@@ -4,6 +4,7 @@ const { handleError } = require('../../utils/errorHandler')
 const normalizeUser = require('../helpers/normalizeUser')
 const { generateUserPassword } = require('../helpers/bcrypt')
 const { validateRegistration, validateLogin } = require('../validations/userValidationService')
+const { registerUser } = require('../models/usersAccessDataService')
 
 const router = express.Router()
 
@@ -16,7 +17,7 @@ router.post( '/', async (req, res) => {
         user = normalizeUser(user)
         user.password = generateUserPassword(user.password)
         
-        // user = await registerUser(user)
+        user = await registerUser(user)
         return res.send(user).status(201)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)

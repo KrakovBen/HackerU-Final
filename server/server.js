@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const cors = require('./middlewares/cors')
 const router = require('./router/router')
+const connectDB = require('./dataBase/dataBaseServce')
 
 app.use(cors)
 app.use(express.json())
@@ -14,4 +15,5 @@ const ENV = config.get("NODE_ENV")
 
 app.listen(PORT, async () => {
     console.log(chalk.blue(`✅ - Listening on: http://localhost:${PORT}`))
+    await connectDB(ENV)
 })
