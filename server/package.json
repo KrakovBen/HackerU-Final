@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "export || cross-env NODE_ENV=production&& node .",
+    "dev": "export || cross-env NODE_ENV=development&& nodemon ."
+  },
+  "author": "Ben Krakovsky",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "config": "^3.3.12",
+    "cross-env": "^7.0.3",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
