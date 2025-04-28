@@ -4,7 +4,7 @@ const { handleError } = require('../../utils/errorHandler')
 const normalizeUser = require('../helpers/normalizeUser')
 const { generateUserPassword } = require('../helpers/bcrypt')
 const { validateRegistration, validateLogin } = require('../validations/userValidationService')
-const { registerUser } = require('../models/usersAccessDataService')
+const { registerUser, loginUser } = require('../models/usersAccessDataService')
 
 const router = express.Router()
 
@@ -29,8 +29,15 @@ router.post('/login', async (req, res) => {
         const { error } = validateLogin(req.body)
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
 
-        // const user = await loginUser(req.body)
+        const user = await loginUser(req.body)
         return res.send(user).status(200)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.get('/', async (req, res) => {
+    try {
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }

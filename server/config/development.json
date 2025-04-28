@@ -2,5 +2,6 @@
     "NODE_ENV": "development",
     "PORT": 8181,
     "DATABASE_URL": "mongodb+srv://hup:8m2fCiSXPGI1DtKK@hackeru.ybye1eh.mongodb.net/HackerU",
-    "DATA_BASE": "mongoDB"
+    "DATA_BASE": "mongoDB",
+    "TOKEN_GENERATOR": "jwt"
 }
