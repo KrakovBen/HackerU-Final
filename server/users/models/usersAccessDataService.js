@@ -61,7 +61,7 @@ const loginUser = async ({ email, password }) => {
             const token = generateAuthToken(user)
 
             if(counter){
-                await LoginUserSchema.findByIdAndDelete(counter._id);
+                await LoginUserSchema.findByIdAndDelete(counter._id)
             }
 
             return Promise.resolve(token)
@@ -72,4 +72,20 @@ const loginUser = async ({ email, password }) => {
     }
 }
 
-module.exports = { registerUser, loginUser }
+
+const deleteUser = async (_id) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.findByIdAndDelete(_id, {isAdmin:0, password:0})
+            if(!user) throw new Error('No User Found!')
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 404
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { registerUser, loginUser, deleteUser }

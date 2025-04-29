@@ -4,7 +4,9 @@ const { handleError } = require('../../utils/errorHandler')
 const normalizeUser = require('../helpers/normalizeUser')
 const { generateUserPassword } = require('../helpers/bcrypt')
 const { validateRegistration, validateLogin } = require('../validations/userValidationService')
-const { registerUser, loginUser } = require('../models/usersAccessDataService')
+const { registerUser, loginUser, deleteUser } = require('../models/usersAccessDataService')
+const { verifyAuthToken } = require('../../auth/providers/jwt')
+const auth = require('../../auth/authService')
 
 const router = express.Router()
 
@@ -38,6 +40,19 @@ router.post('/login', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.delete('/:id', auth, async (req, res) => {
+    const id = req.params.id
+    try {
+        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
+        if(!req.user.isAdmin && (id != verifiedUser._id)) throw new Error('You are not Authorised')
+        
+        const user = await deleteUser(id)
+        return res.send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
