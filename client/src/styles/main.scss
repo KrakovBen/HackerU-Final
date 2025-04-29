@@ -1,0 +1,26 @@
+@import '@fontsource/heebo';
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --primary-color: #1976d2;
+    --secondary-color: #9c27b0;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Heebo', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
