@@ -74,7 +74,7 @@ const loginUser = async ({ email, password }) => {
 
 
 const deleteUser = async (_id) => {
-    if(DB === 'mongoDB'){
+    if(DATA_BASE === 'mongoDB'){
         try {
             const user = await UserSchema.findByIdAndDelete(_id, {isAdmin:0, password:0})
             if(!user) throw new Error('User Not Found')
@@ -89,7 +89,7 @@ const deleteUser = async (_id) => {
 }
 
 const updateUser = async (_id, _user) => {
-    if(DB === 'mongoDB'){
+    if(DATA_BASE === 'mongoDB'){
         try {
             const user = await UserSchema.findByIdAndUpdate(_id, _user, {new: true}).select(["-password","-isAdmin","-__v"])
             if(!user) throw new Error ('User Not Found')

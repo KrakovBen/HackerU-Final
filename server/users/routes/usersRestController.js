@@ -36,14 +36,14 @@ router.post('/login', async (req, res) => {
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
-})
+} )
 
 router.get('/', async (req, res) => {
     try {
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
-})
+} )
 
 router.delete('/:id', auth, async (req, res) => {
     const id = req.params.id
@@ -55,7 +55,7 @@ router.delete('/:id', auth, async (req, res) => {
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
-})
+} )
 
 router.put('/:id', auth, async (req, res) => {
     try {
@@ -65,8 +65,7 @@ router.put('/:id', auth, async (req, res) => {
         const { error } = validateUserUpdate(user)
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
 
-        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
-        if(!user.isAdmin && (id.toString() !== verifiedUser._id.toString())) throw new Error('You are not Authorised')
+        if(!user.isAdmin && (id.toString() !== req.user._id.toString())) throw new Error('You are not Authorised')
         
         user = normalizeUser(user)
         user = await updateUser(id, user)
@@ -74,7 +73,7 @@ router.put('/:id', auth, async (req, res) => {
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
-})
+} )
 
 
 module.exports = router

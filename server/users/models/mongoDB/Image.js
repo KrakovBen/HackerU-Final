@@ -8,7 +8,8 @@ const imageSchema = mongoose.Schema({
     alt: {
         type: String,
         trim: true,
-        minLength: 2
+        minLength: 2,
+        lowercase: true
     }
 }, { _id: false })
 

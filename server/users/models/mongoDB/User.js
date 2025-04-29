@@ -30,11 +30,7 @@ const UserSchema = new mongoose.Schema({
     isBusiness: {
         type: Boolean,
         default: false
-    },
-    createdAt: {
-        type: Date,
-        default: new Date()
     }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model("user", UserSchema)
