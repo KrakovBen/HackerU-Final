@@ -3,8 +3,8 @@ const express = require('express')
 const { handleError } = require('../../utils/errorHandler')
 const normalizeUser = require('../helpers/normalizeUser')
 const { generateUserPassword } = require('../helpers/bcrypt')
-const { validateRegistration, validateLogin } = require('../validations/userValidationService')
-const { registerUser, loginUser, deleteUser } = require('../models/usersAccessDataService')
+const { validateRegistration, validateLogin, validateUserUpdate } = require('../validations/userValidationService')
+const { registerUser, loginUser, deleteUser, updateUser } = require('../models/usersAccessDataService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const auth = require('../../auth/authService')
 
@@ -20,7 +20,7 @@ router.post( '/', async (req, res) => {
         user.password = generateUserPassword(user.password)
         
         user = await registerUser(user)
-        return res.send(user).status(201)
+        return res.status(201).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
 
         const user = await loginUser(req.body)
-        return res.send(user).status(200)
+        return res.status(200).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
@@ -48,14 +48,33 @@ router.get('/', async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
     const id = req.params.id
     try {
-        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
-        if(!req.user.isAdmin && (id != verifiedUser._id)) throw new Error('You are not Authorised')
+        if(!req.user.isAdmin && (id.toString() !== req.user._id.toString())) throw new Error('You are not Authorised')
         
         const user = await deleteUser(id)
-        return res.send(user)
+        return res.status(200).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
 })
+
+router.put('/:id', auth, async (req, res) => {
+    try {
+        const { id } = req.params
+        let user = req.body
+
+        const { error } = validateUserUpdate(user)
+        if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
+
+        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
+        if(!user.isAdmin && (id.toString() !== verifiedUser._id.toString())) throw new Error('You are not Authorised')
+        
+        user = normalizeUser(user)
+        user = await updateUser(id, user)
+        return res.status(200).send(user)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
 
 module.exports = router

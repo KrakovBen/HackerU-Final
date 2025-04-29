@@ -29,7 +29,7 @@ const loginUser = async ({ email, password }) => {
         try {
             const nowTime = new Date()
             const user = await UserSchema.findOne({email})
-            if (!user) throw new Error('Invalid email or Password.')
+            if (!user) throw new Error('Invalid Email or Password.')
             const validPassword = comparePassword(password, user.password)
             let counter = await LoginUserSchema.findOne({userId: user._id})
 
@@ -48,13 +48,13 @@ const loginUser = async ({ email, password }) => {
                     let login = {userId: user._id, counter: [nowTime]}
                     login = new LoginUserSchema(login)
                     await login.save()
-                    throw new Error('Invalid email or Password.')
+                    throw new Error('Invalid Email or Password.')
                 }
 
                 if(counter.counter.length < 3){
                     counter.counter.push(nowTime)
                     await LoginUserSchema.findByIdAndUpdate(counter._id, {counter: counter.counter})
-                    throw new Error('Invalid email or Password.')
+                    throw new Error('Invalid Email or Password.')
                 }
             }
 
@@ -77,7 +77,7 @@ const deleteUser = async (_id) => {
     if(DB === 'mongoDB'){
         try {
             const user = await UserSchema.findByIdAndDelete(_id, {isAdmin:0, password:0})
-            if(!user) throw new Error('No User Found!')
+            if(!user) throw new Error('User Not Found')
             return Promise.resolve(user)
         } catch (error) {
             error.status = 404
@@ -88,4 +88,19 @@ const deleteUser = async (_id) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { registerUser, loginUser, deleteUser }
+const updateUser = async (_id, _user) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.findByIdAndUpdate(_id, _user, {new: true}).select(["-password","-isAdmin","-__v"])
+            if(!user) throw new Error ('User Not Found')
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 404
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { registerUser, loginUser, deleteUser, updateUser }
