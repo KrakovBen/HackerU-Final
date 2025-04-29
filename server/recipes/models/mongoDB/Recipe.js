@@ -1,29 +1,22 @@
 const mongoose = require('mongoose')
 const DEFAULT_SCHEMA_STRING = require('../../helpers/defaultSchemaString')
+const RecipeContentSchema = require('./RecipeContent')
+const ImageSchema = require('./Image')
 
-const Recipe = mongoose.model('recipes', new mongoose.Schema({
+const RecipeSchema = new mongoose.Schema({
     title: DEFAULT_SCHEMA_STRING,
     description: DEFAULT_SCHEMA_STRING,
+    image: ImageSchema,
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'user'
     },
     likes:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'user'
     }],
     tags: [String],
-    sections:[{
-        type: {
-            type: String,
-            enum: ['title', 'text', 'image'],
-            required: true
-        },
-        content: {
-            type: mongoose.Schema.Types.Mixed,
-            required: true
-        }
-    }]
-}, { timestamps: true }))
+    sections:[RecipeContentSchema]
+}, { timestamps: true })
 
-module.exports = Recipe
+module.exports = mongoose.model("recipe", RecipeSchema)
