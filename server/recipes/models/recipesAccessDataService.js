@@ -14,7 +14,6 @@ const getRecipes = async (req) => {
 
         if (req.query.tag) filter.tags = req.query.tag
         if (req.query.createdBy) filter.createdBy = req.query.createdBy
-        console.log(filter)
 
         const recipes = await RecipeSchema.find(filter)
             .sort({ createdAt: -1 })
