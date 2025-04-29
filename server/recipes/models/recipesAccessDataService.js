@@ -38,4 +38,36 @@ const createRecipe = async (recipe) => {
     }
 }
 
-module.exports = { getRecipes, createRecipe }
+const updateRecipe = async (recipeId, recipe) => {
+    if(DATA_BASE !== 'mongoDB') throw new Error('Invalid data base')
+    try {
+        return RecipeSchema.findByIdAndUpdate(recipeId, recipe, { new: true })
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+const likeRecipe = async (recipeId, userId) => {
+    if (DATA_BASE !== 'mongoDB') throw new Error('Invalid data base')
+
+    try {
+        const recipe = await RecipeSchema.findById(recipeId)
+        if (!recipe) throw new Error('Could not find this recipe ID')
+
+        const userIdStr = String(userId)
+        const likeIndex = recipe.likes.findIndex(id => String(id) === userIdStr)
+
+        if (likeIndex === -1) {
+            recipe.likes.push(userId)
+        } else {
+            recipe.likes.splice(likeIndex, 1)
+        }
+
+        await recipe.save()
+        return recipe.likes.length
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+module.exports = { getRecipes, createRecipe, updateRecipe, likeRecipe }
