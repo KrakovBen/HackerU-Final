@@ -11,9 +11,9 @@ import { useUser } from '../../users/providers/UserProvider'
 import ROUTES from '../../routes/routesModel'
 import { Box, Button } from '@mui/material'
 
-function SignupPage() {
-  const { handleSignup } = useUsers()
-  const { value, ...rest } = useForms( initialSignupForm, signupSchema, handleSignup)
+function LoginPage() {
+  const { handleLogin } = useUsers()
+  const { value, ...rest } = useForms( initialSignupForm, signupSchema, handleLogin)
   const { user } = useUser()
   const navigate = useNavigate()
 
@@ -22,15 +22,15 @@ function SignupPage() {
   return (
     <>
     <Box sx={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
-      <Button variant="outlined" onClick={() => navigate(ROUTES.LOGIN)} sx={{ mb: 2 }} color="#737373">התחברות</Button>
+      <Button variant="outlined" onClick={() => navigate(ROUTES.SIGNUP)} sx={{ mb: 2 }} color="#737373">הרשמה</Button>
     </Box>
     <Container sx={{ padding: 8, display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <UserLoginSignupForm to={ROUTES.HOME} title="טופס הרשמה" onSubmit={rest.onSubmit} onReset={rest.handleReset} onFormChange={rest.validateForm} onInputChange={rest.handleChange} setData={rest.setData} errors={value.errors} data={value.data}/>
+      <UserLoginSignupForm to={ROUTES.HOME} title="התחברות" onSubmit={rest.onSubmit} onReset={rest.handleReset} onFormChange={rest.validateForm} onInputChange={rest.handleChange} setData={rest.setData} errors={value.errors} data={value.data}/>
     </Container>
     </>
   )
 }
 
-SignupPage.propTypes = {}
+LoginPage.propTypes = {}
 
-export default SignupPage
+export default LoginPage

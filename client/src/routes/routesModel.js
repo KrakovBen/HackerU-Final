@@ -4,6 +4,7 @@ const ROUTES = {
     FAVORITES: '/favorites',
     CATEGORIES: '/categories',
     SIGNUP: '/signup',
+    LOGIN: '/login',
 }
 
 export default ROUTES

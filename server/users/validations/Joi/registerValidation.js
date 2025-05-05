@@ -3,13 +3,13 @@ const Joi = require('joi')
 const registerValidation = (user) => {
     const schema = Joi.object({
         name: Joi.object().keys({
-            first: Joi.string().min(2).max(256).required(),
+            first: Joi.string().min(2).max(256).required().allow(""),
             middle: Joi.string().min(2).max(256).allow(""),
-            last: Joi.string().min(2).max(256).required()
-        }).required(),
-        isBusiness: Joi.boolean().required(),
+            last: Joi.string().min(2).max(256).required().allow(""),
+        }),
+        isBusiness: Joi.boolean(),
         isAdmin: Joi.boolean(),
-        phone: Joi.string().ruleset.regex(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/).rule({ message: 'user "PHONE" must be a valid phone number' }).required(),
+        phone: Joi.string().ruleset.regex(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/).rule({ message: 'user "PHONE" must be a valid phone number' }),
         email: Joi.string().ruleset.regex(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/).rule({ message: 'user "MAIL" must be a valid mail' }).required(),
         password: Joi.string().ruleset.regex(/((?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}).{7,20})/).rule({ message: 'user "PASSWORD" must be at least nine characters long and contain an uppercase letter, a lowercase letter, a number and one of the following characters !@#$%^&*-' }).required(),
         image: Joi.object().keys({
@@ -23,7 +23,7 @@ const registerValidation = (user) => {
             street: Joi.string().required(),
             houseNumber: Joi.number().required(),
             zip: Joi.number(),
-        }).required()
+        })
     })
 
     return schema.validate(user)

@@ -7,7 +7,7 @@ import FormButton from './FormButton'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 
-const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, children }) => {
+const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, children, submitText }) => {
     const navigate = useNavigate()
 
     return (
@@ -22,13 +22,13 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
 
             <Grid container spacing={1} my={2} direction="row" width="100">
                 <Grid item size={{ xs: 12, sm: 6}}>
-                    <FormButton node={<LoopIcon />} component="div" onClick={onReset}/>
+                    <FormButton node={submitText || "שליחה"} color="primary" component="div" onClick={onSubmit} variant="contained" disabled={!!onChange()} size="large"/>
                 </Grid>
-                <Grid item size={{ xs: 12, sm: 6}}>
-                    <FormButton node="ביטול" color="error" component="div" onClick={() => navigate(to)}></FormButton>
+                <Grid item size={{ xs: 6, sm: 3}}>
+                    <FormButton node="איפוס" color="#737373" component="div" variant="outlined" onClick={onReset} size="large"/>
                 </Grid>
-                <Grid item size={12}>
-                    <FormButton node="Submit" onClick={onSubmit} variant="outlined" disabled={!!onChange()} size="large"/>
+                <Grid item size={{ xs: 6, sm: 3}}>
+                    <FormButton node="ביטול" color="#737373" component="div" variant="outlined" onClick={() => navigate(to)} size="large"/>
                 </Grid>
             </Grid>
         </Box>

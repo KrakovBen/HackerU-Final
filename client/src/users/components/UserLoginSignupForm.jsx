@@ -3,11 +3,11 @@ import { func, string, object } from 'prop-types'
 import Form from '../../forms/components/Form'
 import Input from '../../forms/components/Input'
 
-function UserLoginSignupForm( { onSubmit, onReset, onFormChange, title, errors, data, onInputChange, setData } ) {
+function UserLoginSignupForm( { onSubmit, onReset, onFormChange, title, to, errors, data, onInputChange, setData } ) {
     return (
-        <Form onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} errors={errors} data={data} onInputChange={onInputChange} setData={setData}>
+        <Form onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} to={to} errors={errors} data={data} onInputChange={onInputChange} setData={setData}>
             <Input name="email" label="כתובת אי-מייל" error={errors.email} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
-            <Input name="password" type="password" label="סיסמה" error={errors.password} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
+            <Input name="password" label="סיסמה" error={errors.password} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
         </Form>
     )
 }
@@ -17,10 +17,11 @@ UserLoginSignupForm.propTypes = {
     onReset: func.isRequired,
     onFormChange: func.isRequired,
     title: string.isRequired,
+    to: string.isRequired,
     errors: object.isRequired,
     data: object.isRequired,
     onInputChange: func.isRequired,
-        setData: func.isRequired
+    setData: func.isRequired
 }
 
 export default UserLoginSignupForm

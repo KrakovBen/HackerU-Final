@@ -7,6 +7,7 @@ const Header = () => {
         {text: 'חדשים', link: ROUTES.NEWS},
         {text: 'אהובים', link: ROUTES.FAVORITES},
         {text: 'הרשמה', link: ROUTES.SIGNUP},
+        {text: 'התחברות', link: ROUTES.LOGIN},
         {text: 'קטגוריות', link: ROUTES.CATEGORIES}
     ]
 
