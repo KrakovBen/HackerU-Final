@@ -11,7 +11,7 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
     const navigate = useNavigate()
 
     return (
-        <Box component="form" color={color} sx={{ mt: 2, p: { xs: 1, sm: 2 }, ...styles }}  onSubmit={onSubmit} autoComplete="off" noValidate>
+        <Box component="form" color={color} sx={{ mt: 2, p: { xs: 1, sm: 2 }, ...styles }} width="100%" onSubmit={onSubmit} autoComplete="off" noValidate>
             <Typography align="center" variant="h5" component="h1" mb={2}>
                 {title.toUpperCase()}
             </Typography>
@@ -21,14 +21,14 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
             </Grid>
 
             <Grid container spacing={1} my={2} direction="row" width="100">
-                <Grid item size={{ xs: 12, sm: 6}}>
-                    <FormButton node={submitText || "שליחה"} color="primary" component="div" onClick={onSubmit} variant="contained" disabled={!!onChange()} size="large"/>
-                </Grid>
-                <Grid item size={{ xs: 6, sm: 3}}>
+                <Grid size={{ xs: 6, sm: 3}}>
                     <FormButton node="איפוס" color="#737373" component="div" variant="outlined" onClick={onReset} size="large"/>
                 </Grid>
-                <Grid item size={{ xs: 6, sm: 3}}>
+                <Grid size={{ xs: 6, sm: 3}}>
                     <FormButton node="ביטול" color="#737373" component="div" variant="outlined" onClick={() => navigate(to)} size="large"/>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6}}>
+                    <FormButton node={submitText || "שליחה"} color="primary" component="div" onClick={onSubmit} variant="contained" disabled={!!onChange()} size="large"/>
                 </Grid>
             </Grid>
         </Box>

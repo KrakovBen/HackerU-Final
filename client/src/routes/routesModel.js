@@ -3,8 +3,10 @@ const ROUTES = {
     NEWS: '/news',
     FAVORITES: '/favorites',
     CATEGORIES: '/categories',
-    SIGNUP: '/signup',
-    LOGIN: '/login',
+    SIGNUP: '/user/signup',
+    LOGIN: '/user/login',
+    UPDATE: '/user/update',
+    TEST: '/test'
 }
 
 export default ROUTES

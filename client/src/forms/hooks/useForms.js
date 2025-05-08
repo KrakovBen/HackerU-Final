@@ -39,7 +39,7 @@ const useForms = (initialForm, schema, handleSubmit) => {
         }, [validateProperty]
     )
 
-    const validateForm = useCallback( () => {        
+    const validateForm = useCallback( () => {
         const schemaForValidate = Joi.object(schema);
         const { error } = schemaForValidate.validate(data)
 

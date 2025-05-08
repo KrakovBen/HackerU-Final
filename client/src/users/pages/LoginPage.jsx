@@ -24,7 +24,7 @@ function LoginPage() {
     <Box sx={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
       <Button variant="outlined" onClick={() => navigate(ROUTES.SIGNUP)} sx={{ mb: 2 }} color="#737373">הרשמה</Button>
     </Box>
-    <Container sx={{ padding: 8, display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Container sx={{ padding: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
       <UserLoginSignupForm to={ROUTES.HOME} title="התחברות" onSubmit={rest.onSubmit} onReset={rest.handleReset} onFormChange={rest.validateForm} onInputChange={rest.handleChange} setData={rest.setData} errors={value.errors} data={value.data}/>
     </Container>
     </>

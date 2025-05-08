@@ -3,7 +3,7 @@ import { useUser } from '../providers/UserProvider'
 // import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate } from 'react-router-dom'
 import useAxios from '../../hooks/useAxios'
-import { getUser, setTokenInLocalStorage } from '../services/localStorageService'
+import { getUser, setTokenInLocalStorage, removeToken } from '../services/localStorageService'
 import ROUTES from '../../routes/routesModel'
 import { login, signup } from '../services/usersApiService'
 
@@ -56,6 +56,11 @@ const useUsers = () => {
         [requestStatus, handleLogin]
     )
 
+    const handleLogout = useCallback(() => {
+        removeToken()
+        setUser(null)
+    }, [setUser])
+
     const value = useMemo(
         () => ({ isLoading, error, user, users }),
         [isLoading, error, user, users]
@@ -64,7 +69,7 @@ const useUsers = () => {
     return {
         value,
         handleLogin,
-        // handleLogout,
+        handleLogout,
         handleSignup,
         // handleEdit,
         // handleGetUser,

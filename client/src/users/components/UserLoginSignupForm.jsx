@@ -5,7 +5,7 @@ import Input from '../../forms/components/Input'
 
 function UserLoginSignupForm( { onSubmit, onReset, onFormChange, title, to, errors, data, onInputChange, setData } ) {
     return (
-        <Form onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} to={to} errors={errors} data={data} onInputChange={onInputChange} setData={setData}>
+        <Form styles={{ maxWidth: '480px' }} onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} to={to} errors={errors} data={data} onInputChange={onInputChange} setData={setData}>
             <Input name="email" label="כתובת אי-מייל" error={errors.email} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
             <Input name="password" label="סיסמה" error={errors.password} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
         </Form>

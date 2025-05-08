@@ -5,7 +5,7 @@ import { makeFirstLetterCapital } from "../utils/algoMethods"
 
 function Input({ variant, label, type, name, data, required, error, onChange, ...rest }) {
     return (
-        <Grid item size={12} {...rest}>
+        <Grid size={12} {...rest}>
             <TextField variant={variant} label={makeFirstLetterCapital(label)} type={type} id={name} name={name} value={data[name] ? data[name] : ""} required={required} helperText={error} error={Boolean(error)} onChange={onChange} fullWidth autoComplete="off"
             sx={{ marginBottom: "20px" }}
              slotProps={{ 

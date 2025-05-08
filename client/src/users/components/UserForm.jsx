@@ -14,7 +14,7 @@ function UserForm( { onSubmit, onReset, onFormChange, title, errors, data, onInp
             <Input name="phone" label="טלפון" error={errors.phone} onChange={onInputChange} data={data} size={6} variant={"standard"} p={1}/>
             <Input name="url" label="לינק" error={errors.url} onChange={onInputChange} data={data} size={6} variant={"standard"} p={1}/>
             <Input name="alt" label="תיאור" error={errors.alt} onChange={onInputChange} data={data} size={6} variant={"standard"} p={1}/>
-            <Grid item>
+            <Grid>
                 <FormControlLabel onChange={e => { setData({ ...data, isBusiness: !!e.target.checked }) }} name="isBusiness" control={<Checkbox value={data.isBusiness} color="primary" />} label="Signup as business" checked={data.isBusiness}/>
             </Grid>
        </Form>
