@@ -1,4 +1,6 @@
 import './App.css'
+import { theme } from './theme'
+import { ThemeProvider } from '@mui/material/styles'
 import Layout from './layout/Layout'
 import { SnackbarProvider } from './providers/SnackbarProvider'
 import { BrowserRouter } from "react-router-dom"
@@ -7,7 +9,7 @@ import UserProvider from "./users/providers/UserProvider"
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
         <UserProvider>
           <SnackbarProvider>
@@ -17,7 +19,7 @@ function App() {
           </SnackbarProvider>
         </UserProvider>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   )
 }
 

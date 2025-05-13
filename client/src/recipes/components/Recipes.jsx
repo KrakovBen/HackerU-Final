@@ -9,6 +9,10 @@ const Recipes = () => {
             <Recipe/>
             <Recipe/>
             <Recipe/>
+            <Recipe/>
+            <Recipe/>
+            <Recipe/>
+            <Recipe/>
         </Container>
     )
 }
