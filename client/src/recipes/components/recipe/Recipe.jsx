@@ -9,9 +9,9 @@ const Recipe = ({ recipe }) => {
 
     return (
         <Card sx={{ maxWidth: 450, width: '100%', minWidth: 300, marginInline: 'auto', borderRadius: 3 }}>
-            <CardMedia component="img" height="200" image={recipe?.image?.url || '/images/default-recipe.jpg'} alt={recipe?.image?.alt || 'תמונת מתכון'} />
+            <CardMedia component="img" height="200" image={recipe?.image?.url || '/images/default-recipe.jpg'} alt={recipe?.image?.alt || (recipe?.name || 'שם המתכון')} />
             <CardContent sx={{ textAlign: "start" }}>
-                <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 600 }}>
+                <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', maxWidth: '100%' }}>
                     {recipe?.name || 'שם המתכון'}
                 </Typography>
                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary, fontWeight: 600 }}>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useAxios from '../../hooks/useAxios'
 import { getUser, setTokenInLocalStorage, removeToken } from '../services/localStorageService'
 import ROUTES from '../../routes/routesModel'
-import { login, signup } from '../services/usersApiService'
+import { login, signup, getUser as getUserFromDB } from '../services/usersApiService'
 
 const useUsers = () => {
     const [users, setUsers] = useState(null)
@@ -61,6 +61,17 @@ const useUsers = () => {
         setUser(null)
     }, [setUser])
 
+    const handleGetUser = useCallback( async (user_id) => {
+        try {
+            setLoading(true)
+            const userFormDB = await getUserFromDB(user_id)
+            requestStatus(false, null, userFormDB, user)
+            return userFormDB
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus] )
+
     const value = useMemo(
         () => ({ isLoading, error, user, users }),
         [isLoading, error, user, users]
@@ -72,7 +83,7 @@ const useUsers = () => {
         handleLogout,
         handleSignup,
         // handleEdit,
-        // handleGetUser,
+        handleGetUser,
         // handleGetAllUsers,
         // handleDeleteUser,
         // handleBusinessUser

@@ -16,7 +16,7 @@ function Router() {
 
             <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.UPDATE} element={<UpdatePage />} />
+            <Route path={`${ROUTES.UPDATE}/:user_id`} element={<UpdatePage />} />
             <Route path={ROUTES.TEST} element={<Recipes />} />
         </Routes>
     )

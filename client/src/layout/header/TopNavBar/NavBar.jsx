@@ -11,6 +11,7 @@ import { useUser } from "../../../users/providers/UserProvider"
 import useUsers from "../../../users/hooks/useUsers"
 import MenuLink from '../../../routes/components/MenuLink'
 
+
 const NavBar = ({menuItems}) => {
 
     const [searchMode, setSearchMode] = useState(false)
@@ -112,7 +113,7 @@ const NavBar = ({menuItems}) => {
                             ]}
 
                             {user && [
-                                <MenuLink key="update-profile" navigateTo={ROUTES.UPDATE} onClick={handleClose} text="עדכון פרופיל" />,
+                                <MenuLink key="update-profile" navigateTo={`${ROUTES.UPDATE}/${user._id}`} onClick={handleClose} text="עדכון פרופיל" />,
                                 <MenuLink key="logout" onClick={onLogout} text="התנתקות" />
                             ]}
                         </Menu>

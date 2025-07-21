@@ -4,7 +4,7 @@ const { handleError } = require('../../utils/errorHandler')
 const normalizeUser = require('../helpers/normalizeUser')
 const { generateUserPassword } = require('../helpers/bcrypt')
 const { validateRegistration, validateLogin, validateUserUpdate } = require('../validations/userValidationService')
-const { registerUser, loginUser, deleteUser, updateUser } = require('../models/usersAccessDataService')
+const { registerUser, loginUser, deleteUser, updateUser, getUser } = require('../models/usersAccessDataService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const auth = require('../../auth/authService')
 
@@ -40,6 +40,16 @@ router.post('/login', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+} )
+
+router.get('/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const user = await getUser(id)
+        return res.status(200).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }

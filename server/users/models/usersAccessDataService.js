@@ -96,4 +96,16 @@ const updateUser = async (_id, _user) => {
     }
 }
 
-module.exports = { registerUser, loginUser, deleteUser, updateUser }
+const getUser = async (_id) => {
+    if(DATA_BASE !== 'mongoDB') throw new Error('Invalid data base')
+    try {
+        const user = await UserSchema.findById(_id, {isAdmin:0, password:0})
+        if(!user) throw new Error('User Not Found')
+        return Promise.resolve(user)
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
+}
+
+module.exports = { registerUser, loginUser, deleteUser, updateUser, getUser }

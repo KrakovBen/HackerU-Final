@@ -19,13 +19,14 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 })
 
-const UpdateUserForm = ( { onSubmit, onReset, onFormChange, title, to, errors, data, onInputChange, setData } ) => {
+const UpdateUserForm = ( { onSubmit, onReset, onFormChange, title, to, errors, data, onInputChange } ) => {
     return (
-        <Form onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} to={to} errors={errors} data={data} onInputChange={onInputChange} setData={setData}>
+        <Form onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} title={title} to={to} errors={errors} data={data} onInputChange={onInputChange}>
             <Input name="first" label="שם פרטי" error={errors.first} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
             <Input name="middle" label="שם אמצעי" error={errors.middle} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
             <Input name="last" label="שם משפחה" error={errors.last} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
-            <Input name="phone" label="טלפון" error={errors.phone} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
+            <Input name="phoneNumber" label="טלפון" error={errors.phoneNumber} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
+            <Input name="password" label="סיסמה" error={errors.password} onChange={onInputChange} data={data} variant={"standard"} p={1}/>
             {/* <Button component="label" role={undefined} variant="contained" tabIndex={-1}><CloudUploadIcon sx={{ fontSize: 20, marginInlineEnd: 1 }}/> העלה תמונת פרופיל<VisuallyHiddenInput type="file" accept=".jpg,.jpeg,.png" onChange={(event) => { console.log(event.target.files[0]) }} /></Button> */}
         </Form>
     )

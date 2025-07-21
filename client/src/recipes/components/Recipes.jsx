@@ -1,22 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { array, func } from 'prop-types'
 import Recipe from './recipe/recipe'
 import { Container } from '@mui/material'
 
-const Recipes = () => {
+const Recipes = ( {recipes, onDelete, onLike} ) => {
     return (
         <Container sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-            <Recipe/>
-            <Recipe/>
-            <Recipe/>
-            <Recipe/>
-            <Recipe/>
-            <Recipe/>
-            <Recipe/>
+            {recipes.map( (recipe) => {
+                <Recipe recipe={recipe} onDelete={onDelete} onLike={onLike} />
+            } )}
         </Container>
     )
 }
 
-Recipes.propTypes = {}
+Recipes.propTypes = {
+    recipes: array.isRequired,
+    onDelete: func.isRequired,
+    onLike: func.isRequired
+}
 
 export default Recipes
