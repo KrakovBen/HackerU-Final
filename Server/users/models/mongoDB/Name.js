@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { DEFAULT_VALIDATORE } = require('../../helpers/mongooseValidator')
+const { DEFAULT_VALIDATORE } = require('../../halpers/mongooseValidator')
 
 const NameSchema = new mongoose.Schema({
     fisrtName: DEFAULT_VALIDATORE,
