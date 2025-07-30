@@ -4,6 +4,7 @@ const app = express()
 const chalk = require('chalk')
 const cors = require('./middlewares/cors')
 const router = require('./router/router')
+const connectDB = require('./db/dbService')
 
 require('./utils/timeService')
 
@@ -16,5 +17,5 @@ const ENV = config.get("NODE_ENV")
 
 app.listen(PORT, () => {
     console.log(chalk.yellowBright(`Listening on: http://localhost:${PORT}`))
-    console.log(chalk.yellowBright(`Environment: ${ENV}`))
+    connectDB(ENV)
 })
