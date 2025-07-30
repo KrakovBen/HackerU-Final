@@ -49,7 +49,7 @@
             "Onion",
             "Garlic"
           ],
-          "category": "688a71edb56f79b6a908388c",
+          "category": "Pasta",
           "prepTimeMinutes": 15,
           "cookTimeMinutes": 25,
           "imageUrl": "https://example.com/spaghetti-bolognese.jpg",
@@ -65,7 +65,7 @@
             "Mozzarella cheese",
             "Basil"
           ],
-          "category": "688a71edb56f79b6a908388c",
+          "category": "Pizza",
           "prepTimeMinutes": 20,
           "cookTimeMinutes": 15,
           "imageUrl": "https://example.com/margherita.jpg",
@@ -82,7 +82,7 @@
             "Tomato",
             "Cheddar cheese"
           ],
-          "category": "688a71edb56f79b6a908388c",
+          "category": "Burgers",
           "prepTimeMinutes": 10,
           "cookTimeMinutes": 12,
           "imageUrl": "https://example.com/beef-burger.jpg",
@@ -100,7 +100,7 @@
             "Chili",
             "Garlic"
           ],
-          "category": "688a71edb56f79b6a908388c",
+          "category": "Breakfast",
           "prepTimeMinutes": 10,
           "cookTimeMinutes": 15,
           "imageUrl": "https://example.com/shakshuka.jpg",
