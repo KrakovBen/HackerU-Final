@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/register', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const user = await registerUser(req.body)
         res.status(201).send(user)

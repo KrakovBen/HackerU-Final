@@ -39,4 +39,4 @@ const registerUser = async (normalizeUser) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getUsers }
+module.exports = { getUsers, registerUser }

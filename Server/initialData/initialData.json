@@ -1,0 +1,111 @@
+{
+    "users": [
+        {
+            "name": {
+                "first": "Noam",
+                "last": "Cohen"
+            },
+            "email": "admin@gmail.com",
+            "password": "Aa123456!",
+            "isAdmin": true
+        },
+        {
+            "name": {
+                "first": "Yael",
+                "last": "Levi"
+            },
+            "email": "user1@gmail.com",
+            "password": "Aa123456!",
+            "isAdmin": false
+        },
+        {
+            "name": {
+                "first": "Itai",
+                "last": "Mizrahi"
+            },
+            "email": "user2@gmail.com",
+            "password": "Aa123456!",
+            "isAdmin": false
+        },
+        {
+            "name": {
+                "first": "Tamar",
+                "last": "Ben-David"
+            },
+            "email": "user3@gmail.com",
+            "password": "Aa123456!",
+            "isAdmin": false
+        }
+    ],
+
+    "recipes": [
+        {
+          "title": "Spaghetti Bolognese",
+          "description": "Classic spaghetti with meat sauce",
+          "ingredients": [
+            "Spaghetti",
+            "Ground beef",
+            "Tomato sauce",
+            "Onion",
+            "Garlic"
+          ],
+          "category": "688a71edb56f79b6a908388c",
+          "prepTimeMinutes": 15,
+          "cookTimeMinutes": 25,
+          "imageUrl": "https://example.com/spaghetti-bolognese.jpg",
+          "tags": ["pasta", "meat", "italian"],
+          "createdBy": "Noam Cohen"
+        },
+        {
+          "title": "Margherita Pizza",
+          "description": "Pizza with tomato sauce and mozzarella",
+          "ingredients": [
+            "Pizza dough",
+            "Tomato sauce",
+            "Mozzarella cheese",
+            "Basil"
+          ],
+          "category": "688a71edb56f79b6a908388c",
+          "prepTimeMinutes": 20,
+          "cookTimeMinutes": 15,
+          "imageUrl": "https://example.com/margherita.jpg",
+          "tags": ["pizza", "vegetarian", "italian"],
+          "createdBy": "Noam Cohen"
+        },
+        {
+          "title": "Beef Burger",
+          "description": "Juicy beef burger with lettuce and tomato",
+          "ingredients": [
+            "Burger bun",
+            "Ground beef patty",
+            "Lettuce",
+            "Tomato",
+            "Cheddar cheese"
+          ],
+          "category": "688a71edb56f79b6a908388c",
+          "prepTimeMinutes": 10,
+          "cookTimeMinutes": 12,
+          "imageUrl": "https://example.com/beef-burger.jpg",
+          "tags": ["burger", "beef", "fast food"],
+          "createdBy": "Noam Cohen"
+        },
+        {
+          "title": "Shakshuka",
+          "description": "Poached eggs in spicy tomato sauce",
+          "ingredients": [
+            "Eggs",
+            "Tomato",
+            "Bell pepper",
+            "Onion",
+            "Chili",
+            "Garlic"
+          ],
+          "category": "688a71edb56f79b6a908388c",
+          "prepTimeMinutes": 10,
+          "cookTimeMinutes": 15,
+          "imageUrl": "https://example.com/shakshuka.jpg",
+          "tags": ["breakfast", "israeli", "vegetarian"],
+          "createdBy": "Noam Cohen"
+        }
+    ]
+}

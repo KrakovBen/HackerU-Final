@@ -10,6 +10,7 @@
     "author": "Ben Krakovsky",
     "license": "ISC",
     "dependencies": {
+        "bcryptjs": "^3.0.2",
         "chalk": "^4.1.2",
         "config": "^4.1.0",
         "cors": "^2.8.5",
