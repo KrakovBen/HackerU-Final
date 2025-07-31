@@ -10,24 +10,17 @@ import ROUTES from './../routes/routesModel'
 const ErrorPage = () => {
     const navigate = useNavigate()
     return (
-        <Container>
-            <Typography variant='h1'>ErrorPage</Typography>
+        <Container maxWidth={false}>
+            <Typography variant='h1' fontWeight={700}>הדף לא נמצא</Typography>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
-                <Typography variant='h5' color='initial'>
-                    Oops... The requested URL was not found on this server
-                </Typography>
-                <Button variant='text' color='primary' onClick={()=>navigate(ROUTES.CARDS)}>
-                    Click here to return to the home page...
-                </Button>
-                </Grid>
-                <Grid item xs={12} md={4} justifyContent='center'>
-                <img
-                    width='100%'
-                    src='/assets/images/broken-robot.png'
-                    alt='broken robot'
-                />
+                    <Typography variant='body1'  color='initial'>
+                        אופס... נראה שהלינק שביקשת לא קיים או שהמנה הלכה לאיבוד בדרך 👨🏻‍🍳
+                    </Typography>
+                    <Button variant='contained' color='primary' onClick={()=>navigate(ROUTES.ROOT)}>
+                        חזרה לדף הבית
+                    </Button>
                 </Grid>
             </Grid>
         </Container>
