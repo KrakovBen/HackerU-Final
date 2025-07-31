@@ -11,10 +11,6 @@ body {
   direction: rtl;
 }
 
-.app {
-  min-height: 90vh;
-}
-
 a:visited {
   color: #1d1d1f;
 }/*# sourceMappingURL=global.css.map */
