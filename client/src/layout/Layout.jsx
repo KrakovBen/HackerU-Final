@@ -1,20 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Outlet } from 'react-router-dom'
-import NavBar from '../components/NavBar'
+import { node } from 'prop-types'
+import NavBar from './header/NavBar'
 import Container from '@mui/material/Container'
 
-const Layout = () => {
+const Layout = ({ children }) => {
     return (
         <>
             <NavBar />
-            <Container maxWidth={false} sx={{ mt: 4, mx: '25px', width: '90vw' }}>
-                <Outlet />
+            <Container maxWidth='1680px' sx={{ mt: 4, mx: '25px', width: '90vw' }}>
+                { children }
             </Container>
         </>
     )
 }
 
-Layout.propTypes = {}
+Layout.propTypes = {
+    children: node.isRequired,
+}
 
 export default Layout

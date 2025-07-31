@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, Box, Stack, useMediaQuery, useTheme } from '@mui/material'
 import { Link } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu'
-import ROUTES from '../routes/routesModel'
+import ROUTES from '../../routes/routesModel'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import TextField from '@mui/material/TextField'
@@ -22,9 +22,9 @@ const NavBar = () => {
 
     return (
         <AppBar position="sticky" elevation={0} sx={{ background: 'transparent', py: 3, zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-            <Box sx={{ backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.2)', transition: 'all 0.3s ease-in-out', borderRadius: '16px', boxShadow: '0 8px 32px rgba(31, 38, 135, 0.1)', mx: 'auto', px: 3, py: 1.5, width: '95%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+            <Box sx={{ backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.2)', transition: 'all 0.3s ease-in-out', borderRadius: '16px', boxShadow: '0 8px 32px rgba(31, 38, 135, 0.1)', maxWidth: '1680px', mx: 'auto', px: 3, py: 1.5, width: '95%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
                 <Typography component={Link} to={ROUTES.ROOT} variant="h5" sx={{ fontFamily: 'Karantina', fontWeight: 700, color: '#1d1d1f', '&:hover': { color: '#1d1d1f' }, textDecoration: 'none' }}>
-                    🍽️ CookFlow
+                    🍽️ BisBook
                 </Typography>
 
                 {isMobile ? (

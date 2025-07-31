@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Karantina", sans-serif;
+  background-color: #f7f7f7;
+  color: #1d1d1f;
+  direction: rtl;
+}
+
+.app {
+  min-height: 90vh;
+}
+
+a:visited {
+  color: #1d1d1f;
+}/*# sourceMappingURL=global.css.map */

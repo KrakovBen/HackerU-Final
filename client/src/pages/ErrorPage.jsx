@@ -14,7 +14,7 @@ const ErrorPage = () => {
             <Typography variant='h1' fontWeight={700}>הדף לא נמצא</Typography>
 
             <Grid container spacing={2}>
-                <Grid item xs={12} md={8}>
+                <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 8' } }}>
                     <Typography variant='body1'  color='initial'>
                         אופס... נראה שהלינק שביקשת לא קיים או שהמנה הלכה לאיבוד בדרך 👨🏻‍🍳
                     </Typography>
