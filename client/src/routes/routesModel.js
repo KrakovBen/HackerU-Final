@@ -4,7 +4,7 @@ const ROUTES = {
     USER_PROFILE: '/profile',
     EDIT_USER: '/edit-user',
     LOGIN: '/login',
-    SIGNUP: '/signup',
+    REGISTER: '/register',
     RECIPE: '/recipe',
     CRM: '/crm'
 }
