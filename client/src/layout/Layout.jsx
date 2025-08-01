@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <NavBar />
-            <Container maxWidth='1680px' sx={{ minHeight: 'calc(100vh - 300px)', mx: '25px', width: '90vw' }}>
+            <Container maxWidth='1680px' disableGutters sx={{ minHeight: 'calc(100vh - 300px)', mx: 'auto', width: '90vw' }}>
                 { children }
             </Container>
             <Footer />

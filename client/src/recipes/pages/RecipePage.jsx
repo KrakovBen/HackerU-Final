@@ -26,7 +26,7 @@ const RecipePage = () => {
     }
 
     return (
-        <Container maxWidth='1680px' sx={{ mt: 4, mx: '25px' }}>
+        <Container disableGutters maxWidth='1680px' sx={{ mt: 4, px: 5 }}>
             <RecipeHeader title={recipe.title} description={recipe.description} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrl}/>
 
             <Box>

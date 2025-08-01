@@ -3,19 +3,22 @@ import { string, bool, object, func } from 'prop-types'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import InputBase from '@mui/material/InputBase'
+import Box from '@mui/material/Box'
 
 const Input = ({ variant, type, name, data, label, required, error, onChange, ...rest }) => {
     return (
-        <Grid sx={{ gridColumn: 'span 12', mt: 2 }} {...rest}>
+        <Grid sx={{ gridColumn: 'span 12' }} {...rest}>
             {/* <TextField variant={variant} label={makeFirstLetterCapital(label)} type={type} id={name} name={name} value={data[name] ? data[name] : ''} required={required} helperText={error} error={Boolean(error)} onChange={onChange} fullWidth autoComplete='off' dir="rtl" /> */}
             <Typography variant='h6' component='p'>{required ? `${label} *` : label}</Typography>
-            <InputBase id={name} name={name} type={type} value={data[name]} onChange={onChange} required={required} fullWidth sx={{ borderBottom: '1px solid', borderColor: error ? 'error.main' : 'grey.400', '&:focus-within': { borderColor: 'primary.main' } }}/>
+            <InputBase id={name} variant={variant} name={name} type={type} value={data[name] ? data[name] : ''} onChange={onChange} required={required} fullWidth sx={{ borderBottom: '1px solid', borderColor: error ? 'error.main' : 'grey.400', '&:focus-within': { borderColor: 'primary.main' } }}/>
 
-            {error && (
-                <Typography variant="caption" color="error">
-                    {error}
-                </Typography>
-            )}
+            <Box sx={{ minHeight: 20 }}>
+                {error && (
+                    <Typography sx={{ fontSize: 12 }} variant="caption" color="error">
+                        {error}
+                    </Typography>
+                )}
+            </Box>
         </Grid>
     )
 }
