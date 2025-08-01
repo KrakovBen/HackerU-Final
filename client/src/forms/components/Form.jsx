@@ -16,13 +16,13 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
                 {title.toUpperCase()}
             </Typography>
 
-            <Grid container spacing={spacing}>
+            <Grid container display='grid' spacing={spacing}>
                 {children}
             </Grid>
 
             <Grid container sx={{ display: 'grid', gridTemplateColumns: {xs: 'repeat(1, 1fr)', sm: 'repeat(12, 1fr)'}, gap: 1, my: 2 }}>
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6' } }}>
-                    <FormButton node='cancel' color='error' component='div' variant='outlined' onClick={() => navigate(to)} />
+                    <FormButton node='ביטול' color='error' component='div' variant='outlined' onClick={() => navigate(to)} />
                 </Grid>
 
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6' } }}>
@@ -30,7 +30,7 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
                 </Grid>
 
                 <Grid sx={{ gridColumn: 'span 12' }}>
-                    <FormButton node='Submit' onClick={onSubmit} disabled={!!onChange()} size='large' />
+                    <FormButton node='שליחה' onClick={onSubmit} disabled={!!onChange()} size='large' />
                 </Grid>
             </Grid>
         </Box>

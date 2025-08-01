@@ -6,8 +6,8 @@ import Grid from '@mui/material/Grid'
 
 const Input = ({ variant, type, name, data, label, required, error, onChange, ...rest }) => {
     return (
-        <Grid sx={{ gridColumn: 'span 12' }} {...rest}>
-            <TextField variant={variant} label={makeFirstLetterCapital(label)} type={type} id={name} name={name} value={data[name] ? data[name] : ''} required={required} helperText={error} error={Boolean(error)} onChange={onChange} fullWidth autoComplete='off' />
+        <Grid sx={{ gridColumn: 'span 12', mt: 2 }} {...rest}>
+            <TextField variant={variant} label={makeFirstLetterCapital(label)} type={type} id={name} name={name} value={data[name] ? data[name] : ''} required={required} helperText={error} error={Boolean(error)} onChange={onChange} fullWidth autoComplete='off' dir="rtl" />
         </Grid>
     )
 }
@@ -25,7 +25,7 @@ Input.propTypes = {
 Input.defaultProps = {
     required: true,
     type: 'text',
-    variant: 'outlined',
+    variant: 'standard',
 }
 
 export default React.memo(Input)

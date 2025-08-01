@@ -3,11 +3,13 @@ import { Routes, Route } from "react-router-dom"
 import ErrorPage from './../pages/ErrorPage'
 import ROUTES from './routesModel'
 import RecipePage from '../recipes/pages/RecipePage'
+import LoginPage from '../users/pages/LoginPage'
 
 const Router = () => {
     return (
         <Routes>
             <Route path={ROUTES.RECIPE} element={<RecipePage/>} />
+            <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )

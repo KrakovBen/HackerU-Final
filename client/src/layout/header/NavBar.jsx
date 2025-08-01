@@ -11,7 +11,8 @@ import Collapse from '@mui/material/Collapse'
 
 const pages = [
     { label: 'בית', path: ROUTES.ROOT },
-    { label: 'מתכונים', path: ROUTES.RECIPE }
+    { label: 'מתכונים', path: ROUTES.RECIPE },
+    { label: 'התחברות', path: ROUTES.LOGIN }
 ]
 
 const NavBar = () => {
@@ -43,9 +44,9 @@ const NavBar = () => {
                         </Drawer>
                     </>
                 ) : (
-                    <Stack direction="row" spacing={3} color="#1d1d1f">
-                        {pages.map((page) => (
-                            <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' } }} >
+                    <Stack direction="row" color="#1d1d1f">
+                        {pages.map((page, index) => (
+                            <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
                                 {page.label}
                             </Button>
                         ))}
