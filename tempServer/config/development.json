@@ -1,7 +1,0 @@
-{
-    "NODE_ENV": "development",
-    "PORT": 8181,
-    "DB_URL": "mongodb://localhost:27017/my-recipe-server",
-    "DB_NAME": null,
-    "DB_PASSWORD": null
-}
