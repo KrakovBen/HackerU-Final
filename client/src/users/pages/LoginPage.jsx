@@ -9,12 +9,13 @@ import { Container, Typography } from '@mui/material'
 import Form from '../../forms/components/Form'
 import Input from '../../forms/components/Input'
 import Link from '@mui/material/Link'
+import loginSchema from '../models/joi-schema/loginSchema'
 
 const LoginPage = () => {
     const { user } = useUser()
     const { handleLogin } = useUsers()
 
-    const { value, ...rest } = useForm(initialLoginForm, null, handleLogin)
+    const { value, ...rest } = useForm(initialLoginForm, loginSchema, handleLogin)
 
     if (user) return <Navigate replace to={ROUTES.ROOT} />
     

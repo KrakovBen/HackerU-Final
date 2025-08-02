@@ -8,11 +8,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import TextField from '@mui/material/TextField'
 import Collapse from '@mui/material/Collapse'
+import { useUser } from '../../users/providers/UserProvider'
+import useUsers from '../../users/hooks/useUsers'
 
 const pages = [
     { label: 'בית', path: ROUTES.ROOT },
-    { label: 'מתכונים', path: ROUTES.RECIPE },
-    { label: 'התחברות', path: ROUTES.LOGIN }
+    { label: 'מתכונים', path: ROUTES.RECIPE }
 ]
 
 const NavBar = () => {
@@ -20,6 +21,14 @@ const NavBar = () => {
     const [showSearch, setShowSearch] = useState(false)
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+    const { user } = useUser()
+    const { handleLogout } = useUsers()
+    
+    const onLogout = () => {
+        handleLogout();
+        setOpenDrawer(false);
+    }
 
     return (
         <AppBar position="sticky" elevation={0} sx={{ background: 'transparent', py: 3, zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -40,16 +49,41 @@ const NavBar = () => {
                                         <ListItemText primary={page.label} />
                                     </ListItem>
                                 ))}
+                                {!user && (
+                                    <>
+                                    <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.REGISTER} onClick={() => setOpenDrawer(false)}>
+                                        <ListItemText primary="הרשמה" />
+                                    </ListItem>
+                                    <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.LOGIN} onClick={() => setOpenDrawer(false)}>
+                                        <ListItemText primary="התחברות" />
+                                    </ListItem>
+                                    </>
+                                )}
                             </List>
                         </Drawer>
                     </>
                 ) : (
                     <Stack direction="row" color="#1d1d1f">
-                        {pages.map((page, index) => (
+                        {pages.map((page) => (
                             <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
                                 {page.label}
                             </Button>
                         ))}
+
+                        {!user ? (
+                            <>
+                            <Button component={Link} to={ROUTES.LOGIN} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                                התחברות
+                            </Button>
+                            <Button component={Link} to={ROUTES.REGISTER} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                                הרשמה
+                            </Button>
+                            </>
+                        ) : (
+                            <Button onClick={onLogout} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                                התנתקות
+                            </Button>
+                        )}
 
                         {!showSearch ? (
                             <IconButton onClick={() => setShowSearch(true)} color="inherit">

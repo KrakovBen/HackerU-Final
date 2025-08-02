@@ -30,7 +30,7 @@ const Form = ({ title, onSubmit, onReset, onChange, to, color, spacing, styles, 
                 </Grid>
 
                 <Grid sx={{ gridColumn: 'span 12' }}>
-                    <FormButton node='שליחה' onClick={onSubmit} disabled={!!onChange()} size='large' />
+                    <FormButton node='שליחה' onClick={onSubmit} variant='contained' disabled={!!onChange()} size='large' />
                 </Grid>
             </Grid>
         </Box>

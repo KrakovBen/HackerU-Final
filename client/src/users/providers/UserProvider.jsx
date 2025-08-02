@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
     const [token, setToken] = useState(getToken)
 
     useEffect( () => {
-        if (!user) {
+        if (!user) {            
             const userFromLocalStorage = getUser()
             setUser(userFromLocalStorage)
         }
