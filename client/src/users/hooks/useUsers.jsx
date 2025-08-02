@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login } from '../services/usersApiService'
+import { login, signup, getAllUsers } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
-import { signup } from '../services/usersApiService'
 
 const useUsers = () => {
     const [users, setUsers] = useState(null)
@@ -56,11 +55,21 @@ const useUsers = () => {
         }
     }, [requestStatus, handleLogin])
 
+    const handleGetAllUsers = useCallback( async () => {
+        try {
+            setLoading(true)
+            const usersFormDB = await getAllUsers()
+            requestStatus(false, null, usersFormDB, user)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => (
         { isLoading, error, user, users }
     ), [isLoading, error, user, users])
 
-    return { value, handleLogin, handleLogout, handleSignup }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers }
 }
 
 export default useUsers

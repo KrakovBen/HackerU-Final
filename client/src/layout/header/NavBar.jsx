@@ -13,7 +13,8 @@ import useUsers from '../../users/hooks/useUsers'
 
 const pages = [
     { label: 'בית', path: ROUTES.ROOT },
-    { label: 'מתכונים', path: ROUTES.RECIPE }
+    { label: 'מתכונים', path: ROUTES.RECIPE },
+    { label: 'ניהול משתמשים', path: ROUTES.CRM }
 ]
 
 const NavBar = () => {

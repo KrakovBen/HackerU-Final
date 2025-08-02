@@ -2,9 +2,12 @@ const express = require('express')
 const router = express.Router()
 const { getUsers, registerUser, loginUser } = require('../models/usersAccessDataService')
 const { handleError } = require('../../utils/errorHandler')
+const auth = require('../../auth/authService')
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
+        if(!req.user.isAdmin) throw new Error('אתה לא מורשה לבצע פעולה זו.')
+        
         const users = await getUsers()
         res.status(200).send(users)
     } catch (error) {

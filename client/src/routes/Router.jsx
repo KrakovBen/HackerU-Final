@@ -5,6 +5,7 @@ import ROUTES from './routesModel'
 import RecipePage from '../recipes/pages/RecipePage'
 import LoginPage from '../users/pages/LoginPage'
 import RegisterPage from '../users/pages/RegisterPage'
+import CRMPage from '../users/pages/CRM_Page'
 
 const Router = () => {
     return (
@@ -12,6 +13,7 @@ const Router = () => {
             <Route path={ROUTES.RECIPE} element={<RecipePage/>} />
             <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />
+            <Route path={ROUTES.CRM} element={<CRMPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )
