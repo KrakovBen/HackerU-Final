@@ -6,6 +6,8 @@ import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
 import { login } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
+import normalizeUser from '../helpers/normalization/normalizeUser'
+import { signup } from '../services/usersApiService'
 
 const useUsers = () => {
     const [users, setUsers] = useState(null)
@@ -44,11 +46,21 @@ const useUsers = () => {
         setUser(null);
     }, [setUser])
 
+    const handleSignup = useCallback( async (userFromClient) => {
+        try {
+            const normalizedUser = normalizeUser(userFromClient)            
+            await signup(normalizedUser)
+            await handleLogin({ email: userFromClient.email, password: userFromClient.password })
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus, handleLogin])
+
     const value = useMemo( () => (
         { isLoading, error, user, users }
     ), [isLoading, error, user, users])
 
-    return { value, handleLogin, handleLogout }
+    return { value, handleLogin, handleLogout, handleSignup }
 }
 
 export default useUsers

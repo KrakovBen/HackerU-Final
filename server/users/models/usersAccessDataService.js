@@ -4,7 +4,7 @@ const User = require('./mongoDB/User')
 const { pick } = require('lodash')
 const LoginUserSchema = require('../models/mongoDB/Login')
 const { generateAuthToken } = require('../../auth/providers/jwt')
-const { comparePassword } = require('../halpers/bcrypt')
+const { comparePassword, generateUserPassword } = require('../halpers/bcrypt')
 
 const getUsers = async () => {
     if( DB_TYPE === "mongoDB") {
@@ -29,6 +29,7 @@ const registerUser = async (normalizeUser) => {
             if (user) throw new Error('כתובת Email זו כבר רשומה!')
 
             user = new User(normalizeUser)
+            user.password = await generateUserPassword(user.password)
             user = await user.save()
             user = pick(user, ['name', 'email', '_id'])
 
