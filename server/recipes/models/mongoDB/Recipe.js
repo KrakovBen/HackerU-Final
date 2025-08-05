@@ -19,6 +19,11 @@ const RecipeSchema = new mongoose.Schema({
     prepTimeMinutes: Number,
     cookTimeMinutes: Number,
     imageUrl: String,
+    instructions: {
+        type: [{...DEFAULT_VALIDATORE, maxLength: 500}],
+        default: [],
+        required: true
+    },
     tags: [String],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useUser } from '../providers/UserProvider'
+import { useUser } from '../../users/providers/UserProvider'
 import { getAllRecipes, getRecipe, getRecipesByUser } from '../services/recipesApiService'
 
 const useRecipes = () => {
@@ -24,7 +24,7 @@ const useRecipes = () => {
     }, [searchParams] )
 
     useEffect( () => {
-        if (recipe) {
+        if (Array.isArray(recipe)) {
             setFilterd(recipe.filter(recipe => recipe.title.toLowerCase().includes(query.toLowerCase())))
         }
     }, [recipe, query] )
@@ -50,7 +50,7 @@ const useRecipes = () => {
         try {
             setLoading(true)
             const recipeFormDB = await getRecipe(recipeID)
-            requestStatus(false, null, recipeFormDB)
+            requestStatus(false, null, null, recipeFormDB)
         } catch (error) {
             requestStatus(false, error, null)
         }

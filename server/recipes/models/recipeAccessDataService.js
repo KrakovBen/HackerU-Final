@@ -21,7 +21,7 @@ const getRecipes = async () => {
 const getRecipe = async (id) => {
     if(DB_TYPE === "mongoDB") {
         try {
-            const recipe = await Recipe.findById(id)
+            const recipe = await Recipe.findById(id)            
             if(!recipe) throw new Error('לא נמצא מתכון')
             return Promise.resolve(recipe)
         } catch (error) {

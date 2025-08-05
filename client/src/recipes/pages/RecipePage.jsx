@@ -1,38 +1,32 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Container from '@mui/material/Container'
 import PageHeader from '../../components/PageHeader'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import RecipeHeader from './RecipeHeader'
 import { useParams } from 'react-router-dom'
+import useRecipes from '../hooks/useRecipes'
+import { makeFirstLetterCapital } from '../../utils/algoMethods'
 
 const RecipePage = () => {
-    const recipe = {
-        title: "ספגטי בלונז",
-        description: "מתכון לספגטי בלונז קלאסי",
-        ingredients: [
-            "ספגטי",
-            "בשר",
-            "רוטב עגבניות",
-            "בצל",
-            "שום"
-        ],
-        category: "פסטה",
-        prepTimeMinutes: 15,
-        cookTimeMinutes: 25,
-        imageUrl: "https://cdn.goodlifetv.co.il/wp-content/uploads/2021/10/09184603/750-Recovered-22.jpg",
-        tags: ["פסטה", "בשר", "עגבניות"],
-        createdBy: "Noam Cohen",
-        instructions: ['מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל']
-    }
-
     const { recipeID } = useParams()
+    const { handleGetRecipe, value: { recipe } } = useRecipes()
     
-    // const { recipe } = useRecipes()
+    useEffect( () => {
+        handleGetRecipe(recipeID)
+    }, [] )
+    
+    console.log(recipe)
 
+    if (!recipe) return (
+        <Typography>
+            אופס, נראה שאין נתונים להצגה
+        </Typography>
+    )
+    
     return (
         <Container disableGutters maxWidth='1680px' sx={{ mt: 4, px: 5 }}>
-            <RecipeHeader title={recipe.title} description={recipe.description} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrl}/>
+            <RecipeHeader title={makeFirstLetterCapital(recipe.title)} description={makeFirstLetterCapital(recipe.description)} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrl}/>
 
             <Box>
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>מצרכים</Typography>
@@ -42,7 +36,7 @@ const RecipePage = () => {
 
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>הוראות הכנה</Typography>
 
-                { recipe.instructions.map((instruction, index) => (
+                { recipe.instructions?.map((instruction, index) => (
                     <Box key={index}>
                         <Typography variant='body1' component='h2' sx={{ mt: 5, fontWeight: 900 }}>{index + 1}</Typography>
                         <Typography variant='body1' component='p'>{instruction}</Typography>

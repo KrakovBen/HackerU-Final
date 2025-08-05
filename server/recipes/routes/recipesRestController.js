@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const recipe = await getRecipe(id)
+        const recipe = await getRecipe(id)        
         res.status(200).send(recipe)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
