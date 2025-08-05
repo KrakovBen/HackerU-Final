@@ -4,6 +4,7 @@ import PageHeader from '../../components/PageHeader'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import RecipeHeader from './RecipeHeader'
+import { useParams } from 'react-router-dom'
 
 const RecipePage = () => {
     const recipe = {
@@ -24,6 +25,10 @@ const RecipePage = () => {
         createdBy: "Noam Cohen",
         instructions: ['מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל', 'מטגגנים את הבצל עד שמתקרמל']
     }
+
+    const { recipeID } = useParams()
+    
+    // const { recipe } = useRecipes()
 
     return (
         <Container disableGutters maxWidth='1680px' sx={{ mt: 4, px: 5 }}>

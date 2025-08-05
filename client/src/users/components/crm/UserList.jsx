@@ -29,9 +29,9 @@ const UserList = ({ users, onDelete, onAdmin }) => {
         <>
         <TableBody>
             {users.map(row => (                
-                <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} onClick={()=>{navigate(`${ROUTES.USER_PROFILE}/${row._id}`)}}>
                     <TableCell align="right">{row.name.first} {row.name.last}</TableCell>
-                    <TableCell align="right" component="th" scope="row" onClick={()=>{navigate(`${ROUTES.USER_PROFILE}/${row._id}`)}}>{row.email}</TableCell>
+                    <TableCell align="right" component="th" scope="row">{row.email}</TableCell>
                     <TableCell align="right">
                         <Tooltip title={row.isAdmin ? 'אתה לא מורשה למחוק את המשתמש הזה' : 'מחיקה'}>
                             <IconButton aria-label="delete" onClick={()=>handleDialog("open", row._id)} disabled={row.isAdmin}>

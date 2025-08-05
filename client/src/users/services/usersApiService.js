@@ -29,6 +29,15 @@ export const getAllUsers = async () => {
     }
 }
 
+export const getUser = async (userId) => {
+    try {
+        const { data } = await axios.get(`${apiUrl}/users/${userId}`)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
+
 export const deleteUser = async (userId) => {
     try {
         const { data } = await axios.delete(`${apiUrl}/users/${userId}`)

@@ -18,6 +18,42 @@ const getRecipes = async () => {
     return Promise.resolve('Not in mongoDB')
 }
 
+const getRecipe = async (id) => {
+    if(DB_TYPE === "mongoDB") {
+        try {
+            const recipe = await Recipe.findById(id)
+            if(!recipe) throw new Error('לא נמצא מתכון')
+            return Promise.resolve(recipe)
+        } catch (error) {
+            error.status = 404
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+const getAllRecipes = async (page) => {
+    if (DB_TYPE === "mongoDB") {
+        try {
+            const limit = 12
+            const skip = (page - 1) * limit
+            const totalCount = await Recipe.countDocuments()
+            const totalPages = Math.ceil(totalCount / limit)
+
+            const recipes = await Recipe.find().sort({ createdAt: -1 }).skip(skip).limit(limit)
+            if(!recipes.length) return Promise.resolve({ recipes: [], totalPages, currentPage: page })
+
+            return Promise.resolve({ recipes, totalPages, currentPage: page })
+        } catch (error) {
+            error.status = 404
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
 const createRecipe = async (recipe) => {
     if(DB_TYPE === "mongoDB") {
         try {
@@ -35,4 +71,4 @@ const createRecipe = async (recipe) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getRecipes, createRecipe }
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes }

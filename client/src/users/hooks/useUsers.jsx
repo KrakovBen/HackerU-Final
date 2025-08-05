@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login, signup, getAllUsers, deleteUser, toggleAdmin } from '../services/usersApiService'
+import { login, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
 
@@ -65,19 +65,19 @@ const useUsers = () => {
         }
     }, [requestStatus])
 
-    const handleDeleteUser = useCallback( async (userId) => {
+    const handleDeleteUser = useCallback( async (userID) => {
         try {
             setLoading(true)
-            await deleteUser(userId)
+            await deleteUser(userID)
             snack("success", "המשתמש נמחק בהצלחה")
         } catch (error) {
             requestStatus(false, error, null)
         }
     }, [requestStatus])
 
-    const handleToggleAdmin = useCallback( async (userId) => {
+    const handleToggleAdmin = useCallback( async (userID) => {
         try {
-            await toggleAdmin(userId)
+            await toggleAdmin(userID)
             snack("success", "המשתמש עודכן בהצלחה")
             requestStatus(false, null, users, user)
         } catch (error) {
@@ -85,11 +85,21 @@ const useUsers = () => {
         }
     } ,[requestStatus, users])
 
+    const handleGetUser = useCallback( async (userID) => {
+        try {
+            setLoading(true)
+            const userFormDB = await getUserFromServer(userID)
+            requestStatus(false, null, userFormDB, user)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => (
         { isLoading, error, user, users }
     ), [isLoading, error, user, users])
 
-    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser }
 }
 
 export default useUsers

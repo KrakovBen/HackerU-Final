@@ -16,6 +16,16 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const id = req.params.id        
+        const user = await getUser(id)
+        res.status(200).send(user)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
 router.post('/', async (req, res) => {
     try {
         const user = await registerUser(req.body)

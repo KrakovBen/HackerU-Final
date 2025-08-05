@@ -4,8 +4,8 @@ import { Box, Grid, Typography } from '@mui/material'
 
 const Footer = () => {
     return (
-        <Container maxWidth={false} sx={ { backgroundColor: '#000', color: '#fbfbfd', py: 4, mt: 4, width: '100%', maxWidth: '1680px', mx: 'auto', px: 3 } }>
-            <Container maxWidth='1680px' sx={{ mt: 4, mx: '25px', width: '90vw' }}>
+        <Container maxWidth={false} sx={ { backgroundColor: '#000', color: '#fbfbfd', py: 4, mt: 4, width: '100vw', mx: 'auto', px: 3 } }>
+            <Container sx={{ mt: 4, mx: '25px', width: '90vw', maxWidth: '1680px', margin: 'auto' }}>
                 <Box>
                     <Grid container sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 6, my: 2 }}>
                         <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 4' } }}>
