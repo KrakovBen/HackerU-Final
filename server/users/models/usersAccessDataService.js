@@ -21,6 +21,21 @@ const getUsers = async () => {
     return Promise.resolve('Not in mongoDB')
 }
 
+const getUser = async (_id) => {
+    if (DB_TYPE === 'mongoDB') {
+        try {
+            const user = await User.findById(_id, {password: 0})
+            if (!user) throw new Error('לא נמצא משתמש')
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
 const registerUser = async (normalizeUser) => {
     if(DB_TYPE === "mongoDB") {
         try {
@@ -50,6 +65,9 @@ const loginUser = async ({email, password}) => {
             const user = await User.findOne({email})
             if (!user) throw new Error('שם משתמש או סיסמה שגויים.')
 
+            console.log(password);
+            console.log(user.password);
+                
             const validPassword = comparePassword(password, user.password)
             let counter = await LoginUserSchema.findOne({userId: user._id})
             if(counter){
@@ -85,11 +103,43 @@ const loginUser = async ({email, password}) => {
 
             return Promise.resolve(token)
         } catch (error) {
-            error.status = 400
+            error.status = 401
             return Promise.reject(error)
         }
     }
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getUsers, registerUser, loginUser }
+const deleteUser = async (id) => {
+    if(DB_TYPE === 'mongoDB') {
+        try {
+            const user = await User.findByIdAndDelete(id, {isAdmin:0, password:0})
+            if(!user) throw new Error('לא נמצא משתמש')
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+const toggleAdmin = async (id) => {
+    if (DB_TYPE === 'mongoDB') {
+        try {
+            let user = await User.findById(id)
+            if(!user) throw new Error('לא נמצא משתמש')
+
+            user = await User.findByIdAndUpdate(id, {isAdmin: !user.isAdmin}, {new: true}).select(["-password"])            
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { getUsers, registerUser, loginUser, deleteUser, toggleAdmin, getUser }

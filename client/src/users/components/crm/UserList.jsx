@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import ROUTES from '../../../routes/routesModel'
 import { Tooltip, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
 import UserDeleteDialog from './UserDeleteDialog'
+import EditIcon from './EditIcon'
 
-const UserList = ({ users, onDelete }) => {
+const UserList = ({ users, onDelete, onAdmin }) => {
     const [deleteUser, setDeleteUser] = useState('')
     const [isDialogOpen, setDialog] = useState(false)
     const navigate = useNavigate()
@@ -33,22 +33,20 @@ const UserList = ({ users, onDelete }) => {
                     <TableCell align="right">{row.name.first} {row.name.last}</TableCell>
                     <TableCell align="right" component="th" scope="row" onClick={()=>{navigate(`${ROUTES.USER_PROFILE}/${row._id}`)}}>{row.email}</TableCell>
                     <TableCell align="right">
-                        <Tooltip title={row.isAdmin ? 'You are not allowed to DELETE this user' : 'Delete User'}>
+                        <Tooltip title={row.isAdmin ? 'אתה לא מורשה למחוק את המשתמש הזה' : 'מחיקה'}>
                             <IconButton aria-label="delete" onClick={()=>handleDialog("open", row._id)} disabled={row.isAdmin}>
                                 <DeleteIcon color={row.isAdmin ? "inherit" : "error"} />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title={row.isAdmin ? 'You are not allowed to EDIT this user' : 'Edit User'}>
-                            <IconButton aria-label="edit" onClick={()=>{}} disabled={row.isAdmin}>
-                                <EditIcon color={row.isAdmin ? "inherit" : "primary"} />
-                            </IconButton>
+                        <Tooltip title={row.isAdmin ? 'הסרת הרשאות ניהול' : 'הוספת הרשאות ניהול'}>
+                            <EditIcon onAdmin={onAdmin} user={row} />
                         </Tooltip>
                     </TableCell>
                 </TableRow>
             ))}
         </TableBody>
 
-        <UserDeleteDialog open={isDialogOpen} onClose={handleDialog} />
+        <UserDeleteDialog isDialogOpen={isDialogOpen} onChangeDialog={handleDialog} onDelete={handleDeleteUser} />
         </>
     )
 }

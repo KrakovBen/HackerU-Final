@@ -3,7 +3,7 @@ import { bool, string, arrayOf, func } from 'prop-types'
 import { Typography, TableContainer, Paper, Table, TableHead, TableRow, TableCell } from '@mui/material'
 import UserList from './UserList'
 
-const CRM_Feedback = ({ isLoading, error, users }) => {
+const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
@@ -21,7 +21,7 @@ const CRM_Feedback = ({ isLoading, error, users }) => {
                         <TableCell align="right">פעולות</TableCell>
                     </TableRow>
                 </TableHead>
-                <UserList users={users}></UserList>
+                <UserList users={users} onDelete={onDelete} onAdmin={onAdmin}></UserList>
             </Table>
         </TableContainer>
     )

@@ -3,8 +3,6 @@ const { handleError } = require('../utils/errorHandler')
 const { verifyAuthToken } = require('./providers/jwt')
 
 const tokenGenerator = config.get('TOKEN_GENERATOR')
-console.log(tokenGenerator);
-
 
 const auth = (req, res, next) => {
     if(tokenGenerator === 'jwt') {

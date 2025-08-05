@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login, signup, getAllUsers } from '../services/usersApiService'
+import { login, signup, getAllUsers, deleteUser, toggleAdmin } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
 
@@ -65,11 +65,31 @@ const useUsers = () => {
         }
     }, [requestStatus])
 
+    const handleDeleteUser = useCallback( async (userId) => {
+        try {
+            setLoading(true)
+            await deleteUser(userId)
+            snack("success", "המשתמש נמחק בהצלחה")
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
+    const handleToggleAdmin = useCallback( async (userId) => {
+        try {
+            await toggleAdmin(userId)
+            snack("success", "המשתמש עודכן בהצלחה")
+            requestStatus(false, null, users, user)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    } ,[requestStatus, users])
+
     const value = useMemo( () => (
         { isLoading, error, user, users }
     ), [isLoading, error, user, users])
 
-    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin }
 }
 
 export default useUsers
