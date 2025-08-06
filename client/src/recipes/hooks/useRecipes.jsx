@@ -36,10 +36,10 @@ const useRecipes = () => {
         setRecipe(recipe)
     }, [] )
 
-    const handleGetAllRecipes = useCallback( async () => {
+    const handleGetAllRecipes = useCallback( async (page = 1) => {
         try {
             setLoading(true)
-            const recipesFormDB = await getAllRecipes()
+            const recipesFormDB = await getAllRecipes(page)
             requestStatus(false, null, recipesFormDB)
         } catch (error) {
             requestStatus(false, error, null)
@@ -70,7 +70,7 @@ const useRecipes = () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser  }
 }
 
 useRecipes.propTypes = {}

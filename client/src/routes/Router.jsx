@@ -7,6 +7,7 @@ import LoginPage from '../users/pages/LoginPage'
 import RegisterPage from '../users/pages/RegisterPage'
 import CRMPage from '../users/pages/CRM_Page'
 import UserProfile from '../users/pages/UserProfile'
+import RecipesCategoryPage from '../recipes/pages/RecipesCategoryPage'
 
 const Router = () => {
     return (
@@ -16,6 +17,7 @@ const Router = () => {
             <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />
             <Route path={ROUTES.CRM} element={<CRMPage/>} />
             <Route path={`${ROUTES.USER_PROFILE}/:userID`} element={<UserProfile/>} />
+            <Route path={ROUTES.ROOT} element={<RecipesCategoryPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )

@@ -14,22 +14,20 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/all-recipes', async (req, res) => {
     try {
-        const id = req.params.id
-        const recipe = await getRecipe(id)        
-        res.status(200).send(recipe)
+        const recipes = await getAllRecipes()
+        res.status(200).send(recipes)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
 })
 
-router.get('/all-recipes', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1
-        const recipes = await getAllRecipes(page)
-
-        res.status(200).send(recipes)
+        const id = req.params.id
+        const recipe = await getRecipe(id)        
+        res.status(200).send(recipe)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }

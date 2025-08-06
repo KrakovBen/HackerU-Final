@@ -4,8 +4,8 @@ const apiUrl = import.meta.env.VITE_API_URL
 
 export const getAllRecipes = async () => {
     try {
-        const { data } = await axios.get(`${apiUrl}/recipes`)
-        return data
+        const { data } = await axios.get(`${apiUrl}/recipes/all-recipes`)
+        return data.recipes
     } catch (error) {
         return Promise.reject(error.message)
     }

@@ -39,73 +39,123 @@
     ],
 
     "recipes": [
-        {
-          "title": "Spaghetti Bolognese",
-          "description": "Classic spaghetti with meat sauce",
-          "ingredients": [
-            "Spaghetti",
-            "Ground beef",
-            "Tomato sauce",
-            "Onion",
-            "Garlic"
-          ],
-          "category": "Pasta",
-          "prepTimeMinutes": 15,
-          "cookTimeMinutes": 25,
-          "imageUrl": "https://example.com/spaghetti-bolognese.jpg",
-          "tags": ["pasta", "meat", "italian"],
-          "createdBy": "Noam Cohen"
-        },
-        {
-          "title": "Margherita Pizza",
-          "description": "Pizza with tomato sauce and mozzarella",
-          "ingredients": [
-            "Pizza dough",
-            "Tomato sauce",
-            "Mozzarella cheese",
-            "Basil"
-          ],
-          "category": "Pizza",
-          "prepTimeMinutes": 20,
-          "cookTimeMinutes": 15,
-          "imageUrl": "https://example.com/margherita.jpg",
-          "tags": ["pizza", "vegetarian", "italian"],
-          "createdBy": "Noam Cohen"
-        },
-        {
-          "title": "Beef Burger",
-          "description": "Juicy beef burger with lettuce and tomato",
-          "ingredients": [
-            "Burger bun",
-            "Ground beef patty",
-            "Lettuce",
-            "Tomato",
-            "Cheddar cheese"
-          ],
-          "category": "Burgers",
-          "prepTimeMinutes": 10,
-          "cookTimeMinutes": 12,
-          "imageUrl": "https://example.com/beef-burger.jpg",
-          "tags": ["burger", "beef", "fast food"],
-          "createdBy": "Noam Cohen"
-        },
-        {
-          "title": "Shakshuka",
-          "description": "Poached eggs in spicy tomato sauce",
-          "ingredients": [
-            "Eggs",
-            "Tomato",
-            "Bell pepper",
-            "Onion",
-            "Chili",
-            "Garlic"
-          ],
-          "category": "Breakfast",
-          "prepTimeMinutes": 10,
-          "cookTimeMinutes": 15,
-          "imageUrl": "https://example.com/shakshuka.jpg",
-          "tags": ["breakfast", "israeli", "vegetarian"],
-          "createdBy": "Noam Cohen"
-        }
+      {
+        "title": "ספגטי בולונז",
+        "description": "מתכון איטלקי קלאסי שכל אחד חייב להכיר - ספגטי מבושל בדיוק לרמת אל־דנטה, עם רוטב עשיר של בשר טחון, עגבניות בשלות, בצל, שום, ותבלינים ארומטיים שממלאים את המטבח בניחוח מטריף. מושלם לארוחת ערב חמה ומנחמת.",
+        "ingredients": [
+          "500 גרם ספגטי",
+          "400 גרם בשר בקר טחון איכותי",
+          "1 בצל בינוני קצוץ דק",
+          "2 שיני שום כתושות",
+          "400 מ\"ל רוטב עגבניות חלק",
+          "2 כפות רסק עגבניות",
+          "1 כפית סוכר חום",
+          "מלח ופלפל שחור גרוס",
+          "כפית אורגנו יבש",
+          "מעט שמן זית לטיגון",
+          "גבינת פרמזן מגוררת להגשה"
+        ],
+        "instructions": [
+          "לבשל את הספגטי לפי ההוראות על האריזה עד למידת אל דנטה.",
+          "בינתיים, לטגן בצל קצוץ עם שמן זית עד להזהבה.",
+          "להוסיף את הבשר הטחון ולטגן עד שהוא משנה צבע ומתפורר.",
+          "להוסיף שום, רסק עגבניות, רוטב עגבניות, סוכר ותבלינים, ולבשל כ-15 דקות.",
+          "לסנן את הפסטה ולערבב עם הרוטב.",
+          "להגיש עם גבינת פרמזן מגוררת מעל."
+        ],
+        "category": "6886a436274cdf19adb905be",
+        "prepTimeMinutes": 15,
+        "cookTimeMinutes": 25,
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtpS6h4uer2utJuasHQXrvtLvxZbVovsPTzA&s",
+        "tags": ["פסטה", "בשר", "איטלקי"],
+        "createdBy": "נועם כהן"
+      },
+      {
+        "title": "פיצה מרגריטה",
+        "description": "הקלאסיקה שתמיד מצליחה - פיצה מרגריטה דקה ופריכה עם רוטב עגבניות ביתי, גבינת מוצרלה איכותית, ועלי בזיליקום טריים. כל ביס לוקח אותך לטיול קצר ברחובות נאפולי.",
+        "ingredients": [
+          "בצק פיצה טרי או מוכן מראש",
+          "רוטב עגבניות (עדיף תוצרת בית עם בזיליקום ושום)",
+          "200 גרם גבינת מוצרלה טרייה",
+          "עלי בזיליקום טריים",
+          "שמן זית לזילוף",
+          "מלח ים לפי הטעם",
+          "קמח לקימוח התבנית"
+        ],
+        "instructions": [
+          "לחמם תנור ל-230 מעלות.",
+          "לרדד את בצק הפיצה לעובי הרצוי ולפזר עליו קמח.",
+          "למרוח שכבה אחידה של רוטב עגבניות.",
+          "לפזר את גבינת המוצרלה ולסדר מעל עלי בזיליקום.",
+          "לטפטף מעט שמן זית ולהכניס לאפייה כ-12-15 דקות עד להשחמה.",
+          "להגיש חם עם עוד בזיליקום טרי מעל אם רוצים."
+        ],
+        "category": "6886a436274cdf19adb905be",
+        "prepTimeMinutes": 20,
+        "cookTimeMinutes": 15,
+        "imageUrl": "https://media3.bosch-home.com/Images/600x/16830237_Bosch-RNA-HBL8651UC-VEX-hero-kitchen-pizza-oven.jpg",
+        "tags": ["פיצה", "צמחוני", "איטלקי"],
+        "createdBy": "נועם כהן"
+      },
+      {
+        "title": "המבורגר בקר",
+        "description": "המבורגר עסיסי עם טעם עוצמתי - קציצת בשר בקר משובחת, צלויה לשלמות על מחבת או גריל, בלחמנייה רכה עם ירקות טריים, גבינה נמסה, ורוטב שאתה לא תוכל להפסיק לאכול.",
+        "ingredients": [
+          "לחמניית המבורגר טרייה",
+          "קציצה מ־150 גרם בשר בקר טחון איכותי",
+          "גבינת צ'דר",
+          "פרוסת עגבנייה בשלה",
+          "עלי חסה קראנצ'יים",
+          "פרוסת בצל סגול",
+          "פרוסת חמוצים",
+          "קטשופ, מיונז או איולי",
+          "שמן קנולה לטיגון"
+        ],
+        "instructions": [
+          "לחמם מחבת כבדה או גריל עם מעט שמן.",
+          "לתבל את הקציצה במלח ופלפל ולטגן מכל צד כ-3-4 דקות.",
+          "במהלך הטיגון להניח פרוסת גבינה על הקציצה שתימס.",
+          "בינתיים לקלות קלות את הלחמנייה.",
+          "למרוח רטבים על הלחמנייה, להוסיף ירקות לפי הטעם.",
+          "להניח את הקציצה עם הגבינה ולסגור את ההמבורגר."
+        ],
+        "category": "6886a436274cdf19adb905be",
+        "prepTimeMinutes": 10,
+        "cookTimeMinutes": 12,
+        "imageUrl": "https://ynet-pic1.yit.co.il/PicServer5/2017/12/06/8198672/81267740100898980584no.jpg",
+        "tags": ["המבורגר", "בשר", "אוכל מהיר"],
+        "createdBy": "נועם כהן"
+      },
+      {
+        "title": "שקשוקה",
+        "description": "שקשוקה ישראלית מסורתית - ביצים עלומות ברוטב עגבניות אדום ועמוק, עם פלפלים, בצל, שום, וצ'ילי חריף למי שאוהב עם קצת בעיטה. מנה מושלמת לארוחת בוקר של שישי, לצד חלה טרייה או לחם פרנה.",
+        "ingredients": [
+          "4 ביצים טריות",
+          "4 עגבניות בשלות קצוצות",
+          "1 פלפל אדום מתוק פרוס",
+          "1 בצל קצוץ",
+          "2 שיני שום קצוצות",
+          "צ'ילי חריף לפי הטעם",
+          "כף רסק עגבניות",
+          "פפריקה מתוקה וכמון",
+          "מלח, פלפל",
+          "שמן זית לטיגון",
+          "חופן פטרוזיליה קצוצה לקישוט"
+        ],
+        "instructions": [
+          "לחמם שמן זית במחבת רחבה ולטגן בצל עד הזהבה.",
+          "להוסיף שום, פלפל, עגבניות ורסק ולבשל כ-10 דקות עד שהרוטב מצטמצם.",
+          "לתבל בפפריקה, כמון, מלח, פלפל וצ'ילי חריף.",
+          "ליצור גומות בעזרת כף ולשבור לתוכן את הביצים.",
+          "לכסות ולבשל כ-5-6 דקות עד שהחלבון מתייצב והחלמון נשאר נוזלי.",
+          "לפזר פטרוזיליה מעל ולהגיש מיד עם לחם טרי."
+        ],
+        "category": "6886a436274cdf19adb905be",
+        "prepTimeMinutes": 10,
+        "cookTimeMinutes": 15,
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPQ3DjVzt_3kdEjG21tAgmhMd4r-JFmzqJw&s",
+        "tags": ["בוקר", "ישראלי", "צמחוני"],
+        "createdBy": "נועם כהן"
+      }
     ]
 }

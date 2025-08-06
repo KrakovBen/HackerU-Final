@@ -19,13 +19,15 @@ const RecipePage = () => {
     console.log(recipe)
 
     if (!recipe) return (
-        <Typography>
-            אופס, נראה שאין נתונים להצגה
-        </Typography>
+        <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
+            <Typography>
+                אופס. נראה שמישהו אכל את המתכון.
+            </Typography>
+        </Container>
     )
     
     return (
-        <Container disableGutters maxWidth='1680px' sx={{ mt: 4, px: 5 }}>
+        <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
             <RecipeHeader title={makeFirstLetterCapital(recipe.title)} description={makeFirstLetterCapital(recipe.description)} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrl}/>
 
             <Box>
@@ -36,7 +38,7 @@ const RecipePage = () => {
 
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>הוראות הכנה</Typography>
 
-                { recipe.instructions?.map((instruction, index) => (
+                { recipe.instructions.map((instruction, index) => (
                     <Box key={index}>
                         <Typography variant='body1' component='h2' sx={{ mt: 5, fontWeight: 900 }}>{index + 1}</Typography>
                         <Typography variant='body1' component='p'>{instruction}</Typography>

@@ -33,18 +33,13 @@ const getRecipe = async (id) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-const getAllRecipes = async (page) => {
+const getAllRecipes = async () => {
     if (DB_TYPE === "mongoDB") {
         try {
-            const limit = 12
-            const skip = (page - 1) * limit
-            const totalCount = await Recipe.countDocuments()
-            const totalPages = Math.ceil(totalCount / limit)
+            const recipes = await Recipe.find().sort({ createdAt: -1 })
+            if(!recipes.length) return Promise.resolve({ recipes })
 
-            const recipes = await Recipe.find().sort({ createdAt: -1 }).skip(skip).limit(limit)
-            if(!recipes.length) return Promise.resolve({ recipes: [], totalPages, currentPage: page })
-
-            return Promise.resolve({ recipes, totalPages, currentPage: page })
+            return Promise.resolve({ recipes })
         } catch (error) {
             error.status = 404
             return Promise.reject(error)
