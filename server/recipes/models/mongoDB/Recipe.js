@@ -12,8 +12,7 @@ const RecipeSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        ...DEFAULT_VALIDATORE,
         required: true
     },
     prepTimeMinutes: Number,
@@ -24,7 +23,6 @@ const RecipeSchema = new mongoose.Schema({
         default: [],
         required: true
     },
-    tags: [String],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

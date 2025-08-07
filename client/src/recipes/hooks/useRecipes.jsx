@@ -4,6 +4,7 @@ import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
 import { getAllRecipes, getRecipe, getRecipesByUser } from '../services/recipesApiService'
+import Joi from 'joi'
 
 const useRecipes = () => {
     const { user } = useUser()
@@ -50,6 +51,8 @@ const useRecipes = () => {
         try {
             setLoading(true)
             const recipeFormDB = await getRecipe(recipeID)
+            console.log(recipeFormDB);
+            
             requestStatus(false, null, null, recipeFormDB)
         } catch (error) {
             requestStatus(false, error, null)

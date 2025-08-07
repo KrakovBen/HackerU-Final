@@ -5,7 +5,9 @@ const ROUTES = {
     EDIT_USER: '/edit-user',
     LOGIN: '/login',
     REGISTER: '/register',
-    RECIPE: '/recipe',
+    RECIPES: '/recipes',
+    RECIPE: '/recipes/recipe',
+    RECIPE_EDIT_OR_CREATE: '/recipes/edit-create',
     CRM: '/crm'
 }
 
