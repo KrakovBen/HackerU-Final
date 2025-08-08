@@ -60,7 +60,7 @@ const EditRecipeFormPage = () => {
     if (!value.data) return <>LOADING TO UPDATE!</>
 
     return (
-        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID} onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
+        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID}x onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
     )
 }
 
