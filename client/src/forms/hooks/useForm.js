@@ -6,6 +6,11 @@ const useForm = (initialForm, schema, handleSubmit) => {
     const [data, setData] = useState(initialForm)
     const [errors, setErrors] = useState({})
 
+    const handleReset = useCallback(() => {
+        setData(initialForm)
+        setErrors({})
+    }, [initialForm] )
+
     const validateProperty = useCallback( ({ name, value }) => {
         const obj = { [name]: value }
         const generateSchema = Joi.object({ [name]: schema[name] })
@@ -15,6 +20,35 @@ const useForm = (initialForm, schema, handleSubmit) => {
 
     const handleChange = useCallback( ({ target }) => {
         const { name, value } = target
+        
+        const arrayFieldMatch = name.match(/^(ingredients|instructions)-(\d+)$/)
+        if (arrayFieldMatch) {
+            const [_, fieldName, indexStr] = arrayFieldMatch
+            const index = parseInt(indexStr, 10)
+            setData( (prev) => {
+                const copy = [...(prev[fieldName] || [])]
+                copy[index] = value
+                return { ...prev, [fieldName]: copy }
+            })
+            
+            const errorMessage = validateProperty({ name: fieldName, value: data[fieldName] })
+            
+            if (errorMessage) {
+                setErrors((prev) => ({
+                    ...prev,
+                    [name]: errorMessage, // נשמור לפי ingredients-0
+                }))
+            } else {
+                setErrors((prev) => {
+                    const newErrors = { ...prev };
+                    delete newErrors[name];
+                    return newErrors;
+                })  
+            }
+            
+            return
+        }
+        
         const errorMessage = validateProperty(target)
 
         if (errorMessage) setErrors((prev) => ({ ...prev, [name]: errorMessage }))
@@ -26,11 +60,6 @@ const useForm = (initialForm, schema, handleSubmit) => {
 
         setData((prev) => ({ ...prev, [name]: value }))
     }, [validateProperty] )
-
-    const handleReset = useCallback(() => {
-        setData(initialForm)
-        setErrors({})
-    }, [initialForm] )
 
     const validateForm = useCallback(() => {
         const schemaForValidate = Joi.object(schema)

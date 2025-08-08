@@ -1,51 +1,48 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import useForm from '../../forms/hooks/useForm'
 import Form from '../../forms/components/Form'
 import Input from '../../forms/components/Input'
 import ROUTES from '../../routes/routesModel'
 import { Typography, Button, Box } from '@mui/material'
 
-const initialForm = {
-    title: '',
-    description: '',
-    instructions: '',
-    ingredients: '',
-    category: '',
-    prepTimeMinutes: '',
-    cookTimeMinutes: '',
-    imageUrl: '',
-}
-
-const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, data, title }) => {
+const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, data, title, recipeID }) => {    
     const [ ingredientsList, setIngredientsList ] = useState([''])
     const [ instructionsList, setInstructionsList ] = useState([''])
 
     useEffect(() => {
-        if (data) {
-          if (data.ingredients) {
-            const ingredients = Array.isArray(data.ingredients) ? data.ingredients : data.ingredients.split(',').map(i => i.trim()).filter(Boolean)
+        if (!data) {
+            setIngredientsList([''])
+            setInstructionsList([''])
+            return
+        }
+
+        try {
+            const ingredients = Array.isArray(data.ingredients) 
+                ? data.ingredients 
+                : (data.ingredients || '').split(',').map(i => i.trim()).filter(Boolean)
             setIngredientsList(ingredients.length ? ingredients : [''])
-          }
-      
-          if (data.instructions) {
-            const instructions = Array.isArray(data.instructions) ? data.instructions  : data.instructions.split(',').map(i => i.trim()).filter(Boolean)
+
+            const instructions = Array.isArray(data.instructions) 
+                ? data.instructions 
+                : (data.instructions || '').split(',').map(i => i.trim()).filter(Boolean)
             setInstructionsList(instructions.length ? instructions : [''])
-          }
-        } else {
-          setIngredientsList([''])
-          setInstructionsList([''])
+        } catch (error) {
+            console.error('Error processing recipe data:', error)
+            setIngredientsList([''])
+            setInstructionsList([''])
         }
     }, [data])
 
+    if (!data) return <>LOADING!</>
+
     return (
-        <Form title={title} onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} to={ROUTES.RECIPES} color='primary' spacing={2} styles={{ maxWidth: "980px", width: "80vw", margin: "auto" }}>
-            <Input label='שם המתכון' name='title' type='text' error={errors} data={data} onChange={onInputChange} />
-            <Input label='תיאור המתכון' name='description' type='text' error={errors} data={data} onChange={onInputChange} />
-            <Input label='זמן הכנה' name='prepTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors} data={data} onChange={onInputChange} />
-            <Input label='זמן בישול' name='cookTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors} data={data} onChange={onInputChange} />
-            <Input label='קטגוריה' name='category' type='text' sx={{ gridColumn: 'span 6' }} error={errors} data={data} onChange={onInputChange} />
-            <Input label='תמונה' name='imageUrl' type='text' error={errors} data={data} onChange={onInputChange} />
+        <Form title={title} onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} to={`${ROUTES.RECIPE}/${recipeID}`} color='primary' spacing={2} styles={{ maxWidth: "980px", width: "80vw", margin: "auto" }}>
+            <Input label='שם המתכון' name='title' type='text' error={errors?.title} data={data} onChange={onInputChange} />
+            <Input label='תיאור המתכון' name='description' type='text' error={errors?.description} data={data} onChange={onInputChange} />
+            <Input label='זמן הכנה (בדקות)' name='prepTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.prepTimeMinutes} data={data} onChange={onInputChange} />
+            <Input label='זמן בישול (בדקות)' name='cookTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.cookTimeMinutes} data={data} onChange={onInputChange} />
+            <Input label='קטגוריה' name='category' type='text' sx={{ gridColumn: 'span 6' }} error={errors?.category} data={data} onChange={onInputChange} />
+            <Input label='תמונה' name='imageUrl' type='text' error={errors?.imageUrl} data={data} onChange={onInputChange} />
 
             <Typography variant='h5' component='h2' sx={{ mt: 2 }}>מצרכים</Typography>
             { ingredientsList.map( (item, index) => (                

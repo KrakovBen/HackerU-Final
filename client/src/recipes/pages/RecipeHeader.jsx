@@ -5,7 +5,7 @@ import { string } from 'prop-types'
 import Grid from '@mui/material/Grid'
 import RecipeActionBar from '../components/RecipeActionBar'
 
-const RecipeHeader = ({ title, description, category, prepTimeMinutes, cookTimeMinutes, createdBy, imageUrl }) => {
+const RecipeHeader = ({ title, description, category, prepTimeMinutes, cookTimeMinutes, createdBy, imageUrl, recipeID }) => {
     const tagsStyle = { fontWeight: 100, fontFamily: 'Karantina', letterSpacing: '0.027em' }
     return (
         <Box>
@@ -15,7 +15,7 @@ const RecipeHeader = ({ title, description, category, prepTimeMinutes, cookTimeM
                     <Typography variant="h5" component="h2" color='#144271'>{description}</Typography>
                 </Grid>
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 4' }, display: 'flex', justifyContent: 'flex-end' }}>
-                    <RecipeActionBar />
+                    <RecipeActionBar recipeID={recipeID} />
                 </Grid>
             </Grid>
             

@@ -13,7 +13,16 @@ export const getAllRecipes = async () => {
 
 export const getRecipe = async (recipeID) => {
     try {
-        const { data } = await axios.get(`${apiUrl}/recipes/${recipeID}`)
+        const { data } = await axios.get(`${apiUrl}/recipes/${recipeID}`)        
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
+
+export const updateRecipe = async (recipeID, recipeData) => {
+    try {
+        const { data } = await axios.put(`${apiUrl}/recipes/${recipeID}`, recipeData)
         return data
     } catch (error) {
         return Promise.reject(error.message)

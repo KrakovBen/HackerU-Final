@@ -1,37 +1,69 @@
-import { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { useEffect, useCallback, useRef } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import useRecipes from '../hooks/useRecipes'
-import { useNavigate } from 'react-router-dom'
-import { useUser } from '../../users/providers/UserProvider'
-import RecipeForm from '../components/RecipeForm'
-import ROUTES from '../../routes/routesModel'
 import useForm from '../../forms/hooks/useForm'
+import initialRecipeForm from '../helpers/initialForms/initialRecipeForm'
+import recipeSchema from '../models/joi-schema/recipeSchema'
+import { useUser } from '../../users/providers/UserProvider'
+import mapRecipeToModel from '../helpers/normalization/recipeMapper'
+import RecipeForm from '../components/RecipeForm'
 
-const RecipeFormPage = () => {
+const EditRecipeFormPage = () => {
     const { recipeID } = useParams()
-    const { handleGetRecipe, handleUpdateRecipe, value: { recipe, isLoading, error } } = useRecipes()
-    const { value, ...rest } = useForm()
     const { user } = useUser()
+    const { handleGetRecipe, handleUpdateRecipe } = useRecipes()
     const navigate = useNavigate()
-    
-    useEffect( () => {
-        handleGetRecipe(recipeID)
-    }, [recipeID])
+    const originalRecipeRef = useRef(null)
+    const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, () => {})
 
     const handleSubmit = (data) => {
-        handleUpdateRecipe(recipeID, data)
+        const ingredients = Object.keys(data)
+            .filter((key) => key.startsWith('ingredients-'))
+            .sort((a, b) => Number(a.split('-')[1]) - Number(b.split('-')[1]))
+            .map((key) => data[key])
+            .filter((val) => val?.trim())
+
+        const instructions = Object.keys(data)
+            .filter((key) => key.startsWith('instructions-'))
+            .sort((a, b) => Number(a.split('-')[1]) - Number(b.split('-')[1]))
+            .map((key) => data[key])
+            .filter((val) => val?.trim())
+
+        const fullRecipe = {
+            ...data,
+            ingredients,
+            instructions,
+        }
+
+        handleUpdateRecipe(recipeID, fullRecipe)
     }
+
+    const handleGetRecipeFromAPI = useCallback(() => {
+        handleGetRecipe(recipeID).then(data => {
+            const recipe = mapRecipeToModel(data)
+            rest.setData(recipe)
+            originalRecipeRef.current = recipe
+        })
+    }, [recipeID])
+
+    const onResetClick = () => {
+        if (originalRecipeRef.current) {
+            rest.setData(originalRecipeRef.current)
+            window.scrollTo(0, 0)
+        }
+    }
+
+    useEffect( () => {
+        handleGetRecipeFromAPI()
+    }, [recipeID])
     
-    if (!recipe || isLoading) return <>LOADING TO UPDATE!</>
+    if (!value.data) return <>LOADING TO UPDATE!</>
 
     return (
-        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={recipe} errors={error} onFormChange={rest.validateForm} onReset={rest.handleReset} />
+        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID} onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
     )
 }
 
-RecipeFormPage.propTypes = {
-    recipeID: PropTypes.string.isRequired
-}
+EditRecipeFormPage.propTypes = {}
 
-export default RecipeFormPage
+export default EditRecipeFormPage

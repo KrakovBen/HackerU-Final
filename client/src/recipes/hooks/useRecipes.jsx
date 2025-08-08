@@ -3,7 +3,7 @@ import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
-import { getAllRecipes, getRecipe, getRecipesByUser } from '../services/recipesApiService'
+import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe } from '../services/recipesApiService'
 import Joi from 'joi'
 
 const useRecipes = () => {
@@ -50,10 +50,9 @@ const useRecipes = () => {
     const handleGetRecipe = useCallback( async (recipeID) => {
         try {
             setLoading(true)
-            const recipeFormDB = await getRecipe(recipeID)
-            console.log(recipeFormDB);
-            
+            const recipeFormDB = await getRecipe(recipeID)                        
             requestStatus(false, null, null, recipeFormDB)
+            return recipeFormDB
         } catch (error) {
             requestStatus(false, error, null)
         }
@@ -69,11 +68,21 @@ const useRecipes = () => {
         }
     }, [requestStatus])
 
+    const handleUpdateRecipe = useCallback( async (recipeID, data) => {
+        try {
+            setLoading(true)
+            const recipeFormDB = await updateRecipe(recipeID, data)
+            requestStatus(false, null, null, recipeFormDB)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser  }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe }
 }
 
 useRecipes.propTypes = {}

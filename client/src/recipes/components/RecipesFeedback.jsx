@@ -10,7 +10,7 @@ const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) 
     )
 
     if (recipes && !!recipes.length) return (
-        <Recips recipes={recipes} onDelete={onDelete} onLike={onLike} user={user} />
+        <Recips recipes={recipes} onDelete={onDelete} onLike={onLike} user={user}/>
     )
 }
 

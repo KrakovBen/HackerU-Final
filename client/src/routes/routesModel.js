@@ -7,7 +7,7 @@ const ROUTES = {
     REGISTER: '/register',
     RECIPES: '/recipes',
     RECIPE: '/recipes/recipe',
-    RECIPE_EDIT_OR_CREATE: '/recipes/edit-create',
+    RECIPE_EDIT: '/recipes/edit',
     CRM: '/crm'
 }
 

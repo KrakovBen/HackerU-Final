@@ -16,7 +16,7 @@ const Router = () => {
         <Routes>
             <Route path={`${ROUTES.RECIPES}`} element={<RecipesCategoryPage/>} />
             {/* <Route path={`${ROUTES.RECIPE_EDIT_OR_CREATE}`} element={<CreateRecipeFormPage/>} /> */}
-            <Route path={`${ROUTES.RECIPE_EDIT_OR_CREATE}/:recipeID`} element={<EditRecipeFormPage/>} />
+            <Route path={`${ROUTES.RECIPE_EDIT}/:recipeID`} element={<EditRecipeFormPage/>} />
             <Route path={`${ROUTES.RECIPE}/:recipeID`} element={<RecipePage/>} />
             <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />
