@@ -51,4 +51,20 @@ router.put('/:id', auth, async (req, res) => {
     }
 })
 
+router.post( '/:id/image', auth, uploadImage.single('image'), async (req, res) => {
+    try {
+        const { id } = req.params
+        const recipe = await Recipe.findById(id)
+        if (!recipe) return res.status(404).json({ message: 'לא נמצא מתכון' })
+        if (!req.file) return res.status(400).json({ message: 'לא הועלה קובץ' })
+
+        const publicUrl = `/uploads/recipes/${id}/${req.file.filename}`
+        recipe.imageUrl = publicUrl
+        await recipe.save()
+        res.json({ ok: true, imageUrl: publicUrl, recipeId: id })
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
 module.exports = router

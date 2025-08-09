@@ -10,6 +10,7 @@
     "author": "Ben Krakovsky",
     "license": "ISC",
     "dependencies": {
+        "axios": "^1.11.0",
         "bcryptjs": "^3.0.2",
         "chalk": "^4.1.2",
         "config": "^4.1.0",
@@ -17,7 +18,9 @@
         "express": "^5.1.0",
         "jsonwebtoken": "^9.0.2",
         "lodash": "^4.17.21",
-        "mongoose": "^8.17.0"
+        "mime-types": "^3.0.1",
+        "mongoose": "^8.17.0",
+        "multer": "^2.0.2"
     },
     "devDependencies": {
         "nodemon": "^3.1.10"
