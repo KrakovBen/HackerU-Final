@@ -49,7 +49,6 @@ export const deleteUser = async (userId) => {
 
 export const toggleAdmin = async (userId) => {
     try {
-        console.log(userId);
         const { data } = await axios.patch(`${apiUrl}/users/${userId}/admin`)
         return data
     } catch (error) {

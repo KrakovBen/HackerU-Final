@@ -18,48 +18,47 @@ const useForm = (initialForm, schema, handleSubmit) => {
         return error ? error.details[0].message : null
     }, [schema] )
 
-    const handleChange = useCallback( ({ target }) => {
+    const handleChange = useCallback(({ target }) => {
         const { name, value } = target
-        
+      
         const arrayFieldMatch = name.match(/^(ingredients|instructions)-(\d+)$/)
         if (arrayFieldMatch) {
-            const [_, fieldName, indexStr] = arrayFieldMatch
-            const index = parseInt(indexStr, 10)
-            setData( (prev) => {
-                const copy = [...(prev[fieldName] || [])]
-                copy[index] = value
-                return { ...prev, [fieldName]: copy }
+          const [, fieldName, indexStr] = arrayFieldMatch
+          const index = Number(indexStr)
+      
+          setData(prev => {
+            const copy = [...(prev[fieldName] || [])]
+            copy[index] = value
+      
+            const err = validateProperty({ name: fieldName, value: copy })
+      
+            setErrors(prevErrs => {
+              const next = { ...prevErrs }
+              if (err) next[name] = err
+              else delete next[name]
+              return next
             })
-            
-            const errorMessage = validateProperty({ name: fieldName, value: data[fieldName] })
-            
-            if (errorMessage) {
-                setErrors((prev) => ({
-                    ...prev,
-                    [name]: errorMessage, // נשמור לפי ingredients-0
-                }))
-            } else {
-                setErrors((prev) => {
-                    const newErrors = { ...prev };
-                    delete newErrors[name];
-                    return newErrors;
-                })  
-            }
-            
-            return
+      
+            return { ...prev, [fieldName]: copy }
+          })
+      
+          return
         }
-        
+      
+        if (name === 'ingredients' || name === 'instructions') {
+          return
+        }
+      
         const errorMessage = validateProperty(target)
-
-        if (errorMessage) setErrors((prev) => ({ ...prev, [name]: errorMessage }))
-        else setErrors((prev) => {
-            let obj = { ...prev }
-            delete obj[name]
-            return obj
+        setErrors(prev => {
+          const next = { ...prev }
+          if (errorMessage) next[name] = errorMessage
+          else delete next[name]
+          return next
         })
-
-        setData((prev) => ({ ...prev, [name]: value }))
-    }, [validateProperty] )
+      
+        setData(prev => ({ ...prev, [name]: value }))
+      }, [validateProperty, setData, setErrors])
 
     const validateForm = useCallback(() => {
         const schemaForValidate = Joi.object(schema)

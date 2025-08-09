@@ -67,7 +67,7 @@ router.patch('/:id/admin', auth, async (req, res) => {
         const chackUserPermission = await getUser(req.user._id)
         if(!chackUserPermission.isAdmin) throw new Error('אינך מורשה לבצע פעולה זו.')
 
-        const user = await toggleAdmin(id);
+        const user = await toggleAdmin(id)
         res.status(200).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)

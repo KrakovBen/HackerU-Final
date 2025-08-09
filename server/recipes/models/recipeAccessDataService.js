@@ -52,7 +52,7 @@ const getAllRecipes = async () => {
 const createRecipe = async (recipe) => {
     if(DB_TYPE === "mongoDB") {
         try {
-            const newRecipe = new Recipe(recipe)
+            let newRecipe = new Recipe(recipe)
             newRecipe = await newRecipe.save()
             newRecipe = pick(newRecipe, ['title', 'description', 'ingredients', 'category', 'prepTimeMinutes', 'cookTimeMinutes', 'imageUrl', 'tags', 'createdBy', '_id'])
 
@@ -66,4 +66,21 @@ const createRecipe = async (recipe) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes }
+const updateRecipe = async (id, recipe) => {
+    if(DB_TYPE === "mongoDB") {
+        try {
+            let updatedRecipe = await Recipe.findByIdAndUpdate(id, recipe, { new: true })
+            updatedRecipe = pick(updatedRecipe, ['title', 'description', 'ingredients', 'category', 'prepTimeMinutes', 'cookTimeMinutes', 'imageUrl', 'tags', 'createdBy', '_id'])
+            console.log(updatedRecipe);
+            
+            return Promise.resolve(updatedRecipe)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe }

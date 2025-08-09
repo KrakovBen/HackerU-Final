@@ -16,8 +16,6 @@ const RecipePage = () => {
         handleGetRecipe(recipeID)
     }, [] )
     
-    console.log(recipe)
-
     if (!recipe) return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
             <Typography>

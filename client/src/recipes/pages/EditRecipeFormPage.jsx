@@ -7,6 +7,7 @@ import recipeSchema from '../models/joi-schema/recipeSchema'
 import { useUser } from '../../users/providers/UserProvider'
 import mapRecipeToModel from '../helpers/normalization/recipeMapper'
 import RecipeForm from '../components/RecipeForm'
+import ROUTES from '../../routes/routesModel'
 
 const EditRecipeFormPage = () => {
     const { recipeID } = useParams()
@@ -16,26 +17,9 @@ const EditRecipeFormPage = () => {
     const originalRecipeRef = useRef(null)
     const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, () => {})
 
-    const handleSubmit = (data) => {
-        const ingredients = Object.keys(data)
-            .filter((key) => key.startsWith('ingredients-'))
-            .sort((a, b) => Number(a.split('-')[1]) - Number(b.split('-')[1]))
-            .map((key) => data[key])
-            .filter((val) => val?.trim())
-
-        const instructions = Object.keys(data)
-            .filter((key) => key.startsWith('instructions-'))
-            .sort((a, b) => Number(a.split('-')[1]) - Number(b.split('-')[1]))
-            .map((key) => data[key])
-            .filter((val) => val?.trim())
-
-        const fullRecipe = {
-            ...data,
-            ingredients,
-            instructions,
-        }
-
-        handleUpdateRecipe(recipeID, fullRecipe)
+    const handleSubmit = (data) => {   
+        handleUpdateRecipe(recipeID, data)
+        navigate(`${ROUTES.RECIPE}/${recipeID}`)
     }
 
     const handleGetRecipeFromAPI = useCallback(() => {
@@ -60,7 +44,7 @@ const EditRecipeFormPage = () => {
     if (!value.data) return <>LOADING TO UPDATE!</>
 
     return (
-        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID}x onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
+        <RecipeForm title='עריכת מתכון' onSubmit={() => handleSubmit(value.data)} data={value.data} errors={value.errors} recipeID={recipeID}x onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
     )
 }
 

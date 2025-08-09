@@ -64,9 +64,6 @@ const loginUser = async ({email, password}) => {
             const nowTime = new Date()
             const user = await User.findOne({email})
             if (!user) throw new Error('שם משתמש או סיסמה שגויים.')
-
-            console.log(password);
-            console.log(user.password);
                 
             const validPassword = comparePassword(password, user.password)
             let counter = await LoginUserSchema.findOne({userId: user._id})
