@@ -13,7 +13,7 @@ const Recipe = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {
     return (
         <Card sx={{ borderRadius: '9px', overflow: 'hidden', boxShadow: '0px 3px 6px -1px rgba(0,0,0,0.2)' }} key={recipe._id} onClick={() => navigate(`${ROUTES.RECIPE}/${recipe._id}`)}>
             <CardHeader title={recipe.title} subheader={recipe.category} />
-            <CardMedia image={recipe.imageUrl} alt={recipe.title} height={300} component='img'/>
+            <CardMedia image={recipe.imageUrlFull} alt={recipe.title} height={300} component='img'/>
             <CardContent>
                 <Typography variant='body1' component='p' sx={{ overflow: 'hidden', minHeight: '90px', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{recipe.description}</Typography>
             </CardContent>

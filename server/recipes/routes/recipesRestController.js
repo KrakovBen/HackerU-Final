@@ -1,5 +1,9 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const router = express.Router()
+const fs = require('fs')
+const path = require('path')
+const uploadImage = require('../../middlewares/uploadImage')
 const { handleError } = require('../../utils/errorHandler')
 const { getRecipes, getRecipe, getAllRecipes, updateRecipe } = require('../models/recipeAccessDataService')
 const auth = require('../../auth/authService')
@@ -27,7 +31,7 @@ router.get('/all-recipes', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const recipe = await getRecipe(id)        
+        const recipe = await getRecipe(id)
         res.status(200).send(recipe)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
@@ -54,14 +58,37 @@ router.put('/:id', auth, async (req, res) => {
 router.post( '/:id/image', auth, uploadImage.single('image'), async (req, res) => {
     try {
         const { id } = req.params
-        const recipe = await Recipe.findById(id)
-        if (!recipe) return res.status(404).json({ message: 'לא נמצא מתכון' })
+        let recipe = await getRecipe(id)
+        const isOwner = String(recipe.createdBy) === String(req.user._id)
+        const isAdmin = !!req.user.isAdmin
+
+        if (!isOwner && !isAdmin) {
+            if (req.file) fs.unlink(req.file.path, () => {});
+            return res.status(403).json({ message: 'אינך מורשה להעלות תמונה למתכון זה' });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            if (req.file) fs.unlink(req.file.path, () => {})
+            return res.status(400).json({ message: 'ID לא חוקי' })
+        }
+
+        if (!recipe) {
+            if (req.file) fs.unlink(req.file.path, () => {})
+            return res.status(404).json({ message: 'לא נמצא מתכון' })
+        }
+
         if (!req.file) return res.status(400).json({ message: 'לא הועלה קובץ' })
 
+        if (recipe.imageUrl && recipe.imageUrl.startsWith('/uploads/')){
+            const oldPath = path.join(process.cwd(), recipe.imageUrl)
+            fs.unlink(oldPath, () => {})
+        }
+
         const publicUrl = `/uploads/recipes/${id}/${req.file.filename}`
-        recipe.imageUrl = publicUrl
-        await recipe.save()
-        res.json({ ok: true, imageUrl: publicUrl, recipeId: id })
+        recipe = { ...recipe, imageUrl: publicUrl }
+        const updated = await updateRecipe(id, recipe)
+
+        return res.status(200).json({ ok: true, imageUrl: publicUrl, recipeId: id, recipe: updated })
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }

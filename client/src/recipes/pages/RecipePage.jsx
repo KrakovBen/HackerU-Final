@@ -26,7 +26,7 @@ const RecipePage = () => {
     
     return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
-            <RecipeHeader recipeID={recipeID} title={makeFirstLetterCapital(recipe.title)} description={makeFirstLetterCapital(recipe.description)} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrl}/>
+            <RecipeHeader recipeID={recipeID} title={makeFirstLetterCapital(recipe.title)} description={makeFirstLetterCapital(recipe.description)} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrlFull}/>
 
             <Box>
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>מצרכים</Typography>
