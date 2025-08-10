@@ -37,3 +37,12 @@ export const getRecipesByUser = async (userID) => {
         return Promise.reject(error.message)
     }
 }
+
+export const changeRecipeLike = async (recipeID) => {
+    try {
+        const { data } = await axios.patch(`${apiUrl}/recipes/like/${recipeID}`)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}

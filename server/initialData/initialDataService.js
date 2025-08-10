@@ -11,8 +11,8 @@ const { getUsers } = require('../users/models/usersAccessDataService')
 const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true })
 
 const filenameFromUrl = (url, fallbackExt = 'jpg') => {
-    const ts = Date.now()
-    return `seed-${ts}.${fallbackExt}`
+    const time = Date.now()
+    return `seed-${time}.${fallbackExt}`
 }
 
 const getExtFromHead = async (url) => {
@@ -38,6 +38,7 @@ const downloadToFile = async (url, dest) => {
 const ROOT = process.cwd()
 
 const downloadSeedImagesIfNeeded = async () => {
+    const time = Date.now()
     const recipesNow = await getRecipes()
     let updated = 0
     for (const recipe of recipesNow) {
@@ -54,7 +55,7 @@ const downloadSeedImagesIfNeeded = async () => {
 
                 if (fs.existsSync(path.join(dir, filename))) {
                     const base = path.parse(filename).name
-                    filename = `${base}-${Date.now()}.${ext}`
+                    filename = `${base}-${time}.${ext}`
                 }
 
                 const dest = path.join(dir, filename)
@@ -88,16 +89,16 @@ const generateInitialData = async () => {
         })
     )).filter(Boolean)
 
-    let admin = createdUsers.find(u => u?.isAdmin)
+    let admin = createdUsers.find(user => user?.isAdmin)
     if (!admin) {
-        const adminSeed = users.find(u => u.isAdmin)
+        const adminSeed = users.find(user => user.isAdmin)
         if (!adminSeed) {
             console.log(chalk.redBright('no admin in seed users'))
             return
         }
         try {
             const allUsers = await getUsers()
-            admin = allUsers.find(u => u.email === adminSeed.email || u?.isAdmin)
+            admin = allUsers.find(user => user.email === adminSeed.email || user?.isAdmin)
         } catch (e) {
             console.log(chalk.redBright('failed fetching users list'))
         }

@@ -3,7 +3,7 @@ import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
-import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe } from '../services/recipesApiService'
+import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike } from '../services/recipesApiService'
 import Joi from 'joi'
 
 const useRecipes = () => {
@@ -78,11 +78,20 @@ const useRecipes = () => {
         }
     }, [requestStatus])
 
+    const handleLikeRecipe = useCallback( async (recipeID) => {
+        try {
+            const recipe = await changeRecipeLike(recipeID)
+            requestStatus(false, null, recipes, recipe)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [])
+
     const value = useMemo( () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe }
 }
 
 useRecipes.propTypes = {}

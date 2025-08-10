@@ -2,10 +2,11 @@ import React from 'react'
 import { bool, string, arrayOf, func } from 'prop-types'
 import { Typography, TableContainer, Paper, Table, TableHead, TableRow, TableCell } from '@mui/material'
 import UserList from './UserList'
+import Spinner from '../../../components/Spinner'
 
 const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
-    if (isLoading) return <p>Loading...</p>
-    if (error) return <p>{error}</p>
+    if (isLoading) return ( <Spinner /> )
+    if (error) return ( <Typography>{error}</Typography> )
 
     if (users && !users.length) return (
         <Typography my={15} variant="h6" textAlign="center">אופס... נראה שאין משתמשים להצגה</Typography>

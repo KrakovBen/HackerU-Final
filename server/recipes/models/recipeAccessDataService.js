@@ -97,4 +97,34 @@ const updateRecipe = async (id, recipe) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe }
+const likeRecipe = async (recipeID, userID) => {
+    if(DB_TYPE === "mongoDB") {
+        try {
+            let recipe = await Recipe.findById(recipeID)
+
+            if (!recipe) throw new Error('לא נמצא מתכון')
+
+            if(!recipe.likes.length) {
+                recipe.likes.push(userID)
+                recipe = await Recipe.findByIdAndUpdate(recipeID, { likes: recipe.likes }, { new: true })
+                return Promise.resolve(recipe)
+            }
+
+            const index = recipe.likes.findIndex(id => id === userID)
+            if (index === -1){
+                recipe.likes.push(userID)
+                recipe = await Recipe.findByIdAndUpdate(recipeID, { likes: recipe.likes }, { new: true })
+                return Promise.resolve(recipe)
+            }
+
+            recipe.likes.pop(index)
+            recipe = await Recipe.findByIdAndUpdate(recipeID, { likes: recipe.likes }, { new: true })
+            return Promise.resolve(recipe)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+}
+
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe }

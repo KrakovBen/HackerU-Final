@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const uploadImage = require('../../middlewares/uploadImage')
 const { handleError } = require('../../utils/errorHandler')
-const { getRecipes, getRecipe, getAllRecipes, updateRecipe } = require('../models/recipeAccessDataService')
+const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe } = require('../models/recipeAccessDataService')
 const auth = require('../../auth/authService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
@@ -89,6 +89,18 @@ router.post( '/:id/image', auth, uploadImage.single('image'), async (req, res) =
         const updated = await updateRecipe(id, recipe)
 
         return res.status(200).json({ ok: true, imageUrl: publicUrl, recipeId: id, recipe: updated })
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.patch( '/like/:id', auth, async (req, res) => {
+    try {
+        const id = req.params.id
+        const userId = req.user._id
+
+        const recipe = await likeRecipe(id, userId)
+        res.status(200).send(recipe)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
