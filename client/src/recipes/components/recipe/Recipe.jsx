@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { object, func } from 'prop-types'
 import { Card, CardContent, CardHeader, Typography, CardMedia, CardActions, IconButton, Box } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router-dom'
 import ROUTES from '../../../routes/routesModel'
 import RecipeActionBar from './../RecipeActionBar'
 
-const Recipe = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {    
+const Recipe = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {
     const navigate = useNavigate()
     return (
         <Card sx={{ borderRadius: '9px', overflow: 'hidden', boxShadow: '0px 3px 6px -1px rgba(0,0,0,0.2)' }} key={recipe._id}>
-            <Box onClick={() => navigate(`${ROUTES.RECIPE}/${recipe._id}`)}>
+            <Box sx={{ cursor: 'pointer' }} onClick={() => navigate(`${ROUTES.RECIPE}/${recipe._id}`)}>
                 <CardHeader title={recipe.title} subheader={recipe.category} />
                 <CardMedia image={recipe.imageUrlFull} alt={recipe.title} height={300} component='img'/>
                 <CardContent>

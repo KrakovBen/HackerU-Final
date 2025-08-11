@@ -6,27 +6,32 @@ import Typography from '@mui/material/Typography'
 import RecipeHeader from './RecipeHeader'
 import { useParams } from 'react-router-dom'
 import useRecipes from '../hooks/useRecipes'
-import { makeFirstLetterCapital } from '../../utils/algoMethods'
+import { useUser } from '../../users/providers/UserProvider'
 
 const RecipePage = () => {
     const { recipeID } = useParams()
+    const { user } = useUser()
     const { handleGetRecipe, value: { recipe } } = useRecipes()
     
     useEffect( () => {
         handleGetRecipe(recipeID)
     }, [] )
     
+    useEffect( () => {
+        document.title = recipe?.title ? `${recipe.title} | BisBook` : 'BisBook'
+    }, [recipe] )
+
     if (!recipe) return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
-            <Typography>
+            <Typography variant='h3' component='h2' sx={{ fontWeight: 700 }}>
                 אופס. נראה שמישהו אכל את המתכון.
             </Typography>
         </Container>
     )
-    
+
     return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
-            <RecipeHeader recipeID={recipeID} title={makeFirstLetterCapital(recipe.title)} description={makeFirstLetterCapital(recipe.description)} category={recipe.category} prepTimeMinutes={recipe.prepTimeMinutes} cookTimeMinutes={recipe.cookTimeMinutes} createdBy={recipe.createdBy} imageUrl={recipe.imageUrlFull}/>
+            <RecipeHeader recipe={recipe} user={user}/>
 
             <Box>
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>מצרכים</Typography>
