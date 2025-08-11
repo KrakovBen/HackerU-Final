@@ -10,7 +10,7 @@ import { getRecipesByUser } from '../../recipes/services/recipesApiService'
 const UserProfile = () => {
     const { userID } = useParams()
     const [ userName, setUserName ] = useState(null)
-    const { handleGetUser, value: {users: userFromDB} } = useUsers()
+    const { handleGetUser, value: {users: userFromDB, user} } = useUsers()
     const [ recipes, setRecipes ] = useState([])
     
     useEffect( () => {
@@ -60,7 +60,7 @@ const UserProfile = () => {
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>
             <PageHeader title={userName} subtitle="פרופיל משתמש" />
             {recipes.length > 0 ? (
-                <RecipesFeedback user={userFromDB} isLoading={false} error={null} recipes={recipes} onDelete={() => {}} onLike={() => {}}/>
+                <RecipesFeedback user={user} isLoading={false} error={null} recipes={recipes} onDelete={() => {}} onLike={() => {}}/>
             ) : (
                 <Typography>משתמש זה עדיין לא העלה מתכונים לאתר.</Typography>
             )}

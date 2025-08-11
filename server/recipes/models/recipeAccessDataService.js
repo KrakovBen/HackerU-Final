@@ -1,4 +1,5 @@
 const config = require('config')
+const { Types } = require('mongoose')
 const DB_TYPE = config.get("DB_TYPE")
 const Recipe = require('./mongoDB/Recipe')
 const { pick } = require('lodash')
@@ -41,9 +42,9 @@ const getAllRecipes = async () => {
     if (DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
     try {
-        const recipes = await Recipe.find().sort({ createdAt: -1 })
+        const recipes = await Recipe.aggregate([ { $sort: { createdAt: -1 } }, { $lookup: { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'userData' } }, { $unwind: '$userData' }, { $addFields: { createdByName: { $concat: ['$userData.name.first', ' ', '$userData.name.last'] } } } ])
         if(!recipes.length) return Promise.resolve({ recipes })
-        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe.toObject())) })
+        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe)) })
     } catch (error) {
         error.status = 404
         return Promise.reject(error)
@@ -110,10 +111,11 @@ const getRecipesByUser = async (userID) => {
     if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
     try {
-        const recipes = await Recipe.find({ createdBy: userID }).sort({ createdAt: -1 })
+        const recipes = await Recipe.aggregate([{ $match: { createdBy: new Types.ObjectId(userID) } }, { $sort: { createdAt: -1 } }, { $lookup: { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'userData' } }, { $unwind: '$userData' }, { $addFields: { createdByName: { $concat: ['$userData.name.first', ' ', '$userData.name.last'] } } } ])
+        
         if(!recipes.length) return Promise.resolve({ recipes })
 
-        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe.toObject())) })
+        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe)) })
     } catch (error) {
         error.status = 404
         return Promise.reject(error)
