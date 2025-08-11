@@ -12,93 +12,83 @@ const appendFullImageUrl = (recipe) => {
 }
 
 const getRecipes = async () => {
-    if(DB_TYPE === "mongoDB") {
-        try {
-            const recipes = await Recipe.find()
-            if(!recipes.length) return ([])
-            return Promise.resolve(recipes.map(recipe => appendFullImageUrl(recipe.toObject())))
-        } catch (error) {
-            error.status = 404
-            return Promise.reject(error)
-        }
-    }
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
-    return Promise.resolve('Not in mongoDB')
+    try {
+        const recipes = await Recipe.find()
+        if(!recipes.length) return ([])
+        return Promise.resolve(recipes.map(recipe => appendFullImageUrl(recipe.toObject())))
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
 }
 
 const getRecipe = async (id) => {
-    if(DB_TYPE === "mongoDB") {
-        try {
-            const recipe = await Recipe.findById(id)            
-            if(!recipe) throw new Error('לא נמצא מתכון')
-            return Promise.resolve(recipe ? appendFullImageUrl(recipe.toObject()) : null)
-        } catch (error) {
-            error.status = 404
-            return Promise.reject(error)
-        }
-    }
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
-    return Promise.resolve('Not in mongoDB')
+    try {
+        const recipe = await Recipe.findById(id)            
+        if(!recipe) throw new Error('לא נמצא מתכון')
+        return Promise.resolve(recipe ? appendFullImageUrl(recipe.toObject()) : null)
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
 }
 
 const getAllRecipes = async () => {
-    if (DB_TYPE === "mongoDB") {
-        try {
-            const recipes = await Recipe.find().sort({ createdAt: -1 })
-            if(!recipes.length) return Promise.resolve({ recipes })
+    if (DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
-            return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe.toObject())) })
-        } catch (error) {
-            error.status = 404
-            return Promise.reject(error)
-        }
+    try {
+        const recipes = await Recipe.find().sort({ createdAt: -1 })
+        if(!recipes.length) return Promise.resolve({ recipes })
+        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe.toObject())) })
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
     }
-
-    return Promise.resolve('Not in mongoDB')
 }
 
 const createRecipe = async (recipe) => {
-    if(DB_TYPE === "mongoDB") {
-        try {
-            let newRecipe = new Recipe(recipe)
-            newRecipe = await newRecipe.save()
-            newRecipe = pick(newRecipe, ['title', 'description', 'ingredients', 'category', 'prepTimeMinutes', 'cookTimeMinutes', 'imageUrl', 'tags', 'createdBy', '_id'])
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
-            return Promise.resolve(appendFullImageUrl(newRecipe))
-        } catch (error) {
-            error.status = 400
-            return Promise.reject(error)
-        }
+    try {
+        let newRecipe = new Recipe(recipe)
+        newRecipe = await newRecipe.save()
+        newRecipe = pick(newRecipe, ['title', 'description', 'ingredients', 'category', 'prepTimeMinutes', 'cookTimeMinutes', 'imageUrl', 'tags', 'createdBy', '_id'])
+
+        return Promise.resolve(appendFullImageUrl(newRecipe))
+    } catch (error) {
+        error.status = 400
+        return Promise.reject(error)
     }
-
-    return Promise.resolve('Not in mongoDB')
 }
 
 const updateRecipe = async (id, recipe) => {
-    if(DB_TYPE === "mongoDB") {
-        try {
-            const allowed = [
-                'title','description','ingredients','instructions',
-                'category','prepTimeMinutes','cookTimeMinutes',
-                'imageUrl','tags',
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
+
+    try {
+        const allowed = [
+            'title','description','ingredients','instructions',
+            'category','prepTimeMinutes','cookTimeMinutes',
+            'imageUrl','tags',
             ]
             const toSet = Object.fromEntries( Object.entries(recipe || {}).filter(([key]) => allowed.includes(key)) )
 
-            const updated = await Recipe.findByIdAndUpdate(id, { $set: toSet }, { new: true, runValidators: true }).lean()
-            if (!updated) throw new Error('לא נמצא מתכון')
-            
-            return Promise.resolve(appendFullImageUrl(updated))
-        } catch (error) {
-            error.status = 400
-            return Promise.reject(error)
-        }
+        const updated = await Recipe.findByIdAndUpdate(id, { $set: toSet }, { new: true, runValidators: true }).lean()
+        if (!updated) throw new Error('לא נמצא מתכון')
+        
+        return Promise.resolve(appendFullImageUrl(updated))
+    } catch (error) {
+        error.status = 400
+        return Promise.reject(error)
     }
-
-    return Promise.resolve('Not in mongoDB')
 }
 
 const likeRecipe = async (recipeID, userID) => {
-    if (DB_TYPE !== 'mongoDB') return
+    if (DB_TYPE !== 'mongoDB') return Promise.resolve('Not in mongoDB')
+
     try {
         const recipe = await Recipe.findById(recipeID).select('likes')
         if (!recipe) throw new Error('לא נמצא מתכון')
@@ -116,4 +106,18 @@ const likeRecipe = async (recipeID, userID) => {
     }
 }
 
-module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe }
+const getRecipesByUser = async (userID) => {
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
+
+    try {
+        const recipes = await Recipe.find({ createdBy: userID }).sort({ createdAt: -1 })
+        if(!recipes.length) return Promise.resolve({ recipes })
+
+        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe.toObject())) })
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
+}
+
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser }

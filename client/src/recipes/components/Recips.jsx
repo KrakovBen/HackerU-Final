@@ -1,10 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { array, func, object } from 'prop-types'
 import Grid from '@mui/material/Grid'
 import Recipe from './recipe/Recipe'
+import Typography from '@mui/material/Typography'
 
 const Recips = ({ recipes, onDelete, onLike, user }) => {
-
+    if (!Array.isArray(recipes) || recipes.length === 0) {
+        return <Typography>אין מתכונים להצגה</Typography>
+    }
+    
     return (
         <Grid display="grid" sx={{ gridTemplateColumns: { xs: 'repeat(12, 1fr)' }, gap: '21px' }}>
             {recipes.map(recipe => (
@@ -16,6 +20,11 @@ const Recips = ({ recipes, onDelete, onLike, user }) => {
     )
 }
 
-Recips.propTypes = {}
+Recips.propTypes = {
+    recipes: array,
+    onDelete: func,
+    onLike: func,
+    user: object
+}
 
 export default Recips

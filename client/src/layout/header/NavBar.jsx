@@ -12,9 +12,9 @@ import { useUser } from '../../users/providers/UserProvider'
 import useUsers from '../../users/hooks/useUsers'
 
 const pages = [
-    { label: 'בית', path: ROUTES.ROOT },
-    { label: 'מתכונים', path: ROUTES.RECIPE },
-    { label: 'ניהול משתמשים', path: ROUTES.CRM }
+    { label: 'בית', path: ROUTES.ROOT, adminOnly: false },
+    { label: 'מתכונים', path: ROUTES.RECIPES, adminOnly: false },
+    { label: 'ניהול משתמשים', path: ROUTES.CRM, adminOnly: true }
 ]
 
 const NavBar = () => {
@@ -46,19 +46,17 @@ const NavBar = () => {
                         <Drawer anchor="right" open={openDrawer} onClose={() => setOpenDrawer(false)} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                             <List sx={{ width: '80vw', minWidth: '200px', maxWidth: '600px' }}>
                                 {pages.map((page) => (
-                                    <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} key={page.path} component={Link} to={page.path} onClick={() => setOpenDrawer(false)}>
-                                        <ListItemText primary={page.label} />
-                                    </ListItem>
+                                    (page.adminOnly && !user?.isAdmin) ? null : (
+                                        <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} key={page.path} component={Link} to={page.path} onClick={() => setOpenDrawer(false)}>
+                                            <ListItemText primary={page.label} />
+                                        </ListItem>
+                                    )
                                 ))}
+                                
                                 {!user && (
-                                    <>
-                                    <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.REGISTER} onClick={() => setOpenDrawer(false)}>
-                                        <ListItemText primary="הרשמה" />
-                                    </ListItem>
                                     <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.LOGIN} onClick={() => setOpenDrawer(false)}>
                                         <ListItemText primary="התחברות" />
                                     </ListItem>
-                                    </>
                                 )}
                             </List>
                         </Drawer>
@@ -66,20 +64,17 @@ const NavBar = () => {
                 ) : (
                     <Stack direction="row" color="#1d1d1f">
                         {pages.map((page) => (
-                            <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
-                                {page.label}
-                            </Button>
+                            (page.adminOnly && !user?.isAdmin) ? null : (
+                                <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                                    {page.label}
+                                </Button>
+                            )
                         ))}
 
                         {!user ? (
-                            <>
                             <Button component={Link} to={ROUTES.LOGIN} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
                                 התחברות
                             </Button>
-                            <Button component={Link} to={ROUTES.REGISTER} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
-                                הרשמה
-                            </Button>
-                            </>
                         ) : (
                             <Button onClick={onLogout} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
                                 התנתקות

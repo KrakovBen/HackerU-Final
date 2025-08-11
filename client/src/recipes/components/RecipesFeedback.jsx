@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Recips from '../components/Recips'
 import Spinner from '../../components/Spinner'
 
-const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) => {
+const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) => {    
     if (isLoading) return ( <Spinner /> )
 
     if (error) return ( <Typography>{error}</Typography> )

@@ -4,16 +4,18 @@ import useUsers from '../hooks/useUsers'
 import { Typography, Container } from '@mui/material'
 import PageHeader from '../../components/PageHeader'
 import { makeFirstLetterCapital } from '../../utils/algoMethods'
-import UserRecipes from './UserRecipes'
+import RecipesFeedback from '../../recipes/components/RecipesFeedback'
+import { getRecipesByUser } from '../../recipes/services/recipesApiService'
 
 const UserProfile = () => {
     const { userID } = useParams()
     const [ userName, setUserName ] = useState(null)
     const { handleGetUser, value: {users: userFromDB} } = useUsers()
+    const [ recipes, setRecipes ] = useState([])
     
     useEffect( () => {
         handleGetUser(userID)
-    }, [])
+    }, [userID, handleGetUser])
 
     useEffect( () => {
         if (userFromDB && userFromDB.name) {
@@ -21,6 +23,32 @@ const UserProfile = () => {
             setUserName(fullName)
         }
     }, [userFromDB])
+
+    useEffect( () => {
+        if (!userFromDB || !userFromDB._id) return
+        let ignore = false
+
+        async function fetchUserRecipes() {
+            try {
+                const res = await getRecipesByUser(userFromDB._id)
+                const data = res?.data ?? res
+                const list =
+                    Array.isArray(data) ? data :
+                        Array.isArray(data?.recipes) ? data.recipes :
+                            []
+
+                if (!ignore) {
+                    setRecipes(list)
+                }
+            } catch (error) {
+                if (!ignore) setRecipes([])
+            }
+        }
+
+        fetchUserRecipes()
+
+        return () => { ignore = true }
+    }, [userFromDB] )
 
     if(!userFromDB) return (
         <Typography>
@@ -31,7 +59,11 @@ const UserProfile = () => {
     return (
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>
             <PageHeader title={userName} subtitle="פרופיל משתמש" />
-            <UserRecipes userID={userID} />
+            {recipes.length > 0 ? (
+                <RecipesFeedback user={userFromDB} isLoading={false} error={null} recipes={recipes} onDelete={() => {}} onLike={() => {}}/>
+            ) : (
+                <Typography>משתמש זה עדיין לא העלה מתכונים לאתר.</Typography>
+            )}
         </Container>
     )
 }

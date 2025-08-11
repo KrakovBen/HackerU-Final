@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const uploadImage = require('../../middlewares/uploadImage')
 const { handleError } = require('../../utils/errorHandler')
-const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe } = require('../models/recipeAccessDataService')
+const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser } = require('../models/recipeAccessDataService')
 const auth = require('../../auth/authService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
@@ -22,6 +22,16 @@ router.get('/', async (req, res) => {
 router.get('/all-recipes', async (req, res) => {
     try {
         const recipes = await getAllRecipes()
+        res.status(200).send(recipes)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.get( '/user/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const recipes = await getRecipesByUser(id)
         res.status(200).send(recipes)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
