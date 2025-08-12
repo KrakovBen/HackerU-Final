@@ -6,10 +6,9 @@ import MenuIcon from '@mui/icons-material/Menu'
 import ROUTES from '../../routes/routesModel'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
-import TextField from '@mui/material/TextField'
-import Collapse from '@mui/material/Collapse'
 import { useUser } from '../../users/providers/UserProvider'
 import useUsers from '../../users/hooks/useUsers'
+import SearchBar from './SearchBar'
 
 const pages = [
     { label: 'בית', path: ROUTES.ROOT, adminOnly: false },
@@ -86,9 +85,12 @@ const NavBar = () => {
                                 <SearchIcon />
                             </IconButton>
                         ) : (
-                            <IconButton onClick={() => setShowSearch(false)} color="inherit">
-                                <CloseIcon />
-                            </IconButton>
+                            <>
+                                <SearchBar />
+                                <IconButton onClick={() => setShowSearch(false)} color="inherit">
+                                    <CloseIcon />
+                                </IconButton>
+                            </>
                         )}
                     </Stack>
                 )}

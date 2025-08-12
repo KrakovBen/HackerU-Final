@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-const stringPattern = /^[\u0590-\u05FFa-zA-Z0-9\s\-'"()?!.,:;]+$/
+const stringPattern = /^[\u0590-\u05FFA-Za-z0-9\s"',().\-–—:/+*%\u00BC-\u00BE\u2150-\u215E]+$/u
 
 const recipeSchema = {
     title: Joi.string().min(2).max(256).trim().pattern(stringPattern).required(),
@@ -10,7 +10,8 @@ const recipeSchema = {
     category: Joi.string().min(2).max(256).trim().pattern(stringPattern).required(),
     prepTimeMinutes: Joi.number().min(1).max(256).required(),
     cookTimeMinutes: Joi.number().min(1).max(256).required(),
-    imageUrl: Joi.string().uri().max(1024).required(),
+    imageUrl: Joi.string().max(1024).pattern(/\.(jpg|jpeg|png|gif)$/i).required(),
+    imageUrlFull: Joi.any().optional().strip()
 }
 
 export default recipeSchema

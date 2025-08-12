@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { useSnackbar } from '../../providers/SnackbarProvider'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
@@ -12,12 +12,26 @@ const useUsers = () => {
     const [users, setUsers] = useState(null)
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const snack = useSnackbar()
+    const [ query, setQuery ] = useState('')
+    const [ filteredUsers, setFilterd ] = useState(null)
+    const [ searchParams ] = useSearchParams()
 
     const navigate = useNavigate()
+    const snack = useSnackbar()
+
     const { user, setUser, setToken } = useUser()
 
     useAxios()
+
+    useEffect( () => {
+        setQuery(searchParams.get('q') ?? '')
+    }, [searchParams] )
+
+    useEffect( () => {
+        if (users) {
+            setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email.includes(query)))
+        }
+    }, [users, query] )
 
     const requestStatus = useCallback( (loading, errorMessage, users, user = null) => {
         setLoading(loading)
@@ -96,8 +110,8 @@ const useUsers = () => {
     }, [requestStatus])
 
     const value = useMemo( () => (
-        { isLoading, error, user, users }
-    ), [isLoading, error, user, users])
+        { isLoading, error, user, users, filteredUsers }
+    ), [isLoading, error, user, users, filteredUsers])
 
     return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser }
 }

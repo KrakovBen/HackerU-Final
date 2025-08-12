@@ -9,7 +9,7 @@ import { useUser } from '../../users/providers/UserProvider'
 
 const RecipesCategoryPage = () => {
     const { value, handleGetAllRecipes } = useRecipes()
-    const { isLoading, error, recipes } = value
+    const { isLoading, error, filteredRecipes } = value
     const { user } = useUser()
     const navigate = useNavigate()
 
@@ -21,7 +21,7 @@ const RecipesCategoryPage = () => {
         <Container maxWidth={false} sx={{ mx: 'auto', maxWidth: '1600px' }}>
             <PageHeader title='קצת הייפ, הרבה טעם.' subtitle='חדש חדש! מתכונים שיגרמו לכם לצלם לפני שתטעמו.' />
 
-            <RecipesFeedback user={user} isLoading={isLoading} error={error} recipes={recipes}/>
+            <RecipesFeedback user={user} isLoading={isLoading} error={error} recipes={filteredRecipes}/>
         </Container>
     )
 }

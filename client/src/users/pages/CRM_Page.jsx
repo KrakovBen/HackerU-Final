@@ -10,7 +10,7 @@ import CRM_Feedback from '../components/crm/CRM_Feedback'
 const CRM_Page = () => {
     const { user } = useUser()
     const { handleGetAllUsers, handleDeleteUser, handleToggleAdmin, value } = useUsers()
-    const { users, isLoading, error } = value
+    const { filteredUsers, isLoading, error } = value
 
     useEffect(()=>{
         handleGetAllUsers()
@@ -30,7 +30,7 @@ const CRM_Page = () => {
     return (
         <Container>
             <PageHeader title='משתמשים' subtitle='ניהול משתמשים' />
-            <CRM_Feedback isLoading={isLoading} error={error} users={users} onDelete={onDeleteUser} onAdmin={onToggleAdmin} />
+            <CRM_Feedback isLoading={isLoading} error={error} users={filteredUsers} onDelete={onDeleteUser} onAdmin={onToggleAdmin} />
         </Container>
     )
 }

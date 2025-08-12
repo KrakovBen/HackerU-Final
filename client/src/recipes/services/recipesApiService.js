@@ -13,7 +13,7 @@ export const getAllRecipes = async () => {
 
 export const getRecipe = async (recipeID) => {
     try {
-        const { data } = await axios.get(`${apiUrl}/recipes/${recipeID}`)        
+        const { data } = await axios.get(`${apiUrl}/recipes/${recipeID}`)
         return data
     } catch (error) {
         return Promise.reject(error.message)
@@ -41,6 +41,17 @@ export const getRecipesByUser = async (userID) => {
 export const changeRecipeLike = async (recipeID) => {
     try {
         const { data } = await axios.patch(`${apiUrl}/recipes/like/${recipeID}`)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
+
+export const updateRecipeImage = async (recipeID, imageFile) => {
+    try {
+        const formData = new FormData()
+        formData.append('image', imageFile)
+        const { data } = await axios.post(`${apiUrl}/recipes/${recipeID}/image`, formData)
         return data
     } catch (error) {
         return Promise.reject(error.message)

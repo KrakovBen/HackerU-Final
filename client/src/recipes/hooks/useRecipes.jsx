@@ -3,8 +3,7 @@ import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
-import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike } from '../services/recipesApiService'
-import Joi from 'joi'
+import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike, updateRecipeImage } from '../services/recipesApiService'
 
 const useRecipes = () => {
     const { user } = useUser()
@@ -18,6 +17,7 @@ const useRecipes = () => {
 
     const navigate = useNavigate()
     const snack = useSnackbar()
+    
     useAxios()
 
     useEffect( () => {
@@ -25,10 +25,11 @@ const useRecipes = () => {
     }, [searchParams] )
 
     useEffect( () => {
-        if (Array.isArray(recipe)) {
-            setFilterd(recipe.filter(recipe => recipe.title.toLowerCase().includes(query.toLowerCase())))
+        if (recipes) {
+            setFilterd(recipes.filter(recipe => recipe.title.includes(query) || recipe.description.includes(query) || recipe.ingredients.includes(query) || recipe.category.includes(query)))
+
         }
-    }, [recipe, query] )
+    }, [recipes, query] )
 
     const requestStatus = useCallback( (loading, errorMessage, recipes, recipe = null) => {
         setLoading(loading)
@@ -85,13 +86,23 @@ const useRecipes = () => {
         } catch (error) {
             requestStatus(false, error, null)
         }
-    }, [])
+    }, [requestStatus])
+
+    const handleUpdateRecipeImage = useCallback( async (recipeID, imageFile) => {
+        try {
+            setLoading(true)
+            const recipeFormDB = await updateRecipeImage(recipeID, imageFile)
+            requestStatus(false, null, null, recipeFormDB)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
 
     const value = useMemo( () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe, handleUpdateRecipeImage }
 }
 
 useRecipes.propTypes = {}

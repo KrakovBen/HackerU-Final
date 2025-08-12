@@ -12,13 +12,14 @@ import ROUTES from '../../routes/routesModel'
 const EditRecipeFormPage = () => {
     const { recipeID } = useParams()
     const { user } = useUser()
-    const { handleGetRecipe, handleUpdateRecipe } = useRecipes()
+    const { handleGetRecipe, handleUpdateRecipe, handleUpdateRecipeImage } = useRecipes()
     const navigate = useNavigate()
     const originalRecipeRef = useRef(null)
     const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, () => {})
 
-    const handleSubmit = (data) => {   
-        handleUpdateRecipe(recipeID, data)
+    const handleSubmit = async (data) => {
+        await handleUpdateRecipe(recipeID, data)
+        if (data.__imageFile) await handleUpdateRecipeImage(recipeID, data.__imageFile)
         navigate(`${ROUTES.RECIPE}/${recipeID}`)
     }
 
@@ -44,7 +45,7 @@ const EditRecipeFormPage = () => {
     if (!value.data) return <>LOADING TO UPDATE!</>
 
     return (
-        <RecipeForm title='עריכת מתכון' onSubmit={() => handleSubmit(value.data)} data={value.data} errors={value.errors} recipeID={recipeID}x onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
+        <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID} onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
     )
 }
 

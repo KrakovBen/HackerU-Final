@@ -8,6 +8,7 @@ const mapRecipeToModel = (recipe) => {
         imageUrl: recipe.imageUrl,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
+        imageUrlFull: recipe.imageUrlFull
     }
 }
 

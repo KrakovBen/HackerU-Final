@@ -8,11 +8,15 @@ import { Typography, Button, Box } from '@mui/material'
 const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, data, title, recipeID }) => {    
     const [ ingredientsList, setIngredientsList ] = useState([''])
     const [ instructionsList, setInstructionsList ] = useState([''])
+    const [ imageFile, setImageFile ] = useState(null)
+    const [ imagePreview, setImagePreview ] = useState(data?.imageUrlFull ? `${data.imageUrlFull}` : null)
 
     useEffect(() => {
         if (!data) {
             setIngredientsList([''])
             setInstructionsList([''])
+            setImageFile(null)
+            setImagePreview(null)
             return
         }
 
@@ -36,13 +40,30 @@ const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, da
     if (!data) return <>LOADING!</>
 
     return (
-        <Form title={title} onSubmit={onSubmit} onReset={onReset} onChange={onFormChange} to={`${ROUTES.RECIPE}/${recipeID}`} color='primary' spacing={2} styles={{ maxWidth: "980px", width: "80vw", margin: "auto" }}>
+        <Form title={title} onSubmit={() => onSubmit({ ...data, __imageFile: imageFile })} onReset={onReset} onChange={onFormChange} to={`${ROUTES.RECIPE}/${recipeID}`} color='primary' spacing={2} styles={{ maxWidth: "980px", width: "80vw", margin: "auto" }}>
             <Input label='שם המתכון' name='title' type='text' error={errors?.title} data={data} onChange={onInputChange} />
             <Input label='תיאור המתכון' name='description' type='text' error={errors?.description} data={data} onChange={onInputChange} />
             <Input label='זמן הכנה (בדקות)' name='prepTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.prepTimeMinutes} data={data} onChange={onInputChange} />
             <Input label='זמן בישול (בדקות)' name='cookTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.cookTimeMinutes} data={data} onChange={onInputChange} />
             <Input label='קטגוריה' name='category' type='text' sx={{ gridColumn: 'span 6' }} error={errors?.category} data={data} onChange={onInputChange} />
-            <Input label='תמונה' name='imageUrl' type='text' error={errors?.imageUrl} data={data} onChange={onInputChange} />
+            {/* <Input label='תמונה' name='imageUrl' type='text' error={errors?.imageUrl} data={data} onChange={onInputChange} /> */}
+
+            <Box sx={{ gridColumn: 'span 12' }}>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>תמונה</Typography>
+                <input type="file" accept="image/*" onChange={(event) => {
+                    const file = event.target.files?.[0] || null
+
+                    setImageFile(file)
+                    setImagePreview(file ? URL.createObjectURL(file) : null)
+
+                    if (file) onInputChange({ target: { name: "imageUrl", value: `/uploads/recipes/${file.name}` } })
+                }}/>
+                {imagePreview || data?.imageUrlFull ? (
+                    <Box sx={{ mt: 1 }}>
+                        <img alt="תצוגה מקדימה" src={imagePreview || data.imageUrlFull} style={{ maxWidth: 240, borderRadius: 8 }} />
+                    </Box>
+                ) : null}
+            </Box>
 
             <Typography variant='h5' component='h2' sx={{ mt: 2 }}>מצרכים</Typography>
             { ingredientsList.map( (item, index) => (                

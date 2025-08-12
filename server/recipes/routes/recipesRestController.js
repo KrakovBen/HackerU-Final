@@ -10,7 +10,7 @@ const auth = require('../../auth/authService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
 
-router.get('/', async (req, res) => {
+router.get( '/', async (req, res) => {
     try {
         const recipes = await getRecipes()
         res.status(200).send(recipes)
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/all-recipes', async (req, res) => {
+router.get( '/all-recipes', async (req, res) => {
     try {
         const recipes = await getAllRecipes()
         res.status(200).send(recipes)
@@ -38,7 +38,7 @@ router.get( '/user/:id', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get( '/:id', async (req, res) => {
     try {
         const id = req.params.id
         const recipe = await getRecipe(id)
@@ -48,7 +48,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id', auth, async (req, res) => {
+router.put( '/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
         const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
@@ -90,8 +90,21 @@ router.post( '/:id/image', auth, uploadImage.single('image'), async (req, res) =
         if (!req.file) return res.status(400).json({ message: 'לא הועלה קובץ' })
 
         if (recipe.imageUrl && recipe.imageUrl.startsWith('/uploads/')){
-            const oldPath = path.join(process.cwd(), recipe.imageUrl)
-            fs.unlink(oldPath, () => {})
+            const dir = path.resolve('uploads/recipes', id)
+            if (recipe.imageUrl && !recipe.imageUrl.startsWith(`/uploads/recipes/${id}/`)) {
+                fs.promises.unlink(path.resolve('.' + recipe.imageUrl)).catch(() => {})
+            }
+            
+            try {
+                const files = await fs.promises.readdir(dir);
+                await Promise.all(
+                  files
+                    .filter(name => name !== req.file.filename)
+                    .map(name => fs.promises.unlink(path.join(dir, name)))
+                );
+            } catch (error) {
+                return handleError(res, error.status || 500, error.message)
+            }
         }
 
         const publicUrl = `/uploads/recipes/${id}/${req.file.filename}`
