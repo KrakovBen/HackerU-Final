@@ -28,7 +28,7 @@ const useUsers = () => {
     }, [searchParams] )
 
     useEffect( () => {
-        if (users) {
+        if (users && users.length > 0) {
             setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email.includes(query)))
         }
     }, [users, query] )

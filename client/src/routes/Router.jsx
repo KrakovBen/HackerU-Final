@@ -9,12 +9,14 @@ import CRMPage from '../users/pages/CRM_Page'
 import UserProfile from '../users/pages/UserProfile'
 import RecipesCategoryPage from '../recipes/pages/RecipesCategoryPage'
 import EditRecipeFormPage from '../recipes/pages/EditRecipeFormPage'
+import CreateRecipePage from '../recipes/pages/CreateRecipePage'
 
 const Router = () => {
     return (
         <Routes>
             <Route path={`${ROUTES.RECIPES}`} element={<RecipesCategoryPage/>} />
             <Route path={`${ROUTES.RECIPE_EDIT}/:recipeID`} element={<EditRecipeFormPage/>} />
+            <Route path={`${ROUTES.RECIPE_CREATE}`} element={<CreateRecipePage/>} />
             <Route path={`${ROUTES.RECIPE}/:recipeID`} element={<RecipePage/>} />
             <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />

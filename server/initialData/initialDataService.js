@@ -90,6 +90,8 @@ const generateInitialData = async () => {
     )).filter(Boolean)
 
     let admin = createdUsers.find(user => user?.isAdmin)
+    const nonAdmins = createdUsers.filter(u => !u.isAdmin)
+
     if (!admin) {
         const adminSeed = users.find(user => user.isAdmin)
         if (!adminSeed) {
@@ -118,9 +120,15 @@ const generateInitialData = async () => {
     }
 
     await Promise.all(
-        recipes.map(async recipe => {
+        recipes.map(async (recipe, index) => {
             try {
-                await createRecipe({ ...recipe, createdBy: admin._id })
+                let ownerId
+                if (index < 3) {
+                    ownerId = admin._id
+                } else {
+                    ownerId = nonAdmins[index - 3]._id
+                }
+                await createRecipe({ ...recipe, createdBy: ownerId })
                 return true
             } catch (error) {
                 console.log(chalk.redBright(error.message))

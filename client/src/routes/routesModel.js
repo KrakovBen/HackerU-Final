@@ -6,6 +6,7 @@ const ROUTES = {
     LOGIN: '/login',
     REGISTER: '/register',
     RECIPES: '/recipes',
+    RECIPE_CREATE: '/recipes/create',
     RECIPE: '/recipes/recipe',
     RECIPE_EDIT: '/recipes/edit',
     CRM: '/crm'

@@ -57,3 +57,12 @@ export const updateRecipeImage = async (recipeID, imageFile) => {
         return Promise.reject(error.message)
     }
 }
+
+export const createRecipe = async (recipeData) => {
+    try {
+        const { data } = await axios.post(`${apiUrl}/recipes`, recipeData)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}

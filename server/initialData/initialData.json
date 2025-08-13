@@ -1,29 +1,35 @@
 {
   "users": [
-    {
-      "name": { "first": "נועם", "last": "כהן" },
-      "email": "admin@gmail.com",
-      "password": "Aa123456!",
-      "isAdmin": true
-    },
-    {
-      "name": { "first": "יעל", "last": "לוי" },
-      "email": "user1@gmail.com",
-      "password": "Aa123456!",
-      "isAdmin": false
-    },
-    {
-      "name": { "first": "איתי", "last": "מזרחי" },
-      "email": "user2@gmail.com",
-      "password": "Aa123456!",
-      "isAdmin": false
-    },
-    {
-      "name": { "first": "תמר", "last": "בן דוד" },
-      "email": "user3@gmail.com",
-      "password": "Aa123456!",
-      "isAdmin": false
-    }
+    { "name": { "first": "נועם", "last": "כהן" }, "email": "admin@gmail.com", "password": "Aa123456!", "isAdmin": true },
+    { "name": { "first": "יעל", "last": "לוי" }, "email": "user1@gmail.com", "password": "Aa123456!", "isAdmin": true },
+    { "name": { "first": "איתי", "last": "מזרחי" }, "email": "user2@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "תמר", "last": "בן דוד" }, "email": "user3@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "דניאל", "last": "שלום" }, "email": "user4@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "ליאור", "last": "חסון" }, "email": "user5@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "שחר", "last": "אלבז" }, "email": "user6@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "רוני", "last": "מלכה" }, "email": "user7@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אורן", "last": "כהן" }, "email": "user8@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "מאיה", "last": "דוד" }, "email": "user9@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "טל", "last": "שושן" }, "email": "user10@gmail.com", "password": "Aa123456!", "isAdmin": true },
+    { "name": { "first": "שיר", "last": "רוזן" }, "email": "user11@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "עומר", "last": "כהן" }, "email": "user12@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אביב", "last": "ברק" }, "email": "user13@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "רועי", "last": "אלון" }, "email": "user14@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "הילה", "last": "גולן" }, "email": "user15@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אור", "last": "חיים" }, "email": "user16@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "גיא", "last": "רפאלי" }, "email": "user17@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "ענת", "last": "שמיר" }, "email": "user18@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "יואב", "last": "נחום" }, "email": "user19@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אדיר", "last": "סויסה" }, "email": "user20@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "גל", "last": "פרץ" }, "email": "user21@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אפרת", "last": "חיון" }, "email": "user22@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אביב", "last": "מור" }, "email": "user23@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "עמית", "last": "זהבי" }, "email": "user24@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "שני", "last": "פורת" }, "email": "user25@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "בר", "last": "סולומון" }, "email": "user26@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "אסף", "last": "חדד" }, "email": "user27@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "מיה", "last": "בן שושן" }, "email": "user28@gmail.com", "password": "Aa123456!", "isAdmin": false },
+    { "name": { "first": "ניצן", "last": "חסון" }, "email": "user29@gmail.com", "password": "Aa123456!", "isAdmin": false }
   ],
   "recipes": [
     {

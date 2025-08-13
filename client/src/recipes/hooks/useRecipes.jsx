@@ -3,7 +3,7 @@ import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
-import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike, updateRecipeImage } from '../services/recipesApiService'
+import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike, updateRecipeImage, createRecipe } from '../services/recipesApiService'
 
 const useRecipes = () => {
     const { user } = useUser()
@@ -25,7 +25,7 @@ const useRecipes = () => {
     }, [searchParams] )
 
     useEffect( () => {
-        if (recipes) {
+        if (recipes && recipes.length > 0) {
             setFilterd(recipes.filter(recipe => recipe.title.includes(query) || recipe.description.includes(query) || recipe.ingredients.includes(query) || recipe.category.includes(query)))
 
         }
@@ -59,15 +59,15 @@ const useRecipes = () => {
         }
     }, [requestStatus])
 
-    const handleGetRecipesByUser = useCallback( async () => {
+    const handleGetRecipesByUser = useCallback( async (userID) => {
         try {
             setLoading(true)
-            const recipesFormDB = await getRecipesByUser(user._id)
+            const recipesFormDB = await getRecipesByUser(userID ?? user._id)
             requestStatus(false, null, recipesFormDB)
         } catch (error) {
             requestStatus(false, error, null)
         }
-    }, [requestStatus])
+    }, [requestStatus, user])
 
     const handleUpdateRecipe = useCallback( async (recipeID, data) => {
         try {
@@ -98,11 +98,21 @@ const useRecipes = () => {
         }
     }, [requestStatus])
 
+    const handleCreateRecipe = useCallback( async (data) => {
+        try {
+            setLoading(true)
+            const recipeFormDB = await createRecipe(data)
+            requestStatus(false, null, null, recipeFormDB)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe, handleUpdateRecipeImage }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe, handleUpdateRecipeImage, handleCreateRecipe }
 }
 
 useRecipes.propTypes = {}
