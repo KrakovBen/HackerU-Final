@@ -33,8 +33,8 @@ const NavBar = () => {
     return (
         <AppBar position="sticky" elevation={0} sx={{ background: 'transparent', py: 3, zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Box sx={{ backdropFilter: 'blur(8px)', border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.2)', transition: 'all 0.3s ease-in-out', borderRadius: '16px', boxShadow: '0 8px 32px rgba(31, 38, 135, 0.1)', maxWidth: '1680px', mx: 'auto', px: 3, py: 1.5, width: '95%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-                <Typography component={Link} to={ROUTES.ROOT} variant="h5" sx={{ fontFamily: 'Karantina', fontWeight: 700, color: '#1d1d1f', '&:hover': { color: '#1d1d1f' }, textDecoration: 'none' }}>
-                    🍽️ BisBook
+                <Typography component={Link} to={ROUTES.ROOT} variant="h5" sx={{ fontFamily: 'Karantina', fontWeight: 700, color: theme.palette.primary.main, '&:hover': { color: theme.palette.primary.main }, textDecoration: 'none' }}>
+                    <img style={{ width: 25, height: 25, marginInlineEnd: 2, marginBlockEnd: -2 }} src="/bisbook.svg" alt="BisBook" />BisBook
                 </Typography>
 
                 {isMobile ? (
@@ -46,14 +46,14 @@ const NavBar = () => {
                             <List sx={{ width: '80vw', minWidth: '200px', maxWidth: '600px' }}>
                                 {pages.map((page) => (
                                     (page.adminOnly && !user?.isAdmin) ? null : (
-                                        <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} key={page.path} component={Link} to={page.path} onClick={() => setOpenDrawer(false)}>
+                                        <ListItem sx={{ textAlign: 'right', direction: 'rtl' }} key={page.path} component={Link} to={page.path} onClick={() => setOpenDrawer(false)}>
                                             <ListItemText primary={page.label} />
                                         </ListItem>
                                     )
                                 ))}
                                 
                                 {!user && (
-                                    <ListItem button sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.LOGIN} onClick={() => setOpenDrawer(false)}>
+                                    <ListItem sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.LOGIN} onClick={() => setOpenDrawer(false)}>
                                         <ListItemText primary="התחברות" />
                                     </ListItem>
                                 )}
@@ -61,21 +61,21 @@ const NavBar = () => {
                         </Drawer>
                     </>
                 ) : (
-                    <Stack direction="row" color="#1d1d1f">
+                    <Stack direction="row" color={theme.palette.primary.text}>
                         {pages.map((page) => (
                             (page.adminOnly && !user?.isAdmin) ? null : (
-                                <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                                <Button key={page.path} component={Link} to={page.path} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: theme.palette.primary.main }, marginInlineEnd: 3 }} >
                                     {page.label}
                                 </Button>
                             )
                         ))}
 
                         {!user ? (
-                            <Button component={Link} to={ROUTES.LOGIN} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                            <Button component={Link} to={ROUTES.LOGIN} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: theme.palette.primary.text }, marginInlineEnd: 3 }} >
                                 התחברות
                             </Button>
                         ) : (
-                            <Button onClick={onLogout} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: '#1d1d1f' }, marginInlineEnd: 3 }} >
+                            <Button onClick={onLogout} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: theme.palette.primary.text }, marginInlineEnd: 3 }} >
                                 התנתקות
                             </Button>
                         )}

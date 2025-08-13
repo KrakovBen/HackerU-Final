@@ -22,7 +22,7 @@ const RecipesCategoryPage = () => {
 
     return (
         <Container maxWidth={false} sx={{ mx: 'auto', maxWidth: '1600px' }}>
-            <PageHeader title='קצת הייפ, הרבה טעם.' subtitle='חדש חדש! מתכונים שיגרמו לכם לצלם לפני שתטעמו.' button={button} />
+            <PageHeader title='מה בא לכם להכין?' subtitle='מתכונים מדויקים לתוצאה בטוחה.' button={button} />
 
             <RecipesFeedback user={user} isLoading={isLoading} error={error} recipes={filteredRecipes}/>
         </Container>

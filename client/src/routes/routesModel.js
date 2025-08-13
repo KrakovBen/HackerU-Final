@@ -9,7 +9,9 @@ const ROUTES = {
     RECIPE_CREATE: '/recipes/create',
     RECIPE: '/recipes/recipe',
     RECIPE_EDIT: '/recipes/edit',
-    CRM: '/crm'
+    CRM: '/crm',
+    TERMS: '/terms',
+    PRIVACY: '/privacy'
 }
 
 export default ROUTES

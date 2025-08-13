@@ -11,7 +11,7 @@ const RecipeHeader = ({ recipe, user }) => {
         <Box>
             <Grid container display="grid" alignItems="end" sx={{ mt: 5, gridTemplateColumns: { xs: 'repeat(12, 1fr)', sm: 'repeat(12, 1fr)' }, gap: 2 }}>
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 8' } }}>
-                    <Typography variant="h2" component="h1" color='#25619f' sx={{ fontWeight: 700 }}>{recipe.title}</Typography>
+                    <Typography variant="h2" component="h1" color='primary' sx={{ fontWeight: 700 }}>{recipe.title}</Typography>
                     <Typography variant="h5" component="h2" color='#144271'>{recipe.description}</Typography>
                 </Grid>
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 4' }, display: 'flex', justifyContent: 'flex-end' }}>

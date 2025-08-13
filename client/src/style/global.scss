@@ -6,11 +6,10 @@
 
 body {
     font-family: 'Karantina', sans-serif;
-    background-color: #f7f7f7;
-    color: #1d1d1f;
+    // background-color: #f7f7f7;
     direction: rtl;
 }
 
-a:visited{
-    color: #1d1d1f;
+.app {
+    background: linear-gradient(0deg, #f7f7f7, #f2fbff);
 }

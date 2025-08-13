@@ -70,14 +70,14 @@ const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, da
                 <Input key={index} label={`מצרך מספר ${index + 1}`} name={`ingredients-${index}`} type='text' error={errors?.[`ingredients-${index}`]} data={{[`ingredients-${index}`]: item}} onChange={onInputChange} />
             ) ) }
             <Box display="flex" justifyContent="flex-end" sx={{ gridColumn: 'span 12' }}>
-                <Button sx={{ width: '100%' }} variant='outlined' color='primary' onClick={() => setIngredientsList([...ingredientsList, ''])}>הוסף מצרכים</Button>
+                <Button sx={{ width: '100%' }} variant='outlined' color='primary' onClick={() => setIngredientsList([...ingredientsList, ''])}>הוספת מצרכים</Button>
             </Box>
             <Typography variant='h5' component='h2' sx={{ mt: 2 }}>הוראות הכנה</Typography>
             { instructionsList.map( (item, index) => (
                 <Input key={index} label={`הוראות מספר ${index + 1}`} name={`instructions-${index}`} type='text' error={errors?.[`instructions-${index}`]} data={{[`instructions-${index}`]: item}} onChange={onInputChange} />
             ) ) }
             <Box display="flex" justifyContent="flex-end" sx={{ gridColumn: 'span 12' }}>
-                <Button sx={{ width: '100%' }} variant='outlined' color='primary' onClick={() => setInstructionsList([...instructionsList, ''])}>הוסף הוראות</Button>
+                <Button sx={{ width: '100%' }} variant='outlined' color='primary' onClick={() => setInstructionsList([...instructionsList, ''])}>הוספת הוראות</Button>
             </Box>
         </Form>
     )

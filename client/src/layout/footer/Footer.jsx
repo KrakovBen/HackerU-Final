@@ -1,29 +1,75 @@
 import React from 'react'
-import Container from '@mui/material/Container'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid, Stack, Typography, Link, Divider } from '@mui/material'
+import ROUTES from '../../routes/routesModel'
+import { Link as RouterLink } from 'react-router-dom'
 
 const Footer = () => {
+    const sections = [
+        {
+            title: 'BisBook',
+            items: [
+                { label: 'דף הבית', href: ROUTES.ROOT },
+                { label: 'כל המתכונים', href: ROUTES.RECIPES }
+            ]
+        },
+        {
+            title: 'החשבון שלי',
+            items: [
+                { label: 'התחברות', href: ROUTES.LOGIN },
+                { label: 'הרשמה', href: ROUTES.REGISTER },
+                { label: 'הוספת מתכון', href: ROUTES.RECIPE_CREATE }
+            ]
+        },
+        {
+            title: 'מידע',
+            items: [
+                { label: 'אודות', href: ROUTES.ABOUT }
+            ]
+        },
+        {
+            title: 'יצירת קשר',
+            items: [
+                { label: '03-1234567', href: 'tel:031234567' },
+                { label: 'support@bisbook.com', href: 'mailto:support@bisbook.com' }
+            ]
+        },
+    ]
+
     return (
-        <Container maxWidth={false} sx={ { backgroundColor: '#000', color: '#fbfbfd', py: 4, mt: 4, width: '100vw', mx: 'auto', px: 3 } }>
-            <Container sx={{ mt: 4, mx: '25px', width: '90vw', maxWidth: '1680px', margin: 'auto' }}>
-                <Box>
-                    <Grid container sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 6, my: 2 }}>
-                        <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 4' } }}>
-                            <Typography variant='h5' component='h2'>BisBook</Typography>
-                            <Typography variant='body1' component='p'>BisBook הוא אתר שמציג מתכונים לפי קטגוריה.</Typography>
+        <Box component="footer" sx={{ mt: '120px', bgcolor: 'primary.main', '--ft-title': '#fff', '--ft-text': '#c8dfff', color: 'var(--ft-text)', borderTop: 1, borderColor: 'divider' }}>
+            <Container maxWidth={false} sx={{ py: { xs: 4, md: 6 }, mx: 'auto', maxWidth: '1680px', width: '90vw' }} dir="rtl">
+                <Grid container display="grid" gridTemplateColumns={{ xs: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} spacing={{ xs: 3, md: 6 }}>
+                    {sections.map((sec) => (
+                        <Grid key={sec.title} sx={{ xs: 'span 12', md: 'span 3' }}>
+                            <Typography variant="subtitle1" fontWeight={700} gutterBottom sx={{ color: 'var(--ft-title)' }}>
+                                {sec.title}
+                            </Typography>
+
+                            <Stack spacing={1}>
+                                {sec.items.map((it) => (
+                                    <Link key={it.label} component={RouterLink} to={it.href} underline="hover" variant="body2" sx={{ color: 'inherit' }}>
+                                        {it.label}
+                                    </Link>
+                                ))}
+                            </Stack>
                         </Grid>
-                        <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 4' } }}>
-                            <Typography variant='h5' component='h2'>מידע</Typography>
-                        </Grid>
-                        <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 4' } }}>
-                            <Typography variant='h5' component='h2'>יצירת קשר</Typography>
-                            <Typography variant='body1' component='p'><span style={{ fontWeight: 700 }}>כתובת אי-מייל</span> Admin@gmail.com</Typography>
-                            <Typography variant='body1' component='p'><span style={{ fontWeight: 700 }}>מספר טלפון</span> 050-123-4567</Typography>
-                        </Grid>
-                    </Grid>
-                </Box>
+                    ))}
+                </Grid>
+
+                <Divider sx={{ my: 3, borderColor: '#5c86c1' }} />
+
+                <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" gap={1}>
+                    <Typography variant="body2" sx={{ color: 'var(--ft-title)' }}>
+                        © {new Date().getFullYear()} BisBook. כל הזכויות שמורות.
+                    </Typography>
+                    <Stack direction="row" spacing={2} gap={2}>
+                        <Link component={RouterLink} to={ROUTES.PRIVACY} variant="body2" underline="hover" sx={{ color: 'inherit' }}>מדיניות פרטיות</Link>
+                        <Link component={RouterLink} to={ROUTES.TERMS} variant="body2" underline="hover" sx={{ color: 'inherit' }}>תקנון</Link>
+                    </Stack>
+                </Stack>
             </Container>
-        </Container>
+        </Box>
+
     )
 }
 

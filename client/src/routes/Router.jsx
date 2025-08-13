@@ -10,6 +10,8 @@ import UserProfile from '../users/pages/UserProfile'
 import RecipesCategoryPage from '../recipes/pages/RecipesCategoryPage'
 import EditRecipeFormPage from '../recipes/pages/EditRecipeFormPage'
 import CreateRecipePage from '../recipes/pages/CreateRecipePage'
+import TermsPage from '../pages/TermsPage'
+import PrivacyPage from '../pages/PrivacyPage'
 
 const Router = () => {
     return (
@@ -23,6 +25,8 @@ const Router = () => {
             <Route path={ROUTES.CRM} element={<CRMPage/>} />
             <Route path={`${ROUTES.USER_PROFILE}/:userID`} element={<UserProfile/>} />
             <Route path={ROUTES.ROOT} element={<RecipesCategoryPage/>} />
+            <Route path={ROUTES.TERMS} element={<TermsPage/>} />
+            <Route path={ROUTES.PRIVACY} element={<PrivacyPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )
