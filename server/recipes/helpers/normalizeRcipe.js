@@ -1,10 +1,8 @@
-const normalizeRecipe = async (rawRecipe, userId) => {
-    const imageUrl = rawRecipe.imageUrl || '/uploads/default_recipe_image.jpg'
+const normalizeRecipe = async (rawRecipe, userID) => {
 
     return {
         ...rawRecipe,
-        imageUrl,
-        createdBy: rawRecipe.createdBy || userId
+        createdBy: rawRecipe.createdBy || userID
     }
 }
 

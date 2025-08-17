@@ -29,9 +29,9 @@ const getRecipe = async (id) => {
     if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
 
     try {
-        const recipe = await Recipe.findById(id)            
+        const recipe = await Recipe.aggregate( [ { $match: { _id: new Types.ObjectId(id) } }, { $lookup: { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'userData' } }, { $unwind: { path: '$userData', preserveNullAndEmptyArrays: true } }, { $addFields: { createdByName: { $concat: ['$userData.name.first', ' ', '$userData.name.last'] } } } ] )
         if(!recipe) throw new Error('לא נמצא מתכון')
-        return Promise.resolve(recipe ? appendFullImageUrl(recipe.toObject()) : null)
+        return Promise.resolve(recipe ? appendFullImageUrl(recipe[0]) : null)
     } catch (error) {
         error.status = 404
         return Promise.reject(error)
@@ -43,9 +43,7 @@ const getAllRecipes = async () => {
 
     try {
         const recipes = await Recipe.aggregate([ { $sort: { createdAt: -1 } }, { $lookup: { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'userData' } }, { $unwind: '$userData' }, { $addFields: { createdByName: { $concat: ['$userData.name.first', ' ', '$userData.name.last'] } } } ])
-        if(!recipes.length) return Promise.resolve({ recipes })
-        console.log(recipes.length)
-                
+        if(!recipes.length) return Promise.resolve({ recipes })                
         return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe)) })
     } catch (error) {
         error.status = 404
