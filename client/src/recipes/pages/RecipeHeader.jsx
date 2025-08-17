@@ -37,6 +37,7 @@ const RecipeHeader = ({ recipe, user }) => {
                     <Typography variant="h5" component="h2">זמן בישול</Typography>
                     <Typography variant="h6" component="p" sx={tagsStyle}>{recipe.cookTimeMinutes} דקות</Typography>
                 </Grid>
+                
                 <Grid sx={{ gridColumn: { xs: 'span 6', md: 'span 3', sm: 'span 12' } }}>
                     <Typography variant="h5" component="h2">מאת</Typography>
                     <Typography onClick={() => navigate(`${ROUTES.USER_PROFILE}/${recipe.createdBy}`)} variant="h6" component="p" sx={{ ...tagsStyle, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>{recipe.createdByName}</Typography>
