@@ -9,13 +9,16 @@ import ROUTES from '../../routes/routesModel'
 import RecipeForm from '../components/RecipeForm'
 
 const CreateRecipePage = () => {
-    const { handleCreateRecipe } = useRecipes()
+    const { handleCreateRecipe, handleUpdateRecipeImage } = useRecipes()
     const { user } = useUser()
     const navigate = useNavigate()
     const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, handleCreateRecipe)
         
     const handleSubmit = async (data) => {
         const recipeID = await handleCreateRecipe(data)
+        console.log(recipeID)
+        console.log(data)
+        if (data.__imageFile) await handleUpdateRecipeImage(recipeID, data.__imageFile)
         if (!recipeID) return
         navigate(`${ROUTES.RECIPE}/${recipeID}`)
     }

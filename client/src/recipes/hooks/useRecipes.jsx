@@ -103,6 +103,7 @@ const useRecipes = () => {
             setLoading(true)
             const recipeFormDB = await createRecipe(data)
             requestStatus(false, null, null, recipeFormDB)
+            return recipeFormDB
         } catch (error) {
             requestStatus(false, error, null)
         }

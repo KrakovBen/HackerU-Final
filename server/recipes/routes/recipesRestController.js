@@ -5,10 +5,12 @@ const fs = require('fs')
 const path = require('path')
 const uploadImage = require('../../middlewares/uploadImage')
 const { handleError } = require('../../utils/errorHandler')
-const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser } = require('../models/recipeAccessDataService')
+const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, createRecipe } = require('../models/recipeAccessDataService')
 const auth = require('../../auth/authService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
+const validateRecipe = require('../validations/recipeValidationService')
+const normalizeRecipe = require('../helpers/normalizeRcipe')
 
 router.get( '/', async (req, res) => {
     try {
@@ -64,6 +66,21 @@ router.put( '/:id', auth, async (req, res) => {
         return handleError(res, error.status || 500, error.message)
     }
 })
+
+router.post( '/', auth, async (req, res) => {
+    try {
+        let recipe = req.body        
+        const { error } = validateRecipe(recipe)
+        if(error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
+
+        recipe.imageUrl = null
+        recipe = await normalizeRecipe(recipe, req.user._id)
+        recipe = await createRecipe(recipe)
+        res.status(201).send(recipe._id)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+} )
 
 router.post( '/:id/image', auth, uploadImage.single('image'), async (req, res) => {
     try {
