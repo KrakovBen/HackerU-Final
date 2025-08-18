@@ -1,6 +1,6 @@
 {
   "users": [
-    { "name": { "first": "נועם", "last": "כהן" }, "email": "admin@gmail.com", "password": "Aa123456!", "isAdmin": true },
+    { "name": { "first": "בן", "last": "קרקוב" }, "email": "admin@gmail.com", "password": "Aa123456!", "isAdmin": true },
     { "name": { "first": "יעל", "last": "לוי" }, "email": "user1@gmail.com", "password": "Aa123456!", "isAdmin": true },
     { "name": { "first": "איתי", "last": "מזרחי" }, "email": "user2@gmail.com", "password": "Aa123456!", "isAdmin": false },
     { "name": { "first": "תמר", "last": "בן דוד" }, "email": "user3@gmail.com", "password": "Aa123456!", "isAdmin": false },

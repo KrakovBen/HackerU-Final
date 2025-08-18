@@ -4,8 +4,8 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "export || cross-env NODE_ENV=production&& node .",
-        "dev": "export || cross-env NODE_ENV=development&& nodemon ."
+        "start": "cross-env NODE_ENV=production node .",
+        "dev": "cross-env NODE_ENV=development nodemon ."
     },
     "author": "Ben Krakovsky",
     "license": "ISC",
@@ -15,6 +15,7 @@
         "chalk": "^4.1.2",
         "config": "^4.1.0",
         "cors": "^2.8.5",
+        "cross-env": "^10.0.0",
         "express": "^5.1.0",
         "joi": "^18.0.0",
         "jsonwebtoken": "^9.0.2",
@@ -22,7 +23,8 @@
         "mime-types": "^3.0.1",
         "mongoose": "^8.17.0",
         "morgan": "^1.10.1",
-        "multer": "^2.0.2"
+        "multer": "^2.0.2",
+        "uuid": "^11.1.0"
     },
     "devDependencies": {
         "nodemon": "^3.1.10"

@@ -4,13 +4,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer } from '../services/usersApiService'
+import { login, verifyOtp, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
 
 const useUsers = () => {
     const [users, setUsers] = useState(null)
-    const [isLoading, setLoading] = useState(true)
+    const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [ query, setQuery ] = useState('')
     const [ filteredUsers, setFilterd ] = useState(null)
@@ -40,19 +40,33 @@ const useUsers = () => {
         setError(errorMessage)
     }, [setUser])
 
-    const handleLogin = useCallback( async (user) => {
+    const handleLogin = useCallback( async (credentials) => {
         try {
-            const token = await login(user)
-            setTokenInLocalStorage(token)
-            setToken(token)
-            
-            const userFromLocalStorage = getUser()
-            requestStatus(false, null, null, userFromLocalStorage)
-            navigate(ROUTES.ROOT)
+            setLoading(true)
+            const res = await login(credentials)
+            if (!res?.requiresOtp && !res.txId) throw new Error('שם משתמש או סיסמה שגויים.')
+            requestStatus(false, null, null)
+            return res
         } catch (error) {
             requestStatus(false, error, null)
         }
-    }, [])
+    }, [requestStatus])
+
+    const handleVerifyOtp = useCallback(async ({ txId, code }) => {
+        try {
+            setLoading(true)
+            const token = await verifyOtp({ txId, code })
+            console.log(token)
+            if (!token) throw new Error('אימות נכשל')
+            setTokenInLocalStorage(token)
+            setToken(token)
+            const userFromLocalStorage = getUser()
+            navigate(ROUTES.ROOT)
+            requestStatus(false, null, null, userFromLocalStorage)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus, navigate, setToken])
 
     const handleLogout = useCallback(() => {
         removeToken();
@@ -63,11 +77,13 @@ const useUsers = () => {
         try {
             const normalizedUser = normalizeUser(userFromClient)            
             await signup(normalizedUser)
-            await handleLogin({ email: userFromClient.email, password: userFromClient.password })
+            const res = await handleLogin({ email: userFromClient.email, password: userFromClient.password })
+            console.log(res)
+            navigate(ROUTES.LOGIN, { state: { startInOtp: true, txId: res.txId } })
         } catch (error) {
             requestStatus(false, error, null)
         }
-    }, [requestStatus, handleLogin])
+    }, [requestStatus, handleLogin, navigate])
 
     const handleGetAllUsers = useCallback( async () => {
         try {
@@ -113,7 +129,7 @@ const useUsers = () => {
         { isLoading, error, user, users, filteredUsers }
     ), [isLoading, error, user, users, filteredUsers])
 
-    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser, handleVerifyOtp }
 }
 
 export default useUsers

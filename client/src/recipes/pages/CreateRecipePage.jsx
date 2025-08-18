@@ -16,8 +16,6 @@ const CreateRecipePage = () => {
         
     const handleSubmit = async (data) => {
         const recipeID = await handleCreateRecipe(data)
-        console.log(recipeID)
-        console.log(data)
         if (data.__imageFile) await handleUpdateRecipeImage(recipeID, data.__imageFile)
         if (!recipeID) return
         navigate(`${ROUTES.RECIPE}/${recipeID}`)

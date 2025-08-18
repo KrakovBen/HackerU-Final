@@ -33,13 +33,17 @@ const UserList = ({ users, onDelete, onAdmin }) => {
                     <TableCell sx={{ cursor: 'pointer' }} onClick={()=>{navigate(`${ROUTES.USER_PROFILE}/${row._id}`)}} align="right">{row.name.first} {row.name.last}</TableCell>
                     <TableCell sx={{ cursor: 'pointer' }} onClick={()=>{navigate(`${ROUTES.USER_PROFILE}/${row._id}`)}} align="right" component="th" scope="row">{row.email}</TableCell>
                     <TableCell align="right">
-                        <Tooltip title={row.isAdmin ? 'אתה לא מורשה למחוק את המשתמש הזה' : 'מחיקה'}>
-                            <IconButton aria-label="delete" onClick={()=>handleDialog("open", row._id)} disabled={row.isAdmin}>
-                                <DeleteIcon color={row.isAdmin ? "inherit" : "error"} />
-                            </IconButton>
+                        <Tooltip title={row.isAdmin ? 'אתה לא מורשה למחוק את המשתמש הזה' : 'מחיקה'} disableFocusListener={row.isAdmin} disableTouchListener={row.isAdmin}>
+                            <span style={{ display: 'inline-block' }}>
+                                <IconButton aria-label="delete" onClick={()=>handleDialog("open", row._id)} disabled={row.isAdmin}>
+                                    <DeleteIcon color={row.isAdmin ? "inherit" : "error"} />
+                                </IconButton>
+                            </span>
                         </Tooltip>
-                        <Tooltip title={row.isAdmin ? 'הסרת הרשאות ניהול' : 'הוספת הרשאות ניהול'}>
-                            <EditIcon onAdmin={onAdmin} user={row} />
+                        <Tooltip title={row.isAdmin ? 'הסרת הרשאות ניהול' : 'הוספת הרשאות ניהול'} disableFocusListener={row.isAdmin} disableTouchListener={row.isAdmin}>
+                            <span style={{ display: 'inline-block' }}>
+                                <EditIcon onAdmin={onAdmin} user={row} />
+                            </span>
                         </Tooltip>
                     </TableCell>
                 </TableRow>

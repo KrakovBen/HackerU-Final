@@ -3,7 +3,8 @@ const router = express.Router()
 const { getUsers, registerUser, loginUser, deleteUser, getUser, toggleAdmin } = require('../models/usersAccessDataService')
 const { handleError } = require('../../utils/errorHandler')
 const auth = require('../../auth/authService')
-const { verifyAuthToken } = require('../../auth/providers/jwt')
+const { verifyAuthToken, generateAuthToken } = require('../../auth/providers/jwt')
+const { requestEmailOtp, verifyEmailOtp } = require('../services/otpService')
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -38,11 +39,28 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await loginUser(req.body)
-        res.status(200).send(user)
+        
+        if(!user) throw new Error('שם משתמש או סיסמה שגויים.')
+        const otp = await requestEmailOtp(user, req)
+        res.status(200).send(otp)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }
 })
+
+router.post('/otp', async (req, res) =>{
+    try {
+        const { txId, code } = req.body
+        let user = await verifyEmailOtp({ txId, code })
+        console.log(user)
+        user = await getUser(user.userId)
+        console.log(user)
+        const token = generateAuthToken(user)
+        res.status(200).send(token)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+} )
 
 router.delete('/:id', auth, async (req, res) => {
     try {

@@ -11,6 +11,15 @@ export const login = async (user) => {
     }
 }
 
+export const verifyOtp = async ({ txId, code }) => {
+    try {
+        const { data } = await axios.post(`${apiUrl}/users/otp`, { txId, code }, { withCredentials: true })
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
+
 export const signup = async (normalizedUser) => {
     try {
         const { data } = await axios.post(`${apiUrl}/users`, normalizedUser)

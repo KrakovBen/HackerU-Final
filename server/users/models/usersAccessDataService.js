@@ -87,18 +87,16 @@ const loginUser = async ({email, password}) => {
 
                 if(counter.counter.length < 3){
                     counter.counter.push(nowTime)
-                    await LoginUserSchema.findByIdAndUpdate(counter._id, {counter: counter.counter})
+                    await LoginUserSchema.findByIdAndUpdate(counter._id, { counter: counter.counter })
                     throw new Error('שם משתמש או סיסמה שגויים.')
                 }
             }
-
-            const token = generateAuthToken(user)
 
             if(counter){
                 await LoginUserSchema.findByIdAndDelete(counter._id);
             }
 
-            return Promise.resolve(token)
+            return Promise.resolve(user)
         } catch (error) {
             error.status = 401
             return Promise.reject(error)
