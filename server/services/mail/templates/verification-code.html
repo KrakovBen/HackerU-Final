@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>קוד אימות | {{appName}}</title>
+    <!-- preheader -->
+    <span style="display:none !important;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden;mso-hide:all;">
+        קוד האימות שלך הוא {{code}}. פג בעוד {{expiresInMinutes}} דקות.
+    </span>
+    <style>
+        /* שמור על CSS מינימלי. רוב העיצוב inline למטה עבור תאימות. */
+        @media (max-width: 600px) {
+            .container {
+                width: 100% !important;
+            }
+
+            .content {
+                padding: 20px !important;
+            }
+
+            .code {
+                font-size: 28px !important;
+                letter-spacing: 6px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin:0;padding:0;background: linear-gradient(0deg, #f7f7f7, #f2fbff);">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background: linear-gradient(0deg, #f7f7f7, #f2fbff);">
+        <tr>
+            <td align="center" style="padding:24px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="600" class="container"
+                    style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e6e8ec;">
+                    <!-- Header -->
+                    <tr>
+                        <td
+                            style="padding:20px 24px;background:#fafbfc;border-bottom:1px solid #e6e8ec;text-align:right;">
+                            <!-- לוגו אופציונלי -->
+                            <!-- <img src="{{logoUrl}}" alt="{{appName}}" height="28" style="display:block;border:0;outline:none;text-decoration:none;"> -->
+                            <div
+                                style="font:600 16px/1.4 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111;">
+                                {{appName}}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td class="content"
+                            style="padding:28px 32px;text-align:right;font:400 15px/1.7 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111;">
+                            <h1 style="margin:0 0 12px 0;font:700 20px/1.3 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111;">
+                                קוד אימות
+                            </h1>
+                            <p style="margin:0 0 16px 0;">להשלמת הפעולה בחשבונך, הזן את הקוד הבא:</p>
+
+                            <div class="code" style="margin:12px 0 18px 0;font:700 32px/1.1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:8px;text-align:center;color:#111;">
+                                {{code}}
+                            </div>
+
+                            <p style="margin:0 0 12px 0;color:#444;">הקוד תקף ל-{{expiresInMinutes}} דקות. אם לא ביקשת
+                                קוד, ניתן להתעלם מהודעה זו.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding:16px 24px;background:#fafbfc;border-top:1px solid #e6e8ec;text-align:right;">
+                            <p style="margin:6px 0 0 0;font:400 12px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#98a2b3;">
+                                © {{year}} {{appName}}. כל הזכויות שמורות.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom'
 import ShareIcon from '@mui/icons-material/Share'
 import useRecipes from '../hooks/useRecipes'
 import ROUTES from '../../routes/routesModel'
+import RecipeDeleteDialog from './recipe/RecipeDeleteDialog'
 
 const RecipeActionBar = ({ user, recipe, onDelete }) => {
+    const [ isDialogOpen, setDialog ] = useState(false)
     const navigate = useNavigate()
     const { handleLikeRecipe } = useRecipes()
     const likes = useMemo(() => Array.isArray(recipe?.likes) ? recipe.likes : [], [recipe?.likes])
@@ -48,7 +50,17 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
         window.location.href = url
     }
 
+    const handleDialog = term => {
+        if (term) return setDialog(true)
+        setDialog(false)
+    }
+
+    const handleDeleteRecipe = () => {
+        handleDialog(true)
+    }
+
     return (
+        <>
         <CardActions>
             <Box sx={{ display: 'flex', gap: 1 }}>
                 <IconButton aria-label="share" onClick={handleShareClick}>
@@ -59,7 +71,7 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
                     <FavoriteIcon color={isLike ? "error" : "inherit"} />
                 </IconButton>)}
 
-                {user && (recipeOwnerID === userID || user.isAdmin) && (<IconButton aria-label="delete" onClick={onDelete} disabled={!recipe?._id}>
+                {user && (recipeOwnerID === userID || user.isAdmin) && (<IconButton aria-label="delete" onClick={handleDeleteRecipe} disabled={!recipe?._id}>
                     <DeleteIcon />
                 </IconButton>)}
 
@@ -68,6 +80,9 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
                 </IconButton>)}
             </Box>
         </CardActions>
+
+        <RecipeDeleteDialog isDialogOpen={isDialogOpen} onChangeDialog={handleDialog} onDelete={onDelete} />
+        </>
     )
 }
 

@@ -122,4 +122,15 @@ const getRecipesByUser = async (userID) => {
     }
 }
 
-module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser }
+const deleteRecipe = async (id) => {
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
+
+    try {
+        const recipe = await Recipe.findByIdAndDelete(id)
+        return Promise.resolve(recipe)
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
+}
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, deleteRecipe }

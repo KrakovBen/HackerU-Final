@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const { v4: uuidv4 } = require('uuid')
 const Otp = require('../models/mongoDB/Otp')
-const sendEmail = require('./../../services/brevoEmailService')
+const { sendVerificationCode } = require('../../services/mail/sendVerificationCode')
 
 const OTP_LEN = 6
 const OTP_TTL_MIN = 10
@@ -22,12 +22,7 @@ const requestEmailOtp = async (user, req) => {
         meta: { ip: req.ip, ua: req.get('user-agent') }
     })
 
-    await sendEmail({
-        to: user.email,
-        subject: 'קוד אימות חד-פעמי',
-        text: `קוד האימות שלך: ${code}\nתקף ל-${OTP_TTL_MIN} דקות.`,
-        tags: ['otp','auth']
-    })
+    await sendVerificationCode({ to: user.email, code, expiresInMinutes: OTP_TTL_MIN, tags: ['otp', 'auth'] })
 
     return { txId, ttl: OTP_TTL_MIN }
 }

@@ -66,3 +66,12 @@ export const createRecipe = async (recipeData) => {
         return Promise.reject(error.message)
     }
 }
+
+export const deleteRecipe = async (recipeID) => {
+    try {
+        const { data } = await axios.delete(`${apiUrl}/recipes/${recipeID}`)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
