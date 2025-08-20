@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import useUsers from '../hooks/useUsers'
 import useForm from '../../forms/hooks/useForm'
 import initialSignupForm from '../helpers/initialForms/initialSignupForm'
@@ -17,6 +17,10 @@ const RegisterPage = () => {
     const { value, ...rest } = useForm(initialSignupForm, signupSchema, handleSignup)
 
     const { user } = useUser()
+
+    useEffect(() => {
+        document.title = 'הרשמה | BisBook'
+    }, [])
 
     if (user) return <Navigate replace to={ROUTES.ROOT} />
 

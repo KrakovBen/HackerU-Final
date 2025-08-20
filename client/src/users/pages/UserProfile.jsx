@@ -6,12 +6,14 @@ import PageHeader from '../../components/PageHeader'
 import { makeFirstLetterCapital } from '../../utils/algoMethods'
 import RecipesFeedback from '../../recipes/components/RecipesFeedback'
 import { getRecipesByUser } from '../../recipes/services/recipesApiService'
+import useRecipes from '../../recipes/hooks/useRecipes'
 
 const UserProfile = () => {
     const { userID } = useParams()
     const [ userName, setUserName ] = useState(null)
     const { handleGetUser, value: {users: userFromDB, user} } = useUsers()
     const [ recipes, setRecipes ] = useState([])
+    const { handleDeleteRecipe } = useRecipes()
     
     useEffect( () => {
         handleGetUser(userID)
@@ -19,6 +21,7 @@ const UserProfile = () => {
 
     useEffect( () => {
         if (userFromDB && userFromDB.name) {
+            document.title = `פרופיל משתמש - ${makeFirstLetterCapital(userFromDB.name.first)} ${makeFirstLetterCapital(userFromDB.name.last)} | BisBook`
             const fullName = makeFirstLetterCapital(userFromDB.name.first) + ' ' + makeFirstLetterCapital(userFromDB.name.last)
             setUserName(fullName)
         }
@@ -50,6 +53,11 @@ const UserProfile = () => {
         return () => { ignore = true }
     }, [userFromDB] )
 
+    const onDeleteRecipe = (recipeID) => {
+        handleDeleteRecipe(recipeID)
+        setRecipes(recipes.filter((recipe) => recipe._id !== recipeID))
+    }
+
     if(!userFromDB) return (
         <Typography>
             אופס. נראה שאין נתונים להצגה.
@@ -60,7 +68,7 @@ const UserProfile = () => {
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>
             <PageHeader title={userName} subtitle="פרופיל משתמש" />
             {recipes.length > 0 ? (
-                <RecipesFeedback user={user} isLoading={false} error={null} recipes={recipes} onDelete={() => {}} onLike={() => {}}/>
+                <RecipesFeedback user={user} isLoading={false} error={null} recipes={recipes} onDelete={onDeleteRecipe}/>
             ) : (
                 <Typography>משתמש זה עדיין לא העלה מתכונים לאתר.</Typography>
             )}

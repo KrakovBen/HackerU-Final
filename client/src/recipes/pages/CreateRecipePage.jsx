@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import useRecipes from '../hooks/useRecipes'
 import { useUser } from '../../users/providers/UserProvider'
 import useForm from '../../forms/hooks/useForm'
@@ -20,6 +20,10 @@ const CreateRecipePage = () => {
         if (!recipeID) return
         navigate(`${ROUTES.RECIPE}/${recipeID}`)
     }
+
+    useEffect(() => {
+        document.title = 'יצירת מתכון | BisBook'
+    }, [])
     
     if (!user) return <Navigate replace to={ROUTES.LOGIN} />
 

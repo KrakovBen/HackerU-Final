@@ -6,11 +6,14 @@ import RecipeHeader from './RecipeHeader'
 import { useParams } from 'react-router-dom'
 import useRecipes from '../hooks/useRecipes'
 import { useUser } from '../../users/providers/UserProvider'
+import { useNavigate } from 'react-router-dom'
+import ROUTES from '../../routes/routesModel'
 
 const RecipePage = () => {
     const { recipeID } = useParams()
     const { user } = useUser()
-    const { handleGetRecipe, value: { recipe } } = useRecipes()
+    const navigate = useNavigate()
+    const { handleGetRecipe, value: { recipe }, handleDeleteRecipe } = useRecipes()
     
     useEffect( () => {
         handleGetRecipe(recipeID)
@@ -28,9 +31,14 @@ const RecipePage = () => {
         </Container>
     )
 
+    const onDeleteRecipe = (recipeID) => {
+        handleDeleteRecipe(recipeID)
+        navigate(ROUTES.RECIPES)
+    }
+
     return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
-            <RecipeHeader recipe={recipe} user={user}/>
+            <RecipeHeader recipe={recipe} user={user} onDelete={onDeleteRecipe}/>
 
             <Box>
                 <Typography variant='h5' component='h3' sx={{ mt: 5, fontWeight: 700, textDecoration: 'underline' }}>מצרכים</Typography>

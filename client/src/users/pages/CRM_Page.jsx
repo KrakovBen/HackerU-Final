@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useUser } from '../providers/UserProvider'
 import useUsers from '../hooks/useUsers'
 import { Navigate } from 'react-router-dom'
@@ -24,6 +24,10 @@ const CRM_Page = () => {
     const onToggleAdmin = async (userId) => {
         await handleToggleAdmin(userId)
     }
+
+    useEffect(() => {
+        document.title = 'ניהול משתמשים | BisBook'
+    }, [])
 
     if (!user || !user.isAdmin) return <Navigate replace to={ROUTES.ROOT} />
 

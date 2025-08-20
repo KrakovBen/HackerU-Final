@@ -39,6 +39,7 @@ const EditRecipeFormPage = () => {
     }
 
     useEffect( () => {
+        document.title = 'עריכת מתכון | BisBook'
         handleGetRecipeFromAPI()
     }, [recipeID])
     

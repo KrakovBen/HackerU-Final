@@ -8,6 +8,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import useRecipes from '../hooks/useRecipes'
 import ROUTES from '../../routes/routesModel'
 import RecipeDeleteDialog from './recipe/RecipeDeleteDialog'
+import Typography from '@mui/material/Typography'
 
 const RecipeActionBar = ({ user, recipe, onDelete }) => {
     const [ isDialogOpen, setDialog ] = useState(false)
@@ -38,6 +39,12 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
         } catch {
             setLike(prev => !prev)
         }
+
+        if (!isLike) {
+            recipe.likes.push(user._id)
+        } else {
+            recipe.likes = recipe.likes.filter(id => String(id) !== userID)
+        }
     }
 
     const handleShareClick = () => {
@@ -57,6 +64,7 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
 
     const handleDeleteRecipe = () => {
         handleDialog(true)
+        onDelete(recipe._id)
     }
 
     return (
@@ -67,11 +75,12 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
                     <ShareIcon />
                 </IconButton>
 
-                {user && (<IconButton aria-label="לייק" onClick={handleLike}>
+                <IconButton aria-label="לייק" onClick={user ? handleLike : undefined} disabled={!user} >
                     <FavoriteIcon color={isLike ? "error" : "inherit"} />
-                </IconButton>)}
+                    {likes.length > 0 ? <Typography>{likes.length}</Typography> : ''}
+                </IconButton>
 
-                {user && (recipeOwnerID === userID || user.isAdmin) && (<IconButton aria-label="delete" onClick={handleDeleteRecipe} disabled={!recipe?._id}>
+                {user && (recipeOwnerID === userID || user.isAdmin) && (<IconButton aria-label="delete" onClick={() => handleDialog(true)} disabled={!recipe?._id}>
                     <DeleteIcon />
                 </IconButton>)}
 
@@ -81,7 +90,7 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
             </Box>
         </CardActions>
 
-        <RecipeDeleteDialog isDialogOpen={isDialogOpen} onChangeDialog={handleDialog} onDelete={onDelete} />
+        <RecipeDeleteDialog isDialogOpen={isDialogOpen} onChangeDialog={handleDialog} onDelete={handleDeleteRecipe} />
         </>
     )
 }

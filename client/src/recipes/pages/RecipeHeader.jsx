@@ -1,13 +1,13 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { string, number, object } from 'prop-types'
+import { string, number, object, func } from 'prop-types'
 import Grid from '@mui/material/Grid'
 import RecipeActionBar from '../components/RecipeActionBar'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '../../routes/routesModel'
 
-const RecipeHeader = ({ recipe, user }) => {
+const RecipeHeader = ({ recipe, user, onDelete }) => {
     const navigate = useNavigate()
     const tagsStyle = { fontWeight: 100, fontFamily: 'Karantina', letterSpacing: '0.027em' }
     return (
@@ -18,7 +18,7 @@ const RecipeHeader = ({ recipe, user }) => {
                     <Typography variant="h5" component="h2" color='#144271'>{recipe.description}</Typography>
                 </Grid>
                 <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 4' }, display: 'flex', justifyContent: 'flex-end' }}>
-                    <RecipeActionBar recipe={recipe} user={user} onDelete={() => {}} />
+                    <RecipeActionBar recipe={recipe} user={user} onDelete={onDelete} />
                 </Grid>
             </Grid>
 
@@ -53,7 +53,8 @@ const RecipeHeader = ({ recipe, user }) => {
 
 RecipeHeader.propTypes = {
     recipe: object.isRequired,
-    user: object.isRequired
+    user: object.isRequired,
+    onDelete: func.isRequired
 }
 
 export default RecipeHeader

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useUser } from '../providers/UserProvider'
 import useUsers from '../hooks/useUsers'
 import initialLoginForm from '../helpers/initialForms/initialLoginForm'
@@ -29,6 +29,10 @@ const LoginPage = () => {
             setMode('otp')
         }
     }
+
+    useEffect(() => {
+        document.title = 'התחברות | BisBook'
+    }, [])
     
     const login = useForm(initialLoginForm, loginSchema, submitLogin)
     const otp = useForm({ otp: '' }, otpSchema, ({ otp }) => handleVerifyOtp({ txId, code: otp }))

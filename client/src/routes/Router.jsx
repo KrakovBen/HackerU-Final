@@ -12,6 +12,7 @@ import EditRecipeFormPage from '../recipes/pages/EditRecipeFormPage'
 import CreateRecipePage from '../recipes/pages/CreateRecipePage'
 import TermsPage from '../pages/TermsPage'
 import PrivacyPage from '../pages/PrivacyPage'
+import AboutPage from '../pages/AboutPage'
 
 const Router = () => {
     return (
@@ -27,6 +28,7 @@ const Router = () => {
             <Route path={ROUTES.ROOT} element={<RecipesCategoryPage/>} />
             <Route path={ROUTES.TERMS} element={<TermsPage/>} />
             <Route path={ROUTES.PRIVACY} element={<PrivacyPage/>} />
+            <Route path={ROUTES.ABOUT} element={<AboutPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )
