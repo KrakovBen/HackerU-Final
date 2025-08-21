@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const uploadImage = require('../../middlewares/uploadImage')
 const { handleError } = require('../../utils/errorHandler')
-const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, createRecipe, deleteRecipe } = require('../models/recipeAccessDataService')
+const { getRecipes, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, createRecipe, deleteRecipe, getLikedRecipesByUser } = require('../models/recipeAccessDataService')
 const auth = require('../../auth/authService')
 const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
@@ -158,6 +158,16 @@ router.delete( '/:id', auth, async (req, res) => {
     
         const recipe = await deleteRecipe(id)
         res.status(200).send(recipe)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.get( '/liked/:id', auth, async (req, res) => {
+    try {
+        const id = req.params.id
+        const recipes = await getLikedRecipesByUser(id)
+        res.status(200).send(recipes)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
     }

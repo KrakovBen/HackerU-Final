@@ -3,7 +3,7 @@ import useAxios from '../../hooks/useAxios'
 import { useSnackbar } from '../../providers/SnackbarProvider'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../../users/providers/UserProvider'
-import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike, updateRecipeImage, createRecipe, deleteRecipe } from '../services/recipesApiService'
+import { getAllRecipes, getRecipe, getRecipesByUser, updateRecipe, changeRecipeLike, updateRecipeImage, createRecipe, deleteRecipe, getLikedRecipesByUser } from '../services/recipesApiService'
 
 const useRecipes = () => {
     const { user } = useUser()
@@ -117,11 +117,21 @@ const useRecipes = () => {
         }
     }, [requestStatus])
 
+    const handleGetLikedRecipes = useCallback( async (userID) => {
+        try {
+            setLoading(true)
+            const recipesFormDB = await getLikedRecipesByUser(userID ?? user._id)            
+            requestStatus(false, null, recipesFormDB.recipes)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus, user])
+
     const value = useMemo( () => {
         return { isLoading, recipes, recipe, error, filteredRecipes }
     }, [isLoading, recipes, recipe, error, filteredRecipes] )
 
-    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe, handleUpdateRecipeImage, handleCreateRecipe, handleDeleteRecipe }
+    return { value, handleGetAllRecipes, handleGetRecipe, handleGetRecipesByUser, handleUpdateRecipe, handleLikeRecipe, handleUpdateRecipeImage, handleCreateRecipe, handleDeleteRecipe, handleGetLikedRecipes }
 }
 
 useRecipes.propTypes = {}

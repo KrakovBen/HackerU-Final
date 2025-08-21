@@ -75,3 +75,12 @@ export const deleteRecipe = async (recipeID) => {
         return Promise.reject(error.message)
     }
 }
+
+export const getLikedRecipesByUser = async (userID) => {
+    try {
+        const { data } = await axios.get(`${apiUrl}/recipes/liked/${userID}`)
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}

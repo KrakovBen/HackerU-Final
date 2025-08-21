@@ -28,6 +28,7 @@ const Footer = () => {
                 { label: 'הרשמה', href: ROUTES.REGISTER, visible: ({ isAuthenticated }) => !isAuthenticated },
                 { label: 'הוספת מתכון', href: ROUTES.RECIPE_CREATE, visible: ({ isAuthenticated }) => isAuthenticated },
                 { label: 'ניהול משתמשים', href: ROUTES.CRM, visible: ({ isAdmin }) => isAdmin },
+                { label: 'מתכונים אהובים', href: ROUTES.MY_LIKED_RECIPES, visible: ({ isAuthenticated }) => isAuthenticated },
             ],
         },
         {

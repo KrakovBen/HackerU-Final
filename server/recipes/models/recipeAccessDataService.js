@@ -133,4 +133,20 @@ const deleteRecipe = async (id) => {
         return Promise.reject(error)
     }
 }
-module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, deleteRecipe }
+
+const getLikedRecipesByUser = async (userID) => {
+    if(DB_TYPE !== "mongoDB") return Promise.resolve('Not in mongoDB')
+
+    try {
+        const recipes = await Recipe.aggregate([{ $match: { likes: new Types.ObjectId(userID) } }, { $sort: { createdAt: -1 } }, { $lookup: { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'userData' } }, { $unwind: '$userData' }, { $addFields: { createdByName: { $concat: ['$userData.name.first', ' ', '$userData.name.last'] } } } ])
+        
+        if(!recipes.length) return Promise.resolve({ recipes })
+
+        return Promise.resolve({ recipes: recipes.map(recipe => appendFullImageUrl(recipe)) })
+    } catch (error) {
+        error.status = 404
+        return Promise.reject(error)
+    }
+}
+
+module.exports = { getRecipes, createRecipe, getRecipe, getAllRecipes, updateRecipe, likeRecipe, getRecipesByUser, deleteRecipe, getLikedRecipesByUser }

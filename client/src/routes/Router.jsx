@@ -13,6 +13,7 @@ import CreateRecipePage from '../recipes/pages/CreateRecipePage'
 import TermsPage from '../pages/TermsPage'
 import PrivacyPage from '../pages/PrivacyPage'
 import AboutPage from '../pages/AboutPage'
+import MyLikedRecipes from '../users/pages/MyLikedRecipes'
 
 const Router = () => {
     return (
@@ -29,6 +30,7 @@ const Router = () => {
             <Route path={ROUTES.TERMS} element={<TermsPage/>} />
             <Route path={ROUTES.PRIVACY} element={<PrivacyPage/>} />
             <Route path={ROUTES.ABOUT} element={<AboutPage/>} />
+            <Route path={ROUTES.MY_LIKED_RECIPES} element={<MyLikedRecipes/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )

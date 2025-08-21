@@ -11,7 +11,8 @@ const ROUTES = {
     RECIPE_EDIT: '/recipes/edit',
     CRM: '/crm',
     TERMS: '/terms',
-    PRIVACY: '/privacy'
+    PRIVACY: '/privacy',
+    MY_LIKED_RECIPES: '/my-liked-recipes'
 }
 
 export default ROUTES

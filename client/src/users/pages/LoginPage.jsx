@@ -3,7 +3,7 @@ import { useUser } from '../providers/UserProvider'
 import useUsers from '../hooks/useUsers'
 import initialLoginForm from '../helpers/initialForms/initialLoginForm'
 import useForm from './../../forms/hooks/useForm'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link as RouterLink } from 'react-router-dom'
 import ROUTES from '../../routes/routesModel'
 import { Container, Typography } from '@mui/material'
 import Form from '../../forms/components/Form'
@@ -60,7 +60,7 @@ const LoginPage = () => {
             </Form>
             )}
             </Container>
-            <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link href={ROUTES.REGISTER}>הירשם עכשיו</Link></Typography>
+            <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link component={RouterLink} to={ROUTES.REGISTER}>הירשם עכשיו</Link></Typography>
             </>
             
         )

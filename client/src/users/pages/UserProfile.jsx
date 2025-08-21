@@ -62,7 +62,7 @@ const UserProfile = () => {
         <Typography>
             אופס. נראה שאין נתונים להצגה.
         </Typography>
-    )    
+    )
 
     return (
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>

@@ -4,7 +4,7 @@ import useForm from '../../forms/hooks/useForm'
 import initialSignupForm from '../helpers/initialForms/initialSignupForm'
 import signupSchema from '../models/joi-schema/signupSchema'
 import { useUser } from '../providers/UserProvider'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link as RouterLink } from 'react-router-dom'
 import ROUTES from '../../routes/routesModel'
 import { Container } from '@mui/material'
 import Form from '../../forms/components/Form'
@@ -26,7 +26,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <Container>
+            <Container sx={{ paddingTop: 8, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Form onSubmit={rest.onSubmit} onReset={rest.handleReset} onChange={rest.validateForm} title='הרשמה' styles={{ maxWidth: "650px", width: "80vw", margin: "auto" }} to={ROUTES.ROOT}>
                     <Input label='שם פרטי' name='firstName' type='text' error={value.errors.firstName} data={value.data} onChange={rest.handleChange} sx={{ gridColumn: 'span 6', marginLeft: 1 }} />
                     <Input label='שם משפחה' name='lastName' type='text' error={value.errors.lastName} data={value.data} onChange={rest.handleChange} sx={{ gridColumn: 'span 6' }} />
@@ -35,7 +35,7 @@ const RegisterPage = () => {
                 </Form>
             </Container>
 
-            <Typography textAlign='center' sx={{ mt: 2 }}>כבר יש לך חשבון? <Link href={ROUTES.LOGIN}>התחבר עכשיו</Link></Typography>
+            <Typography textAlign='center' sx={{ mt: 2 }}>כבר יש לך חשבון? <Link component={RouterLink} to={ROUTES.LOGIN}>התחבר עכשיו</Link></Typography>
         </>
     )
 }
