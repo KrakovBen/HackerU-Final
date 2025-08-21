@@ -63,7 +63,7 @@ const useRecipes = () => {
         try {
             setLoading(true)
             const recipesFormDB = await getRecipesByUser(userID ?? user._id)
-            requestStatus(false, null, recipesFormDB)
+            requestStatus(false, null, recipesFormDB.recipes)
         } catch (error) {
             requestStatus(false, error, null)
         }

@@ -166,6 +166,9 @@ router.delete( '/:id', auth, async (req, res) => {
 router.get( '/liked/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
+        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
+        if((id != verifiedUser._id)) throw new Error('אינך מורשה לבצע פעולה זו.')
+            
         const recipes = await getLikedRecipesByUser(id)
         res.status(200).send(recipes)
     } catch (error) {

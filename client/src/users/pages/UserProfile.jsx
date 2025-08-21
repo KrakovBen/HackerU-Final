@@ -5,57 +5,37 @@ import { Typography, Container } from '@mui/material'
 import PageHeader from '../../components/PageHeader'
 import { makeFirstLetterCapital } from '../../utils/algoMethods'
 import RecipesFeedback from '../../recipes/components/RecipesFeedback'
-import { getRecipesByUser } from '../../recipes/services/recipesApiService'
 import useRecipes from '../../recipes/hooks/useRecipes'
 
 const UserProfile = () => {
     const { userID } = useParams()
     const [ userName, setUserName ] = useState(null)
     const { handleGetUser, value: {users: userFromDB, user} } = useUsers()
-    const [ recipes, setRecipes ] = useState([])
-    const { handleDeleteRecipe } = useRecipes()
+    const { handleDeleteRecipe, handleGetRecipesByUser, value: { filteredRecipes, isLoading, error } } = useRecipes()
+    const [ value, setValue ] = useState(null)
     
     useEffect( () => {
+        if (!userID) return
         handleGetUser(userID)
-    }, [userID, handleGetUser])
+        handleGetRecipesByUser(userID)
+    }, [userID])
 
     useEffect( () => {
-        if (userFromDB && userFromDB.name) {
-            document.title = `פרופיל משתמש - ${makeFirstLetterCapital(userFromDB.name.first)} ${makeFirstLetterCapital(userFromDB.name.last)} | BisBook`
-            const fullName = makeFirstLetterCapital(userFromDB.name.first) + ' ' + makeFirstLetterCapital(userFromDB.name.last)
-            setUserName(fullName)
+        const fullName = makeFirstLetterCapital(userFromDB?.name?.first) + ' ' + makeFirstLetterCapital(userFromDB?.name?.last)
+        setUserName(fullName || null)
+
+        if (fullName) {
+            document.title = `פרופיל משתמש - ${fullName} | BisBook`
         }
     }, [userFromDB])
-
+    
     useEffect( () => {
-        if (!userFromDB || !userFromDB._id) return
-        let ignore = false
+        setValue(filteredRecipes)
+    }, [filteredRecipes])
 
-        async function fetchUserRecipes() {
-            try {
-                const res = await getRecipesByUser(userFromDB._id)
-                const data = res?.data ?? res
-                const list =
-                    Array.isArray(data) ? data :
-                        Array.isArray(data?.recipes) ? data.recipes :
-                            []
-
-                if (!ignore) {
-                    setRecipes(list)
-                }
-            } catch (error) {
-                if (!ignore) setRecipes([])
-            }
-        }
-
-        fetchUserRecipes()
-
-        return () => { ignore = true }
-    }, [userFromDB] )
-
-    const onDeleteRecipe = (recipeID) => {
-        handleDeleteRecipe(recipeID)
-        setRecipes(recipes.filter((recipe) => recipe._id !== recipeID))
+    const onDeleteRecipe = async (recipeID) => {
+        await handleDeleteRecipe(recipeID)
+        setValue(prev => prev.filter(recipe => recipe._id !== recipeID))
     }
 
     if(!userFromDB) return (
@@ -67,8 +47,8 @@ const UserProfile = () => {
     return (
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>
             <PageHeader title={userName} subtitle="פרופיל משתמש" />
-            {recipes.length > 0 ? (
-                <RecipesFeedback user={user} isLoading={false} error={null} recipes={recipes} onDelete={onDeleteRecipe}/>
+            {value?.length > 0 ? (
+                <RecipesFeedback user={user} isLoading={isLoading} error={error} recipes={value} onDelete={onDeleteRecipe}/>
             ) : (
                 <Typography>משתמש זה עדיין לא העלה מתכונים לאתר.</Typography>
             )}

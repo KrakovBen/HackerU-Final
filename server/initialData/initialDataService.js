@@ -12,7 +12,7 @@ const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true })
 
 const filenameFromUrl = (url, fallbackExt = 'jpg') => {
     const time = Date.now()
-    return `seed-${time}.${fallbackExt}`
+    return `images-${time}.${fallbackExt}`
 }
 
 const getExtFromHead = async (url) => {

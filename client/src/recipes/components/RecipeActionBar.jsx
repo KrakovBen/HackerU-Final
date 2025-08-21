@@ -63,7 +63,7 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
     }
 
     const handleDeleteRecipe = () => {
-        handleDialog(true)
+        handleDialog(false)
         onDelete(recipe._id)
     }
 
