@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getUsers, registerUser, loginUser, deleteUser, getUser, toggleAdmin } = require('../models/usersAccessDataService')
+const { getUsers, registerUser, loginUser, deleteUser, getUser, toggleAdmin, getUsersWithRecipes } = require('../models/usersAccessDataService')
 const { handleError } = require('../../utils/errorHandler')
 const auth = require('../../auth/authService')
 const { verifyAuthToken, generateAuthToken } = require('../../auth/providers/jwt')
@@ -11,6 +11,15 @@ router.get('/', auth, async (req, res) => {
         if(!req.user.isAdmin) throw new Error('אתה לא מורשה לבצע פעולה זו.')
         
         const users = await getUsers()
+        res.status(200).send(users)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.get('/all', async (req, res) => {
+    try {
+        const users = await getUsersWithRecipes()
         res.status(200).send(users)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)
@@ -52,9 +61,7 @@ router.post('/otp', async (req, res) =>{
     try {
         const { txId, code } = req.body
         let user = await verifyEmailOtp({ txId, code })
-        console.log(user)
         user = await getUser(user.userId)
-        console.log(user)
         const token = generateAuthToken(user)
         res.status(200).send(token)
     } catch (error) {

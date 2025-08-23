@@ -14,6 +14,7 @@ import TermsPage from '../pages/TermsPage'
 import PrivacyPage from '../pages/PrivacyPage'
 import AboutPage from '../pages/AboutPage'
 import MyLikedRecipes from '../users/pages/MyLikedRecipes'
+import MainPage from '../pages/MainPage'
 
 const Router = () => {
     return (
@@ -26,7 +27,7 @@ const Router = () => {
             <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />
             <Route path={ROUTES.CRM} element={<CRMPage/>} />
             <Route path={`${ROUTES.USER_PROFILE}/:userID`} element={<UserProfile/>} />
-            <Route path={ROUTES.ROOT} element={<RecipesCategoryPage/>} />
+            <Route path={ROUTES.ROOT} element={<MainPage/>} />
             <Route path={ROUTES.TERMS} element={<TermsPage/>} />
             <Route path={ROUTES.PRIVACY} element={<PrivacyPage/>} />
             <Route path={ROUTES.ABOUT} element={<AboutPage/>} />

@@ -11,7 +11,7 @@ import ImageIcon from '@mui/icons-material/Image';
 
 const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) => {
     const styleButton = { justifyContent: 'center', display: 'flex', alignItems: 'center',fontWeight: 500, gap: '7px', fontSize:{xs: '15px', md: '20px'} }
-    const [ isListDisplay, setIsListDisplay ] = useState(true)
+    const [ isListDisplay, setIsListDisplay ] = useState(false)
     
     if (isLoading) return ( <Spinner /> )
 
@@ -27,7 +27,7 @@ const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) 
             </Button>
         </Container>
         {isListDisplay ? <RecipsGrid recipes={recipes} onDelete={onDelete} onLike={onLike} user={user}/>
-        : <RecipsImagesList recipes={recipes} onDelete={onDelete} onLike={onLike} user={user}/>
+        : <RecipsImagesList recipes={recipes} />
         }
         </>
     )

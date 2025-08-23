@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login, verifyOtp, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer } from '../services/usersApiService'
+import { login, verifyOtp, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer, getAllUsersWithRecipes } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
 
@@ -29,7 +29,7 @@ const useUsers = () => {
 
     useEffect( () => {
         if (users && users.length > 0) {
-            setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email.includes(query)))
+            setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email?.includes(query)))
         }
     }, [users, query] )
 
@@ -56,7 +56,6 @@ const useUsers = () => {
         try {
             setLoading(true)
             const token = await verifyOtp({ txId, code })
-            console.log(token)
             if (!token) throw new Error('אימות נכשל')
             setTokenInLocalStorage(token)
             setToken(token)
@@ -78,7 +77,6 @@ const useUsers = () => {
             const normalizedUser = normalizeUser(userFromClient)            
             await signup(normalizedUser)
             const res = await handleLogin({ email: userFromClient.email, password: userFromClient.password })
-            console.log(res)
             navigate(ROUTES.LOGIN, { state: { startInOtp: true, txId: res.txId } })
         } catch (error) {
             requestStatus(false, error, null)
@@ -125,11 +123,21 @@ const useUsers = () => {
         }
     }, [requestStatus])
 
+    const handleGetAllUsersWithRecipes = useCallback( async () => {
+        try {
+            setLoading(true)
+            const usersFormDB = await getAllUsersWithRecipes()
+            requestStatus(false, null, usersFormDB, user)
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => (
         { isLoading, error, user, users, filteredUsers }
     ), [isLoading, error, user, users, filteredUsers])
 
-    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser, handleVerifyOtp }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser, handleVerifyOtp, handleGetAllUsersWithRecipes }
 }
 
 export default useUsers

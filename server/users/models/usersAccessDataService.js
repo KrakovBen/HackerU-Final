@@ -5,6 +5,7 @@ const { pick } = require('lodash')
 const LoginUserSchema = require('../models/mongoDB/Login')
 const { generateAuthToken } = require('../../auth/providers/jwt')
 const { comparePassword, generateUserPassword } = require('../halpers/bcrypt')
+const Recipe = require('../../recipes/models/mongoDB/Recipe')
 
 const getUsers = async () => {
     if( DB_TYPE === "mongoDB") {
@@ -137,4 +138,26 @@ const toggleAdmin = async (id) => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getUsers, registerUser, loginUser, deleteUser, toggleAdmin, getUser }
+const getUsersWithRecipes = async () => {
+    if(DB_TYPE === 'mongoDB') {
+        try {
+            const users = await Recipe.aggregate([
+                { $group: { _id: '$createdBy', recipeCount: { $sum: 1 } } },
+                { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'user' } },
+                { $unwind: '$user' },
+                { $sort: { recipeCount: -1, 'user.name.first': 1, 'user.name.last': 1 } },
+                { $project: { _id: '$user._id', name: '$user.name', recipeCount: 1 } },
+            ])
+
+            if(!users.length) return ([])
+            return Promise.resolve(users)
+        } catch (error) {
+            error.status = 404
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { getUsers, registerUser, loginUser, deleteUser, toggleAdmin, getUser, getUsersWithRecipes }
