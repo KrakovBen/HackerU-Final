@@ -3,9 +3,9 @@ import { object, func } from 'prop-types'
 import { Card, CardContent, CardHeader, Typography, CardMedia, Box } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import ROUTES from '../../../routes/routesModel'
-import RecipeActionBar from './../RecipeActionBar'
+import RecipeActionBar from '../RecipeActionBar'
 
-const Recipe = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {
+const RecipeGrid = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {
     const navigate = useNavigate()
     return (
         <Card sx={{ borderRadius: '9px', overflow: 'hidden', boxShadow: '0px 3px 6px -1px rgba(0,0,0,0.2)' }} key={recipe._id}>
@@ -21,7 +21,7 @@ const Recipe = ({ recipe, onDelete, onLike, onShare, onEdit, user }) => {
     )
 }
 
-Recipe.propTypes = {
+RecipeGrid.propTypes = {
     recipe: object.isRequired,
     onDelete: func.isRequired,
     onLike: func.isRequired,
@@ -30,4 +30,4 @@ Recipe.propTypes = {
     user: object.isRequired
 }
 
-export default Recipe
+export default RecipeGrid
