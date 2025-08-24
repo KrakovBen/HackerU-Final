@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getUsers, registerUser, loginUser, deleteUser, getUser, toggleAdmin, getUsersWithRecipes } = require('../models/usersAccessDataService')
+const { getUsers, registerUser, loginUser, deleteUser, getUser, toggleAdmin, getUsersWithRecipes, getUserByEmail, updateUserPassword } = require('../models/usersAccessDataService')
 const { handleError } = require('../../utils/errorHandler')
 const auth = require('../../auth/authService')
 const { verifyAuthToken, generateAuthToken } = require('../../auth/providers/jwt')
@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
-router.get('/all', async (req, res) => {
+router.get('/users-with-recipes', async (req, res) => {
     try {
         const users = await getUsersWithRecipes()
         res.status(200).send(users)
@@ -51,10 +51,10 @@ router.post('/login', async (req, res) => {
         
         if(!user) throw new Error('שם משתמש או סיסמה שגויים.')
         const otp = await requestEmailOtp(user, req)
-        res.status(200).send(otp)
-    } catch (error) {
-        return handleError(res, error.status || 500, error.message)
-    }
+    res.status(200).send(otp)
+} catch (error) {
+    return handleError(res, error.status || 500, error.message)
+}
 })
 
 router.post('/otp', async (req, res) =>{
@@ -93,6 +93,32 @@ router.patch('/:id/admin', auth, async (req, res) => {
         if(!chackUserPermission.isAdmin) throw new Error('אינך מורשה לבצע פעולה זו.')
 
         const user = await toggleAdmin(id)
+        res.status(200).send(user)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.post('/email', async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await getUserByEmail(email)
+        if(!user) throw new Error('כתובת Email שגויה.')
+        const otp = await requestEmailOtp(user, req)
+        res.status(200).send(otp)
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message)
+    }
+})
+
+router.patch('/:id/password', auth, async (req, res) => {
+    try {
+        const id = req.params.id
+        const { password, verifyPassword } = req.body
+        const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
+        if( password != verifyPassword ) throw new Error('הסיסמאות אינן תואמות.')
+        if(id != verifiedUser._id) throw new Error('אינך מורשה לבצע פעולה זו.')
+        const user = await updateUserPassword(password, verifyPassword, id)
         res.status(200).send(user)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)

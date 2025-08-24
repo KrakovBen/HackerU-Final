@@ -30,19 +30,19 @@ const requestEmailOtp = async (user, req) => {
 const verifyEmailOtp = async ({ txId, code }) => {
     const rec = await Otp.findOne({ txId, used: false })
     if (!rec) {
-        const e = new Error('OTP לא קיים או כבר שומש'); e.status = 400; throw e
+        const error = new Error('OTP לא קיים או כבר שומש'); error.status = 400; throw error
     }
     if (rec.expiresAt < new Date()) {
-        const e = new Error('OTP פג תוקף'); e.status = 400; throw e
+        const error = new Error('OTP פג תוקף'); error.status = 400; throw error
     }
     if (rec.attempts >= MAX_ATTEMPTS) {
-        const e = new Error('יותר מדי ניסיונות'); e.status = 429; throw e
+        const error = new Error('יותר מדי ניסיונות'); error.status = 429; throw error
     }
 
-    const ok = bcrypt.compare(code, rec.codeHash)
+    const ok = await bcrypt.compare(code, rec.codeHash)
     if (!ok) {
         await Otp.updateOne({ _id: rec._id }, { $inc: { attempts: 1 } })
-        const e = new Error('קוד שגוי'); e.status = 400; throw e
+        const error = new Error('קוד שגוי'); error.status = 400; throw error
     }
 
     await Otp.updateOne({ _id: rec._id }, { used: true })

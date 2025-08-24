@@ -10,7 +10,7 @@ const Recipe = require('../../recipes/models/mongoDB/Recipe')
 const getUsers = async () => {
     if( DB_TYPE === "mongoDB") {
         try {
-            const users = await User.find({}, {password: 0})
+            const users = await User.find({}, {password: 0}).sort({ isAdmin: -1, 'name.first': 1 })
             if(!users.length) return ([])
             return Promise.resolve(users)
         } catch (error) {
@@ -160,4 +160,41 @@ const getUsersWithRecipes = async () => {
     return Promise.resolve('Not in mongoDB')
 }
 
-module.exports = { getUsers, registerUser, loginUser, deleteUser, toggleAdmin, getUser, getUsersWithRecipes }
+const getUserByEmail = async (email) => {
+    if(DB_TYPE === 'mongoDB') {
+        try {
+            const user = await User.findOne({email: email.email}, {email: 1, _id: 1, isAdmin: 1})
+            if(!user) throw new Error('לא נמצא משתמש')
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+const updateUserPassword = async (password, verifyPassword, userId) => {
+    if(DB_TYPE === 'mongoDB') {
+        try {
+            let user = await User.findById(userId)
+            if(!user) throw new Error('לא נמצא משתמש')
+
+            if(password !== verifyPassword) throw new Error('הסיסמאות אינן תואמות')
+
+            user.password = await generateUserPassword(password)
+            user = await user.save()
+            user = pick(user, ['name', 'email', '_id'])
+
+            return Promise.resolve(user)
+        } catch (error) {
+            error.status = 400
+            return Promise.reject(error)
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB')
+}
+
+module.exports = { getUsers, registerUser, loginUser, deleteUser, toggleAdmin, getUser, getUsersWithRecipes, getUserByEmail, updateUserPassword}

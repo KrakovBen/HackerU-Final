@@ -5,6 +5,8 @@ import UserList from './UserList'
 import Spinner from '../../../components/Spinner'
 
 const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
+    const style = { fontSize: { xs: 13, md: 16 }, letterSpacing: { xs: 0.02, md: 0.04 } }
+    
     if (isLoading) return ( <Spinner /> )
     if (error) return ( <Typography>{error}</Typography> )
 
@@ -17,12 +19,13 @@ const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell align="right">שם מלא</TableCell>
-                        <TableCell align="right">כתובת Email</TableCell>
-                        <TableCell align="right">פעולות</TableCell>
+                        <TableCell align="right" sx={style}>שם מלא</TableCell>
+                        <TableCell align="right" sx={style}>כתובת Email</TableCell>
+                        <TableCell align="right" sx={style}>פעולות</TableCell>
                     </TableRow>
                 </TableHead>
-                <UserList users={users} onDelete={onDelete} onAdmin={onAdmin}></UserList>
+
+                <UserList users={users} onDelete={onDelete} onAdmin={onAdmin} style={style}></UserList>
             </Table>
         </TableContainer>
     )

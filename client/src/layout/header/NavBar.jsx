@@ -9,10 +9,11 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useUser } from '../../users/providers/UserProvider'
 import useUsers from '../../users/hooks/useUsers'
 import SearchBar from './SearchBar'
+import UserMenu from './UserMenu'
 
 const pages = [
     { label: 'בית', path: ROUTES.ROOT, adminOnly: false },
-    { label: 'מתכונים', path: ROUTES.RECIPES, adminOnly: false },
+    { label: 'כל המתכונים', path: ROUTES.RECIPES, adminOnly: false },
     { label: 'ניהול משתמשים', path: ROUTES.CRM, adminOnly: true }
 ]
 
@@ -52,11 +53,8 @@ const NavBar = () => {
                                     )
                                 ))}
                                 
-                                {!user && (
-                                    <ListItem sx={{ textAlign: 'right', direction: 'rtl' }} component={Link} to={ROUTES.LOGIN} onClick={() => setOpenDrawer(false)}>
-                                        <ListItemText primary="התחברות" />
-                                    </ListItem>
-                                )}
+                                <UserMenu user={user} onLogout={onLogout} setOpenDrawer={setOpenDrawer} />
+                                
                             </List>
                         </Drawer>
                     </>
@@ -70,15 +68,7 @@ const NavBar = () => {
                             )
                         ))}
 
-                        {!user ? (
-                            <Button component={Link} to={ROUTES.LOGIN} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: theme.palette.primary.text }, marginInlineEnd: 3 }} >
-                                התחברות
-                            </Button>
-                        ) : (
-                            <Button onClick={onLogout} color="inherit" sx={{ fontWeight: 500, '&:hover': { color: theme.palette.primary.text }, marginInlineEnd: 3 }} >
-                                התנתקות
-                            </Button>
-                        )}
+                        <UserMenu user={user} onLogout={onLogout} />
 
                         {!showSearch ? (
                             <IconButton onClick={() => setShowSearch(true)} color="inherit">

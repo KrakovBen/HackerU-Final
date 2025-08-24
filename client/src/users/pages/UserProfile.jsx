@@ -6,6 +6,9 @@ import PageHeader from '../../components/PageHeader'
 import { makeFirstLetterCapital } from '../../utils/algoMethods'
 import RecipesFeedback from '../../recipes/components/RecipesFeedback'
 import useRecipes from '../../recipes/hooks/useRecipes'
+import { Button } from '@mui/material'
+import { Link } from 'react-router-dom'
+import ROUTES from '../../routes/routesModel'
 
 const UserProfile = () => {
     const { userID } = useParams()
@@ -47,10 +50,11 @@ const UserProfile = () => {
     return (
         <Container maxWidth='1680px' sx={{ mx: 'auto' }}>
             <PageHeader title={userName} subtitle="פרופיל משתמש" />
+            {(user._id === userID) && (<Button variant="outlined" sx={{ fontWeight: 700, fontSize:{xs: '15px', md: '20px'} }} color='primary' component={Link} to={ROUTES.RECIPE_CREATE}>הוספת מתכון</Button>)}
             {value?.length > 0 ? (
                 <RecipesFeedback user={user} isLoading={isLoading} error={error} recipes={value} onDelete={onDeleteRecipe}/>
             ) : (
-                <Typography>משתמש זה עדיין לא העלה מתכונים לאתר.</Typography>
+                <Typography sx={{ textAlign: 'center' }}>{user._id === userID ? 'טרם העלת מתכונים לאתר.' : 'משתמש זה עדיין לא העלה מתכונים לאתר.'}</Typography>
             )}
         </Container>
     )

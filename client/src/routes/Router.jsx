@@ -15,6 +15,8 @@ import PrivacyPage from '../pages/PrivacyPage'
 import AboutPage from '../pages/AboutPage'
 import MyLikedRecipes from '../users/pages/MyLikedRecipes'
 import MainPage from '../pages/MainPage'
+import PasswordChangePage from '../users/pages/PasswordChangePage'
+import ForgotPasswordPage from '../users/pages/ForgotPasswordPage'
 
 const Router = () => {
     return (
@@ -32,6 +34,8 @@ const Router = () => {
             <Route path={ROUTES.PRIVACY} element={<PrivacyPage/>} />
             <Route path={ROUTES.ABOUT} element={<AboutPage/>} />
             <Route path={ROUTES.MY_LIKED_RECIPES} element={<MyLikedRecipes/>} />
+            <Route path={ROUTES.CHANGE_PASSWORD} element={<PasswordChangePage/>} />
+            <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage/>} />
             <Route path="*" element={<ErrorPage />} />
         </Routes>
     )

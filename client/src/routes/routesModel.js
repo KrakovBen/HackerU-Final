@@ -12,7 +12,9 @@ const ROUTES = {
     CRM: '/crm',
     TERMS: '/terms',
     PRIVACY: '/privacy',
-    MY_LIKED_RECIPES: '/my-liked-recipes'
+    MY_LIKED_RECIPES: '/my-liked-recipes',
+    CHANGE_PASSWORD: '/change-password',
+    FORGOT_PASSWORD: '/forgot-password'
 }
 
 export default ROUTES

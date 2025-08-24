@@ -13,8 +13,10 @@ import loginSchema from '../models/joi-schema/loginSchema'
 import otpSchema from '../models/joi-schema/otpSchema'
 import Spinner from '../../components/Spinner'
 import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
+    const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { user } = useUser()
     const { handleLogin, handleVerifyOtp, value } = useUsers()
@@ -30,12 +32,19 @@ const LoginPage = () => {
         }
     }
 
+    const submitOtp = async (data) => {
+        const res = await handleVerifyOtp(data)
+        if (res) {
+            navigate(ROUTES.ROOT)
+        }
+    }
+
     useEffect(() => {
         document.title = 'התחברות | BisBook'
     }, [])
     
     const login = useForm(initialLoginForm, loginSchema, submitLogin)
-    const otp = useForm({ otp: '' }, otpSchema, ({ otp }) => handleVerifyOtp({ txId, code: otp }))
+    const otp = useForm({ otp: '' }, otpSchema, ({ otp }) => submitOtp({ txId, code: otp }))
     
     if (user) return <Navigate replace to={ROUTES.ROOT} />
     
@@ -60,10 +69,11 @@ const LoginPage = () => {
             </Form>
             )}
             </Container>
-            <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link component={RouterLink} to={ROUTES.REGISTER}>הירשם עכשיו</Link></Typography>
-            </>
+            {mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link component={RouterLink} to={ROUTES.REGISTER}>לעמוד הרשמה</Link></Typography> : ''}
+            {mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>שכחת סיסמה? <Link component={RouterLink} to={ROUTES.FORGOT_PASSWORD}>לאיפוס סיסמה</Link></Typography> : ''}
             
-        )
-    }
-    
+        </>
+    )
+}
+
 export default LoginPage

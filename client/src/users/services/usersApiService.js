@@ -40,7 +40,7 @@ export const getAllUsers = async () => {
 
 export const getAllUsersWithRecipes = async () => {
     try {
-        const { data } = await axios.get(`${apiUrl}/users/all`)
+        const { data } = await axios.get(`${apiUrl}/users/users-with-recipes`)
         return data
     } catch (error) {
         return Promise.reject(error.message)
@@ -73,4 +73,21 @@ export const toggleAdmin = async (userId) => {
         return Promise.reject(error.message)
     }
 }
-    
+
+export const getUserByEmail = async (email) => {
+    try {
+        const { data } = await axios.post(`${apiUrl}/users/email`, { email })
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}
+
+export const updateUserPassword = async (password, verifyPassword, userId) => {
+    try {
+        const { data } = await axios.patch(`${apiUrl}/users/${userId}/password`, { password, verifyPassword })
+        return data
+    } catch (error) {
+        return Promise.reject(error.message)
+    }
+}

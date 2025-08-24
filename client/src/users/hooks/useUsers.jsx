@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../providers/UserProvider'
 import useAxios from '../../hooks/useAxios'
 import { removeToken, setTokenInLocalStorage, getUser } from '../services/localStorageService'
-import { login, verifyOtp, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer, getAllUsersWithRecipes } from '../services/usersApiService'
+import { login, verifyOtp, signup, getAllUsers, deleteUser, toggleAdmin, getUser as getUserFromServer, getAllUsersWithRecipes, getUserByEmail, updateUserPassword } from '../services/usersApiService'
 import ROUTES from '../../routes/routesModel'
 import normalizeUser from '../helpers/normalization/normalizeUser'
 
@@ -60,8 +60,8 @@ const useUsers = () => {
             setTokenInLocalStorage(token)
             setToken(token)
             const userFromLocalStorage = getUser()
-            navigate(ROUTES.ROOT)
             requestStatus(false, null, null, userFromLocalStorage)
+            return userFromLocalStorage
         } catch (error) {
             requestStatus(false, error, null)
         }
@@ -133,11 +133,34 @@ const useUsers = () => {
         }
     }, [requestStatus])
 
+    const handleGetUserByEmail = useCallback( async (email) => {
+        try {
+            setLoading(true)
+            const res = await getUserByEmail(email)
+            if (!res?.requiresOtp && !res.txId) throw new Error('שם משתמש או סיסמה שגויים.')
+            requestStatus(false, null, null)
+            return res
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
+    const handleUpdatePassword = useCallback( async (password, verifyPassword, userId) => {
+        try {
+            setLoading(true)
+            const user = await updateUserPassword(password, verifyPassword, userId)
+            requestStatus(false, null, user)
+            return user
+        } catch (error) {
+            requestStatus(false, error, null)
+        }
+    }, [requestStatus])
+
     const value = useMemo( () => (
         { isLoading, error, user, users, filteredUsers }
     ), [isLoading, error, user, users, filteredUsers])
 
-    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser, handleVerifyOtp, handleGetAllUsersWithRecipes }
+    return { value, handleLogin, handleLogout, handleSignup, handleGetAllUsers, handleDeleteUser, handleToggleAdmin, handleGetUser, handleVerifyOtp, handleGetAllUsersWithRecipes, handleGetUserByEmail, handleUpdatePassword }
 }
 
 export default useUsers
