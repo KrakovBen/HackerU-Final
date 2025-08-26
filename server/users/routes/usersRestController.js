@@ -5,6 +5,7 @@ const { handleError } = require('../../utils/errorHandler')
 const auth = require('../../auth/authService')
 const { verifyAuthToken, generateAuthToken } = require('../../auth/providers/jwt')
 const { requestEmailOtp, verifyEmailOtp } = require('../services/otpService')
+const { validateRegistration, validateLogin } = require('../validations/userValidationService')
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -38,6 +39,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        const { error } = validateRegistration(req.body)
+        if(error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
+
         const user = await registerUser(req.body)
         res.status(201).send(user)
     } catch (error) {
@@ -47,6 +51,9 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        const { error } = validateLogin(req.body)
+        if(error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
+
         const user = await loginUser(req.body)
         
         if(!user) throw new Error('שם משתמש או סיסמה שגויים.')
@@ -116,8 +123,10 @@ router.patch('/:id/password', auth, async (req, res) => {
         const id = req.params.id
         const { password, verifyPassword } = req.body
         const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
+        
         if( password != verifyPassword ) throw new Error('הסיסמאות אינן תואמות.')
         if(id != verifiedUser._id) throw new Error('אינך מורשה לבצע פעולה זו.')
+
         const user = await updateUserPassword(password, verifyPassword, id)
         res.status(200).send(user)
     } catch (error) {
