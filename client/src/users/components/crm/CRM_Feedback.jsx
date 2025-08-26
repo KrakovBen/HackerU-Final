@@ -3,6 +3,7 @@ import { bool, string, arrayOf, func } from 'prop-types'
 import { Typography, TableContainer, Paper, Table, TableHead, TableRow, TableCell } from '@mui/material'
 import UserList from './UserList'
 import Spinner from '../../../components/Spinner'
+import userType from '../../models/types/userType'
 
 const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
     const style = { fontSize: { xs: 13, md: 16 }, letterSpacing: { xs: 0.02, md: 0.04 } }
@@ -34,7 +35,7 @@ const CRM_Feedback = ({ isLoading, error, users, onDelete, onAdmin }) => {
 CRM_Feedback.propTypes = {
     isLoading: bool.isRequired,
     error: string,
-    // users: arrayOf(userListType),
+    users: arrayOf(userType).isRequired,
     onDelete: func.isRequired
 }
 

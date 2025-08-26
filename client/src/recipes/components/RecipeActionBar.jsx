@@ -9,6 +9,7 @@ import useRecipes from '../hooks/useRecipes'
 import ROUTES from '../../routes/routesModel'
 import RecipeDeleteDialog from './recipe/RecipeDeleteDialog'
 import Typography from '@mui/material/Typography'
+import { object, func } from 'prop-types'
 
 const RecipeActionBar = ({ user, recipe, onDelete }) => {
     const [ isDialogOpen, setDialog ] = useState(false)
@@ -93,6 +94,12 @@ const RecipeActionBar = ({ user, recipe, onDelete }) => {
         <RecipeDeleteDialog isDialogOpen={isDialogOpen} onChangeDialog={handleDialog} onDelete={handleDeleteRecipe} />
         </>
     )
+}
+
+RecipeActionBar.propTypes = {
+    user: object.isRequired,
+    recipe: object.isRequired,
+    onDelete: func.isRequired,
 }
 
 export default RecipeActionBar

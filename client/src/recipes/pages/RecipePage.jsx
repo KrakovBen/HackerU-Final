@@ -59,6 +59,4 @@ const RecipePage = () => {
     )
 }
 
-RecipePage.propTypes = {}
-
 export default RecipePage

@@ -4,6 +4,8 @@ import Spinner from '../../components/Spinner'
 import ROUTES from '../../routes/routesModel'
 import { useNavigate } from 'react-router-dom'
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar'
+import userType from '../../users/models/types/userType'
+import { bool, string, arrayOf } from 'prop-types'
 
 const UsersGrid = ({ users, isLoading, error }) => {
     const navigate = useNavigate()
@@ -29,6 +31,12 @@ const UsersGrid = ({ users, isLoading, error }) => {
             ))}
         </Container>
     )
+}
+
+UsersGrid.propTypes = {
+    users: arrayOf(userType).isRequired,
+    isLoading: bool.isRequired,
+    error: string,
 }
 
 export default UsersGrid

@@ -4,14 +4,12 @@ import useRecipes from '../hooks/useRecipes'
 import useForm from '../../forms/hooks/useForm'
 import initialRecipeForm from '../helpers/initialForms/initialRecipeForm'
 import recipeSchema from '../models/joi-schema/recipeSchema'
-import { useUser } from '../../users/providers/UserProvider'
 import mapRecipeToModel from '../helpers/normalization/recipeMapper'
 import RecipeForm from '../components/RecipeForm'
 import ROUTES from '../../routes/routesModel'
 
 const EditRecipeFormPage = () => {
     const { recipeID } = useParams()
-    const { user } = useUser()
     const { handleGetRecipe, handleUpdateRecipe, handleUpdateRecipeImage } = useRecipes()
     const navigate = useNavigate()
     const originalRecipeRef = useRef(null)
@@ -49,7 +47,5 @@ const EditRecipeFormPage = () => {
         <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID} onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />
     )
 }
-
-EditRecipeFormPage.propTypes = {}
 
 export default EditRecipeFormPage

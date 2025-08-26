@@ -7,7 +7,8 @@ import Spinner from '../../components/Spinner'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import WindowIcon from '@mui/icons-material/Window'
-import ImageIcon from '@mui/icons-material/Image';
+import ImageIcon from '@mui/icons-material/Image'
+import recipeType from '../models/types/recipeType'
 
 const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) => {
     const styleButton = { justifyContent: 'center', display: 'flex', alignItems: 'center',fontWeight: 500, gap: '7px', fontSize:{xs: '15px', md: '20px'} }
@@ -33,6 +34,13 @@ const RecipesFeedback = ({ isLoading, error, recipes, onDelete, onLike, user }) 
     )
 }
 
-RecipesFeedback.propTypes = {}
+RecipesFeedback.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    recipes: PropTypes.arrayOf(recipeType).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onLike: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
+}
 
 export default RecipesFeedback

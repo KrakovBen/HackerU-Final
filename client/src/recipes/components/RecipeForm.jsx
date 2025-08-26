@@ -46,7 +46,6 @@ const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, da
             <Input label='זמן הכנה (בדקות)' name='prepTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.prepTimeMinutes} data={data} onChange={onInputChange} />
             <Input label='זמן בישול (בדקות)' name='cookTimeMinutes' type='number' sx={{ gridColumn: 'span 6' }} error={errors?.cookTimeMinutes} data={data} onChange={onInputChange} />
             <Input label='קטגוריה' name='category' type='text' sx={{ gridColumn: 'span 6' }} error={errors?.category} data={data} onChange={onInputChange} />
-            {/* <Input label='תמונה' name='imageUrl' type='text' error={errors?.imageUrl} data={data} onChange={onInputChange} /> */}
 
             <Box sx={{ gridColumn: 'span 12' }}>
                 <Typography variant="subtitle1" sx={{ mb: 1 }}>תמונה</Typography>
