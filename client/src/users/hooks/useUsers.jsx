@@ -29,7 +29,7 @@ const useUsers = () => {
 
     useEffect( () => {
         if (users && users.length > 0) {
-            setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email?.includes(query)))
+            setFilterd(users.filter(user => user.name.first.includes(query) || user.name.last.includes(query) || user.email?.includes(query.toLocaleLowerCase())))
         }
     }, [users, query] )
 

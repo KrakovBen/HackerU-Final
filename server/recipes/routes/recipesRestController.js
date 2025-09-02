@@ -11,6 +11,7 @@ const { verifyAuthToken } = require('../../auth/providers/jwt')
 const { getUser } = require('../../users/models/usersAccessDataService')
 const validateRecipe = require('../validations/recipeValidationService')
 const normalizeRecipe = require('../helpers/normalizeRcipe')
+const { getRecipeTags } = require('../services/getRecipeTags')
 
 router.get( '/', async (req, res) => {
     try {
@@ -74,6 +75,8 @@ router.post( '/', auth, async (req, res) => {
         if(error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`)
 
         recipe.imageUrl = null
+        const tags = await getRecipeTags({ description: recipe.description, title: recipe.title })
+        recipe.tags = tags
         recipe = await normalizeRecipe(recipe, req.user._id)
         recipe = await createRecipe(recipe)
         res.status(201).send(recipe._id)
@@ -150,13 +153,17 @@ router.delete( '/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
         const verifiedUser = verifyAuthToken(req.headers['x-auth-token'])
-        if(!req.user.isAdmin && (id != verifiedUser._id)) throw new Error('אינך מורשה לבצע פעולה זו.')
+        let recipe = await getRecipe(id)
+        if(!recipe) throw new Error('לא נמצא מתכון')
+        const recipeUserId = recipe.createdBy
+
+        if(!req.user.isAdmin && (recipeUserId != verifiedUser._id)) throw new Error('אינך מורשה לבצע פעולה זו.')
         if( req.user.isAdmin ){
             const userData = await getUser(verifiedUser._id)
             if(!userData.isAdmin) throw new Error('אינך מורשה לבצע פעולה זו.')
         }
     
-        const recipe = await deleteRecipe(id)
+        recipe = await deleteRecipe(id)
         res.status(200).send(recipe)
     } catch (error) {
         return handleError(res, error.status || 500, error.message)

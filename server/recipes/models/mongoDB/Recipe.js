@@ -33,6 +33,10 @@ const RecipeSchema = new mongoose.Schema({
     likes: {
         type: [mongoose.Schema.Types.ObjectId],
         default: []
+    },
+    tags: {
+        type: [String],
+        default: []
     }
 }, { timestamps: true })
 

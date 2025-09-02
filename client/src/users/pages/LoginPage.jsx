@@ -58,7 +58,7 @@ const LoginPage = () => {
                 onChange={mode === 'password' ? login.validateForm : otp.validateForm}
                 title={mode === 'password' ? 'התחברות' : 'אימות דו־שלבי'}
                 styles={{ maxWidth: "650px", width: "80vw" }}>
-                    {mode === 'password' ? (
+                    { mode === 'password' ? (
                         <>
                             <Input label='כתובת Email' name='email' type='email' error={login.value.errors.email} data={login.value.data} onChange={login.handleChange} />
                             <Input label='סיסמה' name='password' type='password' error={login.value.errors.password} data={login.value.data} onChange={login.handleChange} />
@@ -69,9 +69,8 @@ const LoginPage = () => {
             </Form>
             )}
             </Container>
-            {mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link component={RouterLink} to={ROUTES.REGISTER}>לעמוד הרשמה</Link></Typography> : ''}
-            {mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>שכחת סיסמה? <Link component={RouterLink} to={ROUTES.FORGOT_PASSWORD}>לאיפוס סיסמה</Link></Typography> : ''}
-            
+            { mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>אין לך חשבון? <Link component={RouterLink} to={ROUTES.REGISTER}>לעמוד הרשמה</Link></Typography> : '' }
+            { mode === 'password' ? <Typography textAlign='center' sx={{ mt: 2 }}>שכחת סיסמה? <Link component={RouterLink} to={ROUTES.FORGOT_PASSWORD}>לאיפוס סיסמה</Link></Typography> : '' }
         </>
     )
 }

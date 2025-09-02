@@ -1,4 +1,7 @@
 const normalizeRecipe = async (rawRecipe, userID) => {
+    if (typeof rawRecipe.tags === 'string') {
+        rawRecipe.tags = rawRecipe.tags.split(',').map(tag => tag.trim())
+    }
 
     return {
         ...rawRecipe,

@@ -7,6 +7,8 @@ const { registerUser } = require('../users/models/usersAccessDataService')
 const initialData = require('./initialData.json')
 const { createRecipe, getRecipes, updateRecipe } = require('../recipes/models/recipeAccessDataService')
 const { getUsers } = require('../users/models/usersAccessDataService')
+const normalizeRecipe = require('../recipes/helpers/normalizeRcipe')
+const { getRecipeTags } = require('../recipes/services/getRecipeTags')
 
 const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true })
 
@@ -119,15 +121,33 @@ const generateInitialData = async () => {
         return
     }
 
+    for (let i = 0; i < recipes.length; i++) {
+        try {
+            const recipe = recipes[i]
+            await new Promise(resolve => setTimeout(resolve, 500))
+          
+            const tags = await getRecipeTags({ description: recipe.description, title: recipe.title })
+
+            recipe.tags = tags
+      
+            console.log(`Recipe ${i + 1} of ${recipes.length}`)
+        } catch (error) {
+            console.log(chalk.redBright(error.message))
+        }
+    }
+
+
     await Promise.all(
         recipes.map(async (recipe, index) => {
             try {
                 let ownerId
                 if (index < 3) {
-                    ownerId = admin._id
+                    ownerId = admin?._id
                 } else {
-                    ownerId = nonAdmins[index - 3]._id
+                    ownerId = nonAdmins[index - 3]?._id
                 }
+
+                recipe = await normalizeRecipe({ ...recipe, createdBy: ownerId })
                 await createRecipe({ ...recipe, createdBy: ownerId })
                 return true
             } catch (error) {

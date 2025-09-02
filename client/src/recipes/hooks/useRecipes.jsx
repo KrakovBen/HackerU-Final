@@ -26,8 +26,7 @@ const useRecipes = () => {
 
     useEffect( () => {
         if (recipes && recipes.length > 0) {
-            setFilterd(recipes.filter(recipe => recipe.title.includes(query) || recipe.description.includes(query) || recipe.ingredients.includes(query) || recipe.category.includes(query)))
-
+            setFilterd( recipes.filter(recipe => recipe.title.toLowerCase().includes(query) || recipe.description.toLowerCase().includes(query) || recipe.ingredients?.some(ing => ing.toLowerCase().includes(query)) || recipe.category?.toLowerCase().includes(query) || recipe.tags?.some(tag => tag.toLowerCase().includes(query)) ) )
         }
     }, [recipes, query] )
 
