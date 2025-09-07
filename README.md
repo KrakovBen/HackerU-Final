@@ -1,5 +1,3 @@
-<div dir="rtl" align="right">
-
 # 🍲 Recipe App | אפליקציית מתכונים  
 **HackerU Final Project – Full Stack Development**  
 
@@ -129,7 +127,4 @@ npm start
 ---
 
 ## 👨‍💻 Author | מחבר
-Ben Krakovsky  
-פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
-
-</div>
+Ben Krakovsky עבור  פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
