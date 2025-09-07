@@ -12,7 +12,7 @@
 
 ---
 
-## 🚀 Features | פיצ'רים
+## 🚀 פיצ'רים | Features
 - 🔐 Authentication & Authorization – אימות והרשאות עם **JWT**
 - 📖 Recipe CRUD – ניהול מתכונים מלא (הוספה, עדכון, מחיקה)
 - 🙋 User CRUD – ניהול משתמשים מלא (הוספה, עדכון, מחיקה)
@@ -23,7 +23,7 @@
 
 ---
 
-## 📂 Project Structure | מבנה פרויקט
+## 📂 מבנה פרויקט | Project Structure
 ```bash
 HackerU-Final/
 ├── client/                 # Frontend (React)
@@ -63,7 +63,7 @@ HackerU-Final/
 
 ---
 
-## ⚙️ Installation | הוראות התקנה
+## ⚙️ הוראות התקנה | Installation
 
 ### 1. Clone repository
 ```bash
@@ -80,13 +80,13 @@ cd ../server
 npm install
 ```
 
-### 3. Environment variables | משתני סביבה
+### 3. משתני סביבה | Environment variables
 📝 **הערה:** קבצי `.env` והקונפיגורציה (`development.json`, `production.json`)  
 אינם כלולים בפרויקט מטעמי אבטחה – הם צורפו למשימה באתר.  
 
 ---
 
-## ▶️ Running the Project | הרצה
+## ▶️ הרצה | Running the Project
 
 ### Development mode
 ```bash
@@ -110,13 +110,13 @@ npm start
 
 ---
 
-## 🔑 Notes | הערות
+## 🔑 הערות | Notes
 - לאחר **הפעלה ראשונית** יש להמתין מספר דקות עד שהמידע יורד ומסתנכרן מול השרתים.  
 - מומלץ ליצור **משתמשים עם אימייל אמיתי** כדי לבדוק את מערכת ההתחברות.  
 
 ---
 
-## 🛠️ Tech Stack | טכנולוגיות
+## 🛠️ טכנולוגיות | Tech Stack
 | צד לקוח | צד שרת | מסד נתונים | כלים נוספים |
 |---------|---------|-------------|-------------|
 | React   | Node.js | MongoDB     | Morgan      |
@@ -126,5 +126,5 @@ npm start
 
 ---
 
-## 👨‍💻 Author | מחבר
+## 👨‍💻 מחבר | Author
 בן קרקובסקי עבור פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
