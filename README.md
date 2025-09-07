@@ -25,8 +25,6 @@
 
 ---
 
-</div>
-<div dir="ltr" align="left">
 ## 📂 Project Structure | מבנה פרויקט
 ```bash
 HackerU-Final/
@@ -66,9 +64,7 @@ HackerU-Final/
 ```
 
 ---
-</div>
 
-<div dir="rtl" align="right">
 ## ⚙️ Installation | הוראות התקנה
 
 ### 1. Clone repository
