@@ -127,4 +127,4 @@ npm start
 ---
 
 ## 👨‍💻 Author | מחבר
-Ben Krakovsky עבור  פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
+בן קרקובסקי עבור פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
