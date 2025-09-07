@@ -1,5 +1,5 @@
-# 🍲 Recipe App | אפליקציית מתכונים  
-**HackerU Final Project – Full Stack Development**  
+# 🍲 אפליקציית מתכונים | bisbook  
+**עבור HackerU Final Project – Full Stack Development**  
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)
