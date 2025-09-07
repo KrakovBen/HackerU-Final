@@ -26,6 +26,8 @@
 ---
 
 ## 📂 Project Structure | מבנה פרויקט
+</div>
+<div dir="ltr" align="left">
 ```bash
 HackerU-Final/
 ├── client/                 # Frontend (React)
@@ -64,7 +66,9 @@ HackerU-Final/
 ```
 
 ---
+</div>
 
+<div dir="rtl" align="right">
 ## ⚙️ Installation | הוראות התקנה
 
 ### 1. Clone repository
