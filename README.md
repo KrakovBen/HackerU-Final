@@ -26,13 +26,37 @@
 ```bash
 HackerU-Final/
 ├── client/                 # Frontend (React)
+│   ├── public/             # קבצים סטטיים
+│   └── src/                # קוד המקור
+│       ├── components/     # קומפוננטות React
+│       ├── forms/          # טפסים
+│       ├── hooks/          # custom hooks
+│       ├── layout/         # layout
+│       ├── pages/          # עמודי React (routes)
+│       ├── providers/      # providers
+│       ├── recipes/        # מתכונים
+│       ├── routes/         # ניתוב
+│       ├── styles/         # קבצי SCSS/CSS
+│       ├── users/          # משתמשים
+│       ├── utils/          # פונקציות עזר
+│       └── App.js          # קובץ ראשי
+│
 ├── server/                 # Backend (Node.js, Express, MongoDB)
 │   ├── auth/               # Authentication & JWT
 │   ├── config/             # Environment configs
+│   ├── db/                 # חיבור למסד הנתונים
+│   ├── initialData/        # נתוני דמה / seed
 │   ├── logger/             # Logger service + Morgan
-│   ├── middlewares/        # Middlewares (upload, CORS, etc.)
+│   ├── logs/               # קבצי לוגים
+│   ├── middlewares/        # Middlewares (upload, CORS וכו')
+│   ├── recipes/            # מודולים הקשורים לניהול מתכונים
+│   ├── router/             # ניתוב API
+│   ├── services/           # לוגיקה עסקית
 │   ├── uploads/            # Recipe images
+│   ├── users/              # מודולים הקשורים לניהול משתמשים
+│   ├── utils/              # פונקציות עזר
 │   └── server.js           # Entry point
+│
 └── README.md
 ```
 
