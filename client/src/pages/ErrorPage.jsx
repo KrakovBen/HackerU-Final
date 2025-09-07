@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -26,7 +25,5 @@ const ErrorPage = () => {
         </Container>
     )
 }
-
-ErrorPage.propTypes = {}
 
 export default ErrorPage

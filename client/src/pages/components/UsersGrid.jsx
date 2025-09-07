@@ -12,7 +12,7 @@ const UsersGrid = ({ users, isLoading, error }) => {
     if (error) return ( <Typography>{error}</Typography> )
     if (isLoading) return ( <Spinner /> )
 
-    if (!users?.length) return null
+    if (!users?.length) return ( <Typography>אין משתמשים להצגה</Typography> )
     
     return (
         <Container maxWidth={false} disableGutters sx={{ mx: 'auto', maxWidth: '1600px', justifyContent: {xs: 'center', md: 'flex-end'}, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', alignItems: 'center', mb: 2 }}>
@@ -36,7 +36,7 @@ const UsersGrid = ({ users, isLoading, error }) => {
 UsersGrid.propTypes = {
     users: arrayOf(userType).isRequired,
     isLoading: bool.isRequired,
-    error: string,
+    error: string
 }
 
 export default UsersGrid

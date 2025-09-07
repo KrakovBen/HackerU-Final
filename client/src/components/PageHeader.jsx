@@ -18,7 +18,7 @@ const PageHeader = ({ title, subtitle, button }) => {
                     <Typography variant="h5" component="h2" sx={{ fontSize:{xs: '25px', md: '40px'}, letterSpacing: '0.025em' }}>{subtitle}</Typography>
                 </Box>
                 <Box>
-                    {button ?  <Button onClick={() => navigate(button.path)} variant="outlined" sx={{ fontWeight: 700, fontSize:{xs: '15px', md: '20px'} }} color='primary'>{button.text}</Button> : null}
+                    { button ? <Button onClick={() => navigate(button.path)} variant="outlined" sx={{ fontWeight: 700, fontSize:{xs: '15px', md: '20px'} }} color='primary'>{button.text}</Button> : null }
                 </Box>
             </Container>
             <Divider sx={{ my: 2 }} />

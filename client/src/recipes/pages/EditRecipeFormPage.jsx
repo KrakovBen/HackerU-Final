@@ -7,13 +7,14 @@ import recipeSchema from '../models/joi-schema/recipeSchema'
 import mapRecipeToModel from '../helpers/normalization/recipeMapper'
 import RecipeForm from '../components/RecipeForm'
 import ROUTES from '../../routes/routesModel'
+import Spinner from '../../components/Spinner'
 
 const EditRecipeFormPage = () => {
     const { recipeID } = useParams()
     const { handleGetRecipe, handleUpdateRecipe, handleUpdateRecipeImage } = useRecipes()
     const navigate = useNavigate()
     const originalRecipeRef = useRef(null)
-    const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, () => {})
+    const { value, ...rest } = useForm(initialRecipeForm, recipeSchema, () => {} )
 
     const handleSubmit = async (data) => {
         await handleUpdateRecipe(recipeID, data)
@@ -41,7 +42,7 @@ const EditRecipeFormPage = () => {
         handleGetRecipeFromAPI()
     }, [recipeID])
     
-    if (!value.data) return <>LOADING TO UPDATE!</>
+    if (!value.data) return <Spinner />
 
     return (
         <RecipeForm title='עריכת מתכון' onSubmit={handleSubmit} data={value.data} errors={value.errors} recipeID={recipeID} onInputChange={rest.handleChange} onFormChange={rest.validateForm} onReset={onResetClick} />

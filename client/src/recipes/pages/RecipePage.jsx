@@ -23,6 +23,11 @@ const RecipePage = () => {
         document.title = recipe?.title ? `${recipe.title} | BisBook` : 'BisBook'
     }, [recipe] )
 
+    const onDeleteRecipe = (recipeID) => {
+        handleDeleteRecipe(recipeID)
+        navigate(ROUTES.RECIPES)
+    }
+
     if (!recipe) return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>
             <Typography variant='h3' component='h2' sx={{ fontWeight: 700 }}>
@@ -30,11 +35,6 @@ const RecipePage = () => {
             </Typography>
         </Container>
     )
-
-    const onDeleteRecipe = (recipeID) => {
-        handleDeleteRecipe(recipeID)
-        navigate(ROUTES.RECIPES)
-    }
 
     return (
         <Container disableGutters maxWidth={false} sx={{ maxWidth: '1680px', mt: 4, px: 5 }}>

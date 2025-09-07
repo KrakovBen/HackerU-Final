@@ -4,6 +4,7 @@ import Form from '../../forms/components/Form'
 import Input from '../../forms/components/Input'
 import ROUTES from '../../routes/routesModel'
 import { Typography, Button, Box } from '@mui/material'
+import Spinner from '../../components/Spinner'
 
 const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, data, title, recipeID }) => {    
     const [ ingredientsList, setIngredientsList ] = useState([''])
@@ -37,7 +38,7 @@ const RecipeForm = ({ onSubmit, onReset, errors, onFormChange, onInputChange, da
         }
     }, [data])
 
-    if (!data) return <>LOADING!</>
+    if (!data) return <Spinner />
 
     return (
         <Form title={title} onSubmit={() => onSubmit({ ...data, __imageFile: imageFile })} onReset={onReset} onChange={onFormChange} to={`${ROUTES.RECIPE}/${recipeID}`} color='primary' spacing={2} styles={{ maxWidth: "980px", width: "80vw", margin: "auto" }}>

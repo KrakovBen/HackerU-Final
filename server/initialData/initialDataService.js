@@ -73,7 +73,7 @@ const downloadSeedImagesIfNeeded = async () => {
     }
 
     if (updated) console.log(chalk.greenBright(`Downloaded ${updated} seed images.`))
-    else console.log(chalk.greenBright('All seed images already exist.'))
+    else console.log(chalk.greenBright('All seed images already exist.')) 
 }
 
 const generateInitialData = async () => {
@@ -92,7 +92,7 @@ const generateInitialData = async () => {
     )).filter(Boolean)
 
     let admin = createdUsers.find(user => user?.isAdmin)
-    const nonAdmins = createdUsers.filter(u => !u.isAdmin)
+    const nonAdmins = createdUsers.filter(user => !user.isAdmin)
 
     if (!admin) {
         const adminSeed = users.find(user => user.isAdmin)
@@ -142,9 +142,9 @@ const generateInitialData = async () => {
             try {
                 let ownerId
                 if (index < 3) {
-                    ownerId = admin?._id
+                    ownerId = admin._id
                 } else {
-                    ownerId = nonAdmins[index - 3]?._id
+                    ownerId = nonAdmins[index - 3]._id
                 }
 
                 recipe = await normalizeRecipe({ ...recipe, createdBy: ownerId })

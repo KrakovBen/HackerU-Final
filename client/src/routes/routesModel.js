@@ -13,7 +13,6 @@ const ROUTES = {
     TERMS: '/terms',
     PRIVACY: '/privacy',
     MY_LIKED_RECIPES: '/my-liked-recipes',
-    CHANGE_PASSWORD: '/change-password',
     FORGOT_PASSWORD: '/forgot-password'
 }
 

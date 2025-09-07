@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { string, number, object, func } from 'prop-types'
+import { object, func } from 'prop-types'
 import Grid from '@mui/material/Grid'
 import RecipeActionBar from '../components/RecipeActionBar'
 import { useNavigate } from 'react-router-dom'

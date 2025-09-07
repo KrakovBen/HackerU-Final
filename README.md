@@ -1,141 +1,113 @@
-# מערכת מתכונים - BisBook
+# 🍲 Recipe App | אפליקציית מתכונים  
+**HackerU Final Project – Full Stack Development**  
 
-## תיאור כללי
-מערכת BisBook היא מערכת לניהול ושיתוף מתכונים, הכוללת צד לקוח (React) וצד שרת (Node.js + Express + MongoDB).  
-המערכת תומכת בהרשאות משתמשים, יצירת מתכונים, העלאת תמונות, לייקים, וניהול משתמשים דרך ממשק CRM.
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=flat&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white)
 
----
-
-## טכנולוגיות בשימוש
-### צד לקוח (Client)
-- **React**: ספריית JavaScript לבניית ממשקי משתמש.
-- **Material-UI (MUI)**: ספריית רכיבים לעיצוב.
-- **React Router**: ניתוב בין דפים.
-- **Axios**: קריאות HTTP לשרת.
-- **Joi**: ולידציה של טפסים בצד לקוח.
-- **SCSS/CSS**: עיצוב מותאם.
-
-### צד שרת (Server)
-- **Node.js + Express**: שרת API.
-- **MongoDB + Mongoose**: מסד נתונים NoSQL.
-- **JWT (JSON Web Token)**: אימות משתמשים.
-- **bcrypt**: הצפנת סיסמאות.
-- **Multer**: העלאת קבצים (תמונות מתכונים).
-- **Morgan**: לוגים של בקשות.
-- **Config**: ניהול הגדרות לפי סביבות (פיתוח, ייצור).
+מערכת מתכונים מלאה בצד לקוח ובצד שרת.  
+כוללת ניהול משתמשים, התחברות, ניהול מתכונים והעלאת תמונות.  
 
 ---
 
-## מבנה תיקיות
-```
-project/
-├── client/                # צד לקוח - React
-│   ├── src/
-│   │   ├── assets/        # תמונות וקבצים סטטיים
-│   │   ├── components/    # רכיבים כלליים (PageHeader, Spinner וכו')
-│   │   ├── forms/         # רכיבי טפסים והוקים לניהול טפסים
-│   │   ├── layout/        # מבנה עמודים (Header, Footer)
-│   │   ├── pages/         # דפים כלליים (תקנון, פרטיות, 404)
-│   │   ├── providers/     # Context Providers (Theme, Snackbar)
-│   │   ├── recipes/       # כל מה שקשור למתכונים
-│   │   ├── users/         # כל מה שקשור למשתמשים
-│   │   ├── routes/        # מודל ראוטים והגדרות Router
-│   │   ├── style/         # קבצי עיצוב גלובליים
-│   │   └── utils/         # פונקציות עזר
-│   └── package.json       # הגדרות צד לקוח
-│
-├── server/                # צד שרת - Node.js
-│   ├── auth/              # אימות משתמשים (JWT)
-│   ├── config/            # קבצי קונפיג לכל סביבה
-│   ├── db/                # חיבור למסד הנתונים
-│   ├── initialData/       # נתונים התחלתיים
-│   ├── logger/            # לוגים (Morgan)
-│   ├── middlewares/       # מידלוורים (CORS, העלאת קבצים)
-│   ├── recipes/           # מודלים, ראוטים, ולידציות למתכונים
-│   ├── users/             # מודלים, ראוטים, ולידציות למשתמשים
-│   ├── uploads/           # תיקיית קבצים שהועלו
-│   ├── utils/             # פונקציות עזר לשרת
-│   ├── router/            # Router ראשי
-│   ├── server.js          # קובץ כניסה לשרת
-│   └── package.json       # הגדרות צד שרת
-```
+## 🚀 Features | פיצ'רים
+- 🔐 Authentication & Authorization – אימות והרשאות עם **JWT**
+- 📖 Recipe CRUD – ניהול מתכונים מלא (הוספה, עדכון, מחיקה)
+- 🖼️ Image Upload – העלאת תמונות עם **Multer**
+- 🎨 UI – ממשק משתמש עם **React** + **MUI**
+- 📝 Logs – לוגים עם **Morgan**
+- ⚙️ Config – תמיכה בסביבות **development** ו-**production**
 
 ---
 
-## הרשאות במערכת
-- **משתמש רגיל**:
-  - יכול להירשם ולהתחבר
-  - לצפות במתכונים
-  - ליצור מתכונים חדשים
-  - לערוך ולמחוק רק את המתכונים שיצר
-  - לעשות לייק למתכונים
-- **אדמין**:
-  - כל הרשאות המשתמש הרגיל
-  - מחיקת מתכונים של אחרים
-  - ניהול משתמשים בממשק CRM
-
----
-
-## פונקציונליות עיקרית
-1. **הרשמה והתחברות**
-   - אימות JWT
-   - הצפנת סיסמאות ב-bcrypt
-2. **ניהול מתכונים**
-   - יצירה, עריכה, מחיקה
-   - העלאת תמונה ייחודית לכל מתכון
-   - לייקים
-3. **ממשק משתמש**
-   - עמודי מתכון
-   - קטגוריות
-   - חיפוש
-4. **עמודים כלליים**
-   - תקנון
-   - מדיניות פרטיות
-   - עמוד 404
-5. **ניהול משתמשים**
-   - צפייה ברשימת משתמשים
-   - מחיקת משתמשים (Admin)
-
----
-
-## API צד שרת
-### מתכונים
-- `GET /api/recipes` – קבלת כל המתכונים
-- `GET /api/recipes/:id` – קבלת מתכון לפי מזהה
-- `POST /api/recipes` – יצירת מתכון חדש
-- `PUT /api/recipes/:id` – עדכון מתכון
-- `DELETE /api/recipes/:id` – מחיקת מתכון
-- `POST /api/recipes/:id/image` – העלאת תמונה למתכון
-- `PATCH /api/recipes/:id/like` – לייק/הסרת לייק
-
-### משתמשים
-- `POST /api/users/register` – הרשמה
-- `POST /api/users/login` – התחברות
-- `GET /api/users` – קבלת כל המשתמשים (Admin)
-- `DELETE /api/users/:id` – מחיקת משתמש (Admin)
-
----
-
-## התקנה והרצה
-### צד שרת
+## 📂 Project Structure | מבנה פרויקט
 ```bash
-cd server
-npm install
-npm run dev
+HackerU-Final/
+├── client/                 # Frontend (React)
+├── server/                 # Backend (Node.js, Express, MongoDB)
+│   ├── auth/               # Authentication & JWT
+│   ├── config/             # Environment configs
+│   ├── logger/             # Logger service + Morgan
+│   ├── middlewares/        # Middlewares (upload, CORS, etc.)
+│   ├── uploads/            # Recipe images
+│   └── server.js           # Entry point
+└── README.md
 ```
-שרת ברירת מחדל: `http://localhost:8181`
 
-### צד לקוח
+---
+
+## ⚙️ Installation | הוראות התקנה
+
+### 1. Clone repository
+```bash
+git clone https://github.com/your-username/HackerU-Final.git
+cd HackerU-Final
+```
+
+### 2. Install dependencies
 ```bash
 cd client
 npm install
-npm start
+
+cd ../server
+npm install
 ```
-לקוח ברירת מחדל: `http://localhost:3000`
+
+### 3. Environment variables | משתני סביבה
+צור קובץ `.env` בתוך `server/`:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/recipes
+JWT_SECRET=your_jwt_secret
+```
+
+> 📝 **הערה:** קבצי `.env` והקונפיגורציה (`development.json`, `production.json`)  
+> אינם כלולים בפרויקט מטעמי אבטחה – הם צורפו למשימה באתר.  
 
 ---
 
-## דרישות מערכת
-- Node.js 18+
-- MongoDB 6+
-- npm 9+
+## ▶️ Running the Project | הרצה
+
+### Development mode
+```bash
+# Server
+cd server
+npm run dev
+
+# Client
+cd ../client
+npm start
+```
+
+### Production mode
+```bash
+cd client
+npm run build
+
+cd ../server
+npm start
+```
+
+---
+
+## 🔑 Notes | הערות
+- מומלץ ליצור **משתמשים עם אימייל אמיתי** כדי לבדוק את מערכת ההתחברות.  
+- לאחר **הפעלה ראשונית** יש להמתין מספר דקות עד שהמידע יורד ומסתנכרן מול השרתים.  
+
+---
+
+## 🛠️ Tech Stack | טכנולוגיות
+| צד לקוח | צד שרת | מסד נתונים | כלים נוספים |
+|---------|---------|-------------|-------------|
+| React   | Node.js | MongoDB     | Morgan      |
+| React Router | Express |         | dotenv      |
+| MUI     | JWT     |             | config      |
+| SCSS    | Multer  |             |             |
+
+---
+
+## 👨‍💻 Author | מחבר
+פרויקט גמר בקורס פיתוח **Full-Stack** ב-HackerU.
