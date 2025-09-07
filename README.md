@@ -81,8 +81,8 @@ npm install
 ```
 
 ### 3. Environment variables | משתני סביבה
-> 📝 **הערה:** קבצי `.env` והקונפיגורציה (`development.json`, `production.json`)  
-> אינם כלולים בפרויקט מטעמי אבטחה – הם צורפו למשימה באתר.  
+📝 **הערה:** קבצי `.env` והקונפיגורציה (`development.json`, `production.json`)  
+אינם כלולים בפרויקט מטעמי אבטחה – הם צורפו למשימה באתר.  
 
 ---
 
