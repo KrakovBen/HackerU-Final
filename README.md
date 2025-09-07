@@ -42,7 +42,7 @@ HackerU-Final/
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/your-username/HackerU-Final.git
+git clone https://github.com/KrakovBen/HackerU-Final.git
 cd HackerU-Final
 ```
 
@@ -56,14 +56,6 @@ npm install
 ```
 
 ### 3. Environment variables | משתני סביבה
-צור קובץ `.env` בתוך `server/`:
-
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/recipes
-JWT_SECRET=your_jwt_secret
-```
-
 > 📝 **הערה:** קבצי `.env` והקונפיגורציה (`development.json`, `production.json`)  
 > אינם כלולים בפרויקט מטעמי אבטחה – הם צורפו למשימה באתר.  
 
