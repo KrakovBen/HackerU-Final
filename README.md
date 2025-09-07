@@ -25,9 +25,9 @@
 
 ---
 
-## 📂 Project Structure | מבנה פרויקט
 </div>
 <div dir="ltr" align="left">
+## 📂 Project Structure | מבנה פרויקט
 ```bash
 HackerU-Final/
 ├── client/                 # Frontend (React)
