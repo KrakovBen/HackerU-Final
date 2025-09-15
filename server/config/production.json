@@ -1,0 +1,7 @@
+{
+    "NODE_ENV": "production",
+    "PORT": 9191,
+    "DB_URL": "mongodb+srv://hup:8m2fCiSXPGI1DtKK@hackeru.ybye1eh.mongodb.net/my-recipe-server",
+    "JWT_KEY": "qSGO@#YozpIMSueWf5fMYr3cO^tqljtA",
+    "BREVO_API_KEY": "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"
+}

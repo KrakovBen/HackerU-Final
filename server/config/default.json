@@ -1,0 +1,12 @@
+{
+    "DB_TYPE": "mongoDB",
+    "TOKEN_GENERATOR": "jwt",
+    "LOGGER": "morgan",
+    "VALIDATOR": "Joi",
+    "BREVO_API_URL": "https://api.brevo.com/v3/smtp/email",
+    "EMAIL_FROM_NAME": "Bisbook",
+    "EMAIL_FROM_EMAIL": "bisbook@hackeru.krakov.cc",
+    "JWT_EXPIRES_IN": "4h",
+    "N8N_API_URL": "https://n8n.krakov.cc/webhook",
+    "N8N_API_KEY": "0C6YAvDIFSeuvoHcHdftagmHEZcZaVz9GgGSxjvQzXUBPjoKtibS4VEcnHuCwHYC"
+}
